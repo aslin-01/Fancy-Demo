@@ -45,7 +45,7 @@ export function CartPage() {
           Your cart is empty
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Discover our handwoven sarees and find something you love.
+          Discovers our handwoven sarees and find something you love.
         </p>
         <Link
           to="/shop"
