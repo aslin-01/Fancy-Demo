@@ -5,7 +5,6 @@ import Sellers from "@/components/home/Sellers";
 import Bridal from "@/components/home/Bridal";
 import Arrivals from "@/components/home/Arrivals";
 import Festive from "@/components/home/Festive";
-import Inspiration from "@/components/home/Inspiration";
 import Touch from "@/components/home/Touch";
 
 export function HomePage() {
@@ -17,7 +16,6 @@ export function HomePage() {
       <Bridal />
       <Arrivals />
       <Festive />
-      <Inspiration />
       <Touch />
     </div>
   );

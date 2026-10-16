@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StoreProvider } from "@/lib/store";
 import { Toaster } from "sonner";
+import ScrollToTop from "@/components/common/ScrollToTop";
 
 // Layout & Pages
 import Layout from "@/pages/Layout";
@@ -50,6 +51,7 @@ export function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
+        <ScrollToTop />
       </BrowserRouter>
       <Toaster position="top-right" richColors />
     </StoreProvider>
