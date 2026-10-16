@@ -37,7 +37,7 @@ export function Touch() {
           />
           <button
             type="submit"
-            className="shrink-0 bg-[#0C0A07] text-[#F5B815] px-6 text-sm font-semibold tracking-[0.15em] uppercase transition-colors hover:bg-[#F5B815] hover:text-[#0C0A07] cursor-pointer"
+            className="shrink-0 bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-6 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 active:scale-[0.98] cursor-pointer shadow-md"
           >
             Subscribe
           </button>

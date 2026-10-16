@@ -6,7 +6,7 @@ import {
   Minus,
   Plus,
   ShieldCheck,
-  ShoppingBag,
+  ShoppingCart,
   Star,
   Truck,
   ZoomIn,
@@ -237,12 +237,12 @@ export function ProductDetailPage() {
             <button
               onClick={handleAdd}
               disabled={!product.inStock}
-              className={`flex-1 sm:flex-none ${theme.buttons.actionCard} py-3 sm:px-8 text-sm`}
+              className={`flex-1 sm:flex-none ${theme.buttons.actionCard} py-3.5 sm:px-8 text-sm`}
             >
               {added ? (
                 <Check className="h-4 w-4" />
               ) : (
-                <ShoppingBag className="h-4 w-4" />
+                <ShoppingCart className="h-4 w-4 stroke-[2.25]" />
               )}
               {added ? "Added!" : "Add to Cart"}
             </button>
@@ -285,7 +285,7 @@ export function ProductDetailPage() {
               />
               <button
                 type="submit"
-                className="shrink-0 bg-secondary px-4 text-sm font-medium text-secondary-foreground cursor-pointer hover:bg-[#F5B815] hover:text-[#0C0A07] transition-colors"
+                className="shrink-0 bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] cursor-pointer shadow-sm"
               >
                 Check
               </button>

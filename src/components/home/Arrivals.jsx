@@ -19,7 +19,7 @@ export function Arrivals() {
       <div className="mt-10 text-center">
         <Link
           to="/shop?sort=newest"
-          className={theme.buttons.outline}
+          className={theme.buttons.primary}
         >
           View All New Arrivals
         </Link>

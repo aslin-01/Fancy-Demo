@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Heart, ShoppingBag, Star } from "lucide-react";
+import { Heart, ShoppingCart, Star } from "lucide-react";
 import { formatINR } from "@/data/products";
 import { useStore } from "@/lib/store";
 import { theme } from "@/theme";
@@ -73,9 +73,9 @@ export function ProductCard({ product }) {
         <button
           onClick={() => addToCart(product.id)}
           disabled={!product.inStock}
-          className={`mt-2 ${theme.buttons.actionCard}`}
+          className={`mt-2 w-full ${theme.buttons.actionCard}`}
         >
-          <ShoppingBag className="h-3.5 w-3.5" /> Add to Cart
+          <ShoppingCart className="h-3.5 w-3.5 stroke-[2.25]" /> Add to Cart
         </button>
       </div>
     </div>

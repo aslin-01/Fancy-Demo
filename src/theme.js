@@ -143,7 +143,7 @@ export const theme = {
     primaryWide:
       "w-full inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center shadow-md",
     gold:
-      "inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#F5B815] to-[#E5A506] text-[#0C0A07] border border-[#F5B815] px-8 py-3.5 text-sm font-semibold tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#FEE63E] hover:to-[#F5B815] hover:shadow-lg hover:shadow-[#F5B815]/35 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center shadow-md",
+      "inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center shadow-md",
     outlineMaroon:
       "inline-flex items-center justify-center rounded-md border border-[#B87802] px-8 py-3 text-sm font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white hover:shadow-md hover:shadow-[#B87802]/25 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
     outline:
@@ -151,7 +151,9 @@ export const theme = {
     outlineLight:
       "inline-flex items-center justify-center rounded-md border border-white/60 bg-white/10 backdrop-blur-sm px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase text-white transition-all duration-200 hover:bg-white hover:text-[#0C0A07] hover:border-white hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
     actionCard:
-      "flex items-center justify-center gap-2 rounded-md border border-[#0C0A07]/10 bg-[#0C0A07] text-white py-2.5 text-xs font-medium tracking-wider uppercase transition-all duration-200 hover:bg-[#B87802] hover:border-[#B87802] hover:shadow-md hover:shadow-[#B87802]/25 disabled:cursor-not-allowed disabled:opacity-40 active:scale-[0.98] cursor-pointer",
+      "flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-2.5 text-xs font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer shadow-md",
+    actionDark:
+      "flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-2.5 text-xs font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer shadow-md",
     iconRound:
       "grid place-items-center rounded-full bg-card/90 shadow-md backdrop-blur-sm transition-all duration-200 cursor-pointer hover:bg-[#F5B815] hover:text-[#0C0A07] hover:scale-110",
     secondarySm:

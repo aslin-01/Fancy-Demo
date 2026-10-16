@@ -28,7 +28,7 @@ export function Hero() {
               silks, cottons, and bridal treasures crafted by master artisans.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link to="/shop" className={theme.buttons.gold}>
+              <Link to="/shop" className={theme.buttons.primary}>
                 Shop Now
               </Link>
               <Link

@@ -7,7 +7,7 @@ import {
   Heart,
   Menu,
   Search,
-  ShoppingBag,
+  ShoppingCart,
   Sparkles,
   User,
   X,
@@ -212,37 +212,50 @@ export function Header() {
             />
           </form>
 
-          <div className="ml-auto flex shrink-0 items-center gap-5">
+          <div className="ml-auto flex shrink-0 items-center gap-4 sm:gap-6">
             <Link
               to="/shop"
-              className="hidden items-center gap-1.5 text-sm hover:text-[#B87802] sm:flex transition-colors"
-              aria-label="Account"
+              className="group flex flex-col items-center justify-center gap-1 text-foreground/85 hover:text-[#B87802] transition-colors"
+              aria-label="Profile"
             >
-              <User className="h-5 w-5" />
+              <User className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-tight">
+                Profile
+              </span>
             </Link>
             <Link
               to="/wishlist"
-              className="relative transition-colors hover:text-[#B87802]"
+              className="group relative flex flex-col items-center justify-center gap-1 text-foreground/85 hover:text-[#B87802] transition-colors"
               aria-label="Wishlist"
             >
-              <Heart className="h-5 w-5" />
-              {wishlist.length > 0 && (
-                <span className={theme.badges.counterGold}>
-                  {wishlist.length}
-                </span>
-              )}
+              <div className="relative">
+                <Heart className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
+                {wishlist.length > 0 && (
+                  <span className={theme.badges.counterGold}>
+                    {wishlist.length}
+                  </span>
+                )}
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-tight">
+                Wishlist
+              </span>
             </Link>
             <Link
               to="/cart"
-              className="relative transition-colors hover:text-[#B87802]"
+              className="group relative flex flex-col items-center justify-center gap-1 text-foreground/85 hover:text-[#B87802] transition-colors"
               aria-label="Shopping cart"
             >
-              <ShoppingBag className="h-5 w-5" />
-              {cartCount > 0 && (
-                <span className={theme.badges.counterMaroon}>
-                  {cartCount}
-                </span>
-              )}
+              <div className="relative">
+                <ShoppingCart className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
+                {cartCount > 0 && (
+                  <span className={theme.badges.counterMaroon}>
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-tight">
+                Cart
+              </span>
             </Link>
           </div>
         </div>

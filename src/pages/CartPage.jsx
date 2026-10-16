@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { formatINR, products } from "@/data/products";
 import { useStore } from "@/lib/store";
 import { theme } from "@/theme";
@@ -40,12 +40,12 @@ export function CartPage() {
   if (lines.length === 0) {
     return (
       <div className={theme.layout.emptyState}>
-        <ShoppingBag className="mx-auto h-12 w-12 text-muted-foreground" />
+        <ShoppingCart className="mx-auto h-12 w-12 text-muted-foreground stroke-[1.5]" />
         <h1 className={`mt-4 ${theme.typography.h1Page}`}>
           Your cart is empty
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Discovers our handwoven sarees and find something you love.
+          Discover our handwoven sarees and find something you love.
         </p>
         <Link
           to="/shop"
@@ -137,7 +137,7 @@ export function CartPage() {
             />
             <button
               type="submit"
-              className="shrink-0 bg-[#0C0A07] text-[#F5B815] px-4 text-sm font-medium cursor-pointer hover:bg-[#F5B815] hover:text-[#0C0A07] transition-colors"
+              className="shrink-0 bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] active:scale-[0.98] cursor-pointer shadow-sm"
             >
               Apply
             </button>

@@ -26,7 +26,7 @@ export function Festive() {
           </p>
           <Link
             to="/shop?category=Silk"
-            className={`mt-8 ${theme.buttons.gold}`}
+            className={`mt-8 ${theme.buttons.primary}`}
           >
             Shop the Collection
           </Link>

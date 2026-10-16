@@ -295,7 +295,7 @@ export function ShopPage() {
                 <div className="mt-10 text-center">
                   <button
                     onClick={() => setVisible((v) => v + PAGE_SIZE)}
-                    className={theme.buttons.outline}
+                    className={theme.buttons.primary}
                   >
                     Load More
                   </button>
