@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * CF Handlooms — Official Brand Design System
+ * Palette extracted directly from logo (public/favicon.png):
+ * - Primary Emblem Gold: #F5B815 (Sample highlights: #FEE63E, #FBC119)
+ * - Deep Amber Gold: #B87802 (Sample shadows: #D38703, #AA5300)
+ * - Deep Onyx Black: #0C0A07 (Sample darks: #000000, #060300)
+ * - Warm Ivory Neutral: #FAF8F2
+ * - Champagne Neutral: #F3EBDD
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-onyx: var(--onyx);
+  --color-onyx-deep: var(--onyx-deep);
+  --color-maroon: var(--maroon);
+  --color-maroon-deep: var(--maroon-deep);
+  --color-ivory: var(--ivory);
+  --color-beige: var(--beige);
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-cursive: "Great Vibes", cursive;
+}
+
+:root {
+  --radius: 0.375rem;
+
+  /* Logo-Derived Warm Ivory Background & Onyx Foreground */
+  --background: #FAF8F2;
+  --foreground: #12100D;
+  --card: #FFFFFF;
+  --card-foreground: #12100D;
+  --popover: #FFFFFF;
+  --popover-foreground: #12100D;
+
+  /* Primary Action: Deep Amber Gold */
+  --primary: #B87802;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary: Warm Champagne Neutral */
+  --secondary: #F3EBDD;
+  --secondary-foreground: #12100D;
+  --muted: #F2EBE0;
+  --muted-foreground: #6B6457;
+
+  /* Accent: Royal Gold Tint */
+  --accent: #F5EEDB;
+  --accent-foreground: #0C0A07;
+  --destructive: #B3261E;
+  --destructive-foreground: #FFFFFF;
+
+  /* Borders & Focus Ring */
+  --border: #E8D8B5;
+  --input: #E8D8B5;
+  --ring: #F5B815;
+
+  /* Brand Logo Tokens (Extracted directly from logo) */
+  --gold: #F5B815;
+  --gold-light: #FEE63E;
+  --gold-deep: #B87802;
+  --gold-foreground: #0C0A07;
+  --onyx: #12100D;
+  --onyx-deep: #0C0A07;
+  --ivory: #FAF8F2;
+  --beige: #F3EBDD;
+
+  /* Aliases mapped to logo palette */
+  --maroon: #B87802;
+  --maroon-deep: #0C0A07;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+/* Scrollbar matching luxury aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F3EBDD;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8D8B5;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B87802;
+}
+
+/* Cursive brand accent */
+@utility font-cursive {
+  font-family: var(--font-cursive);
+}
+
+/* Gold divider flourish - exact logo gold gradient */
+@utility divider-gold {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #F5B815, transparent);
+}
+
+/* Slow, graceful fade-up used across sections */
+@utility animate-fade-up {
+  animation: fade-up 0.8s ease-out both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
