@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { products } from "@/data/products";
+import { useStore } from "@/lib/store";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { ProductCard } from "@/components/common/ProductCard";
 import { theme } from "@/theme";
 
 export function Arrivals() {
+  const { products } = useStore();
   const newArrivals = products.filter((p) => p.isNew).slice(0, 4);
 
   return (

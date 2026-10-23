@@ -1,19 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { categories } from "@/data/products";
+import { useStore } from "@/lib/store";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { theme } from "@/theme";
 
 export function Category() {
+  const { categories } = useStore();
+  const activeCategories = categories.filter((c) => c.isActive !== false);
+
   return (
     <section id="categories" className={theme.layout.sectionContainer}>
       <SectionHeading eyebrow="Curated for You" title="Shop by Category" />
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        {categories.map((cat) => (
+        {activeCategories.map((cat) => (
           <Link
-            key={cat.slug}
-            to={`/shop?category=${encodeURIComponent(cat.slug)}`}
+            key={cat.slug || cat.name}
+            to={`/shop?category=${encodeURIComponent(cat.slug || cat.name)}`}
             className="group relative overflow-hidden rounded-lg"
           >
             <img

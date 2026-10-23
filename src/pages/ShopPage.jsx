@@ -1,11 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
-import { products } from "@/data/products";
+import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/common/ProductCard";
 import { theme } from "@/theme";
 
-const categories = ["Silk", "Cotton", "Designer", "Wedding", "Party Wear"];
 const colors = [
   "Maroon",
   "Red",
@@ -33,6 +32,7 @@ const sortOptions = [
 const PAGE_SIZE = 8;
 
 export function ShopPage() {
+  const { products, categories: dynamicCategories } = useStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get("category") || "";
   const queryParam = searchParams.get("q") || "";
@@ -44,6 +44,10 @@ export function ShopPage() {
   const [inStockOnly, setInStockOnly] = useState(false);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const categoryNames = useMemo(() => {
+    return dynamicCategories.map((c) => c.name || c.slug);
+  }, [dynamicCategories]);
 
   const updateSearchParam = (key, value) => {
     const newParams = new URLSearchParams(searchParams);
@@ -58,16 +62,21 @@ export function ShopPage() {
   const filtered = useMemo(() => {
     let list = [...products];
     if (categoryParam) {
-      list = list.filter((p) => p.category === categoryParam);
+      const catLower = categoryParam.toLowerCase();
+      list = list.filter(
+        (p) =>
+          p.category?.toLowerCase() === catLower ||
+          p.category?.toLowerCase().includes(catLower)
+      );
     }
     if (queryParam) {
       const q = queryParam.toLowerCase();
       list = list.filter(
         (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.fabric.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q) ||
-          p.color.toLowerCase().includes(q)
+          p.name?.toLowerCase().includes(q) ||
+          p.fabric?.toLowerCase().includes(q) ||
+          p.category?.toLowerCase().includes(q) ||
+          p.color?.toLowerCase().includes(q)
       );
     }
     if (selectedColors.length) {
@@ -94,10 +103,11 @@ export function ShopPage() {
         list.sort((a, b) => b.price - a.price);
         break;
       default:
-        list.sort((a, b) => b.reviews - a.reviews);
+        list.sort((a, b) => (b.reviews || 0) - (a.reviews || 0));
     }
     return list;
   }, [
+    products,
     categoryParam,
     queryParam,
     selectedColors,
@@ -113,33 +123,32 @@ export function ShopPage() {
   const filterPanel = (
     <div className="space-y-7">
       <div>
-        <h3 className={theme.typography.h3Sidebar}>
-          Category
-        </h3>
+        <h3 className={theme.typography.h3Sidebar}>Category</h3>
         <ul className="mt-3 space-y-2">
-          {categories.map((c) => (
-            <li key={c}>
-              <button
-                onClick={() =>
-                  updateSearchParam("category", categoryParam === c ? null : c)
-                }
-                className={`text-sm transition-colors hover:text-[#B87802] cursor-pointer ${
-                  categoryParam === c
-                    ? "font-semibold text-[#B87802]"
-                    : "text-muted-foreground"
-                }`}
-              >
-                {c} Sarees
-              </button>
-            </li>
-          ))}
+          {categoryNames.map((c) => {
+            const isSelected = categoryParam.toLowerCase() === c.toLowerCase();
+            return (
+              <li key={c}>
+                <button
+                  onClick={() =>
+                    updateSearchParam("category", isSelected ? null : c)
+                  }
+                  className={`text-sm transition-colors hover:text-[#B87802] cursor-pointer ${
+                    isSelected
+                      ? "font-semibold text-[#B87802]"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  {c.toLowerCase().includes("saree") ? c : `${c} Sarees`}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
       <div>
-        <h3 className={theme.typography.h3Sidebar}>
-          Color
-        </h3>
+        <h3 className={theme.typography.h3Sidebar}>Color</h3>
         <div className="mt-3 flex flex-wrap gap-2">
           {colors.map((c) => (
             <button
@@ -158,9 +167,7 @@ export function ShopPage() {
       </div>
 
       <div>
-        <h3 className={theme.typography.h3Sidebar}>
-          Price
-        </h3>
+        <h3 className={theme.typography.h3Sidebar}>Price</h3>
         <ul className="mt-3 space-y-2">
           {priceRanges.map((r, i) => (
             <li key={r.label}>
@@ -188,9 +195,7 @@ export function ShopPage() {
       </div>
 
       <div>
-        <h3 className={theme.typography.h3Sidebar}>
-          Occasion
-        </h3>
+        <h3 className={theme.typography.h3Sidebar}>Occasion</h3>
         <ul className="mt-3 space-y-2">
           {occasions.map((o) => (
             <li key={o}>

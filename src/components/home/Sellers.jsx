@@ -1,10 +1,11 @@
 import React from "react";
-import { products } from "@/data/products";
+import { useStore } from "@/lib/store";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { ProductCard } from "@/components/common/ProductCard";
 import { theme } from "@/theme";
 
 export function Sellers() {
+  const { products } = useStore();
   const bestSellers = products.filter((p) => p.isBestSeller).slice(0, 4);
 
   return (

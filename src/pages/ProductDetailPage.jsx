@@ -11,7 +11,7 @@ import {
   Truck,
   ZoomIn,
 } from "lucide-react";
-import { formatINR, products } from "@/data/products";
+import { formatINR } from "@/data/products";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/common/ProductCard";
 import { theme } from "@/theme";
@@ -32,9 +32,10 @@ const sampleReviews = [
 export function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === id);
+  const { getProduct, products, addToCart, toggleWishlist, wishlist } = useStore();
 
-  const { addToCart, toggleWishlist, wishlist } = useStore();
+  const product = getProduct(id) || products.find((p) => String(p.id) === String(id) || String(p._id) === String(id));
+
   const [qty, setQty] = useState(1);
   const [pin, setPin] = useState("");
   const [pinResult, setPinResult] = useState(null);
@@ -59,7 +60,10 @@ export function ProductDetailPage() {
   }
 
   const wished = wishlist.includes(product.id);
-  const discount = Math.round((1 - product.price / product.mrp) * 100);
+  const discount = product.mrp && product.mrp > product.price
+    ? Math.round((1 - product.price / product.mrp) * 100)
+    : 0;
+
   const related = products
     .filter((p) => p.id !== product.id && p.category === product.category)
     .concat(
@@ -101,108 +105,90 @@ export function ProductDetailPage() {
       </nav>
 
       <div className="grid gap-12 lg:grid-cols-2">
-        {/* Image with zoom */}
-        <div>
+        {/* Gallery */}
+        <div className="relative">
           <div
-            className="group relative cursor-zoom-in overflow-hidden rounded-lg border border-border"
+            className="group relative aspect-3/4 overflow-hidden rounded-lg border border-border bg-card cursor-zoom-in"
             onClick={() => setZoomed(!zoomed)}
           >
             <img
               src={product.image}
               alt={product.name}
-              width={1024}
-              height={1280}
-              className={`aspect-[4/5] w-full object-cover transition-transform duration-500 ${
+              className={`h-full w-full object-cover transition-transform duration-500 ${
                 zoomed ? "scale-150" : "group-hover:scale-105"
               }`}
             />
-            <span className="absolute right-4 bottom-4 flex items-center gap-1.5 rounded-full bg-card/90 px-3 py-1.5 text-xs text-muted-foreground">
-              <ZoomIn className="h-3.5 w-3.5" /> Click to zoom
-            </span>
+            <div className="pointer-events-none absolute right-4 bottom-4 flex items-center gap-1.5 rounded-full bg-card/90 px-3 py-1.5 text-xs text-muted-foreground shadow backdrop-blur-sm">
+              <ZoomIn className="h-3.5 w-3.5" />
+              <span>{zoomed ? "Click to reset" : "Click to zoom"}</span>
+            </div>
+            {discount > 0 && (
+              <span className={`absolute top-4 left-4 ${theme.badges.discount}`}>
+                {discount}% OFF
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Details */}
+        {/* Info */}
         <div>
-          <p className={theme.typography.metaSku}>
-            {product.fabric} · SKU {product.sku}
-          </p>
-          <h1 className={`mt-2 ${theme.typography.h2Section}`}>
+          <span className={theme.typography.eyebrowGold}>
+            {product.category} Collection
+          </span>
+          <h1 className={`mt-2 ${theme.typography.h1Page}`}>
             {product.name}
           </h1>
 
-          <div className="mt-3 flex items-center gap-2">
-            <div className="flex gap-0.5">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-4 w-4 ${
-                    i < Math.round(product.rating)
-                      ? "fill-[#F5B815] text-[#F5B815]"
-                      : "text-border"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className={theme.typography.bodyMuted}>
-              {product.rating} · {product.reviews} reviews
-            </span>
-          </div>
-
-          <div className="mt-5 flex items-baseline gap-3">
-            <span className={theme.typography.priceBig}>
-              {formatINR(product.price)}
-            </span>
-            <span className={theme.typography.priceStrike}>
-              {formatINR(product.mrp)}
-            </span>
-            <span className="rounded-sm bg-[#F5EEDB] border border-[#E8D8B5] px-2 py-1 text-xs font-semibold text-[#B87802]">
-              Save {discount}%
-            </span>
-          </div>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Inclusive of all taxes
+          <p className={`mt-2 font-mono text-xs ${theme.typography.metaMuted}`}>
+            SKU: {product.sku}
           </p>
 
-          <p className="mt-6 leading-relaxed text-foreground/80">
+          <div className="mt-4 flex items-baseline gap-4">
+            <span className={theme.typography.priceDisplay}>
+              {formatINR(product.price)}
+            </span>
+            {product.mrp && product.mrp > product.price && (
+              <span className={theme.typography.priceStrikethrough}>
+                {formatINR(product.mrp)}
+              </span>
+            )}
+            <span className="text-xs text-muted-foreground">
+              (Inclusive of all taxes)
+            </span>
+          </div>
+
+          <p className="mt-6 text-base leading-relaxed text-foreground/80">
             {product.description}
           </p>
 
+          {/* Details list */}
           <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 rounded-lg border border-border bg-card p-5 text-sm">
             <div>
-              <dt className={theme.typography.metaMuted}>
-                Fabric
-              </dt>
-              <dd className="mt-0.5">{product.fabric}</dd>
+              <dt className={theme.typography.metaMuted}>Fabric</dt>
+              <dd className="mt-0.5 font-medium">{product.fabric || 'Pure Mulberry Silk'}</dd>
             </div>
             <div>
-              <dt className={theme.typography.metaMuted}>
-                Color
-              </dt>
-              <dd className="mt-0.5">{product.color}</dd>
+              <dt className={theme.typography.metaMuted}>Color</dt>
+              <dd className="mt-0.5 font-medium">{product.color || 'Multicolor'}</dd>
             </div>
             <div>
-              <dt className={theme.typography.metaMuted}>
-                Length
-              </dt>
-              <dd className="mt-0.5">{product.length}</dd>
+              <dt className={theme.typography.metaMuted}>Occasion</dt>
+              <dd className="mt-0.5 font-medium">{product.occasion || 'Festive'}</dd>
             </div>
             <div>
-              <dt className={theme.typography.metaMuted}>
-                Blouse
-              </dt>
-              <dd className="mt-0.5">{product.blousePiece}</dd>
+              <dt className={theme.typography.metaMuted}>Length</dt>
+              <dd className="mt-0.5 font-medium">{product.length || '6.3 metres'}</dd>
             </div>
             <div>
-              <dt className={theme.typography.metaMuted}>
-                Wash Care
-              </dt>
-              <dd className="mt-0.5">{product.washCare}</dd>
+              <dt className={theme.typography.metaMuted}>Blouse Piece</dt>
+              <dd className="mt-0.5 font-medium">{product.blousePiece || 'Included'}</dd>
             </div>
             <div>
-              <dt className={theme.typography.metaMuted}>
-                Availability
-              </dt>
+              <dt className={theme.typography.metaMuted}>Wash Care</dt>
+              <dd className="mt-0.5 font-medium">{product.washCare || 'Dry clean only'}</dd>
+            </div>
+            <div>
+              <dt className={theme.typography.metaMuted}>Availability</dt>
               <dd
                 className={`mt-0.5 font-medium ${
                   product.inStock ? "text-green-700" : "text-destructive"
@@ -270,9 +256,7 @@ export function ProductDetailPage() {
 
           {/* PIN checker */}
           <form onSubmit={checkPin} className="mt-6">
-            <label className={theme.forms.label}>
-              Check Delivery
-            </label>
+            <label className={theme.forms.label}>Check Delivery</label>
             <div className="mt-2 flex max-w-xs overflow-hidden rounded-sm border border-input">
               <input
                 value={pin}
@@ -297,8 +281,7 @@ export function ProductDetailPage() {
 
           <div className="mt-6 flex flex-wrap gap-6 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
-              <Truck className="h-4 w-4 text-[#B87802]" /> Free shipping over
-              ₹2,999
+              <Truck className="h-4 w-4 text-[#B87802]" /> Free shipping over ₹2,999
             </span>
             <span className="flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-[#B87802]" /> Secure payments
@@ -309,16 +292,11 @@ export function ProductDetailPage() {
 
       {/* Reviews */}
       <section className="mt-20">
-        <h2 className={theme.typography.h2Section}>
-          Customer Reviews
-        </h2>
+        <h2 className={theme.typography.h2Section}>Customer Reviews</h2>
         <div className={theme.dividers.goldLeft} />
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           {sampleReviews.map((r) => (
-            <div
-              key={r.name}
-              className={theme.cards.padded}
-            >
+            <div key={r.name} className={theme.cards.padded}>
               <div className="flex gap-0.5">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
@@ -343,9 +321,7 @@ export function ProductDetailPage() {
 
       {/* Related */}
       <section className="mt-20">
-        <h2 className={theme.typography.h2Section}>
-          You May Also Love
-        </h2>
+        <h2 className={theme.typography.h2Section}>You May Also Love</h2>
         <div className={theme.dividers.goldLeft} />
         <div className={`mt-8 ${theme.layout.grid4Cols}`}>
           {related.map((p) => (

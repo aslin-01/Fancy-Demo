@@ -214,13 +214,17 @@ export function Header() {
 
           <div className="ml-auto flex shrink-0 items-center gap-4 sm:gap-6">
             <Link
-              to="/shop"
+              to="/admin/dashboard"
               className="group flex flex-col items-center justify-center gap-1 text-foreground/85 hover:text-[#B87802] transition-colors"
-              aria-label="Profile"
+              aria-label="Admin Portal"
+              title="Admin Portal"
             >
-              <User className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
-              <span className="text-[10px] sm:text-[11px] font-medium tracking-tight">
-                Profile
+              <div className="relative">
+                <User className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
+                <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-[#B87802] ring-1 ring-white" />
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-tight text-[#B87802]">
+                Admin
               </span>
             </Link>
             <Link

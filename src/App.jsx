@@ -4,7 +4,7 @@ import { StoreProvider } from "@/lib/store";
 import { Toaster } from "sonner";
 import ScrollToTop from "@/components/common/ScrollToTop";
 
-// Layout & Pages
+// Layout & Storefront Pages
 import Layout from "@/pages/Layout";
 import HomePage from "@/pages/HomePage";
 import ShopPage from "@/pages/ShopPage";
@@ -29,6 +29,7 @@ export function App() {
     <StoreProvider>
       <BrowserRouter>
         <Routes>
+          {/* Public E-Commerce Storefront Routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
 

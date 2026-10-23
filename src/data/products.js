@@ -10,7 +10,7 @@ export { hero };
 export const products = [
   {
     id: "kanchipuram-silk-maroon",
-    sku: "VK-SIL-001",
+    sku: "CF-SIL-001",
     name: "Kanchipuram Pure Silk Saree — Maroon & Gold",
     category: "Silk",
     fabric: "Pure Mulberry Silk",
@@ -31,7 +31,7 @@ export const products = [
   },
   {
     id: "banarasi-silk-heritage",
-    sku: "VK-SIL-002",
+    sku: "CF-SIL-002",
     name: "Banarasi Silk Saree — Heritage Brocade",
     category: "Silk",
     fabric: "Banarasi Silk",
@@ -52,7 +52,7 @@ export const products = [
   },
   {
     id: "cotton-handloom-ivory",
-    sku: "VK-COT-001",
+    sku: "CF-COT-001",
     name: "Handloom Cotton Saree — Ivory & Beige",
     category: "Cotton",
     fabric: "Handloom Cotton",
@@ -73,7 +73,7 @@ export const products = [
   },
   {
     id: "bridal-red-zari",
-    sku: "VK-WED-001",
+    sku: "CF-WED-001",
     name: "Bridal Wedding Saree — Royal Red Zari",
     category: "Wedding",
     fabric: "Pure Silk with Zari",
@@ -94,7 +94,7 @@ export const products = [
   },
   {
     id: "organza-blush-pink",
-    sku: "VK-DES-001",
+    sku: "CF-DES-001",
     name: "Shimmer Organza Saree — Blush Pink",
     category: "Designer",
     fabric: "Organza",
@@ -115,7 +115,7 @@ export const products = [
   },
   {
     id: "chiffon-emerald",
-    sku: "VK-DES-002",
+    sku: "CF-DES-002",
     name: "Chiffon Saree — Emerald with Gold Buttis",
     category: "Designer",
     fabric: "Chiffon",
@@ -136,7 +136,7 @@ export const products = [
   },
   {
     id: "designer-navy-sequin",
-    sku: "VK-PAR-001",
+    sku: "CF-PAR-001",
     name: "Designer Party Wear Saree — Midnight Sequin",
     category: "Party Wear",
     fabric: "Georgette with Sequins",
@@ -158,7 +158,7 @@ export const products = [
   },
   {
     id: "festive-mustard-temple",
-    sku: "VK-SIL-003",
+    sku: "CF-SIL-003",
     name: "Traditional Festive Saree — Mustard Temple Border",
     category: "Silk",
     fabric: "Art Silk",
@@ -179,7 +179,7 @@ export const products = [
   },
   {
     id: "soft-silk-rose",
-    sku: "VK-SIL-004",
+    sku: "CF-SIL-004",
     name: "Soft Silk Saree — Rose Gold Sheen",
     category: "Silk",
     fabric: "Soft Silk",
@@ -200,7 +200,7 @@ export const products = [
   },
   {
     id: "linen-sage-everyday",
-    sku: "VK-COT-002",
+    sku: "CF-COT-002",
     name: "Linen Saree — Natural Sand",
     category: "Cotton",
     fabric: "Pure Linen",
@@ -220,7 +220,7 @@ export const products = [
   },
   {
     id: "georgette-emerald-evening",
-    sku: "VK-PAR-002",
+    sku: "CF-PAR-002",
     name: "Evening Georgette Saree — Deep Emerald",
     category: "Party Wear",
     fabric: "Georgette",
@@ -240,7 +240,7 @@ export const products = [
   },
   {
     id: "bridal-gold-kanchipuram",
-    sku: "VK-WED-002",
+    sku: "CF-WED-002",
     name: "Bridal Kanchipuram Saree — Antique Gold",
     category: "Wedding",
     fabric: "Pure Mulberry Silk",

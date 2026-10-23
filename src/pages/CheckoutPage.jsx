@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { formatINR, products } from "@/data/products";
@@ -49,10 +50,49 @@ export function CheckoutPage() {
     return Object.keys(errs).length === 0;
   };
 
-  const placeOrder = (e) => {
+  const placeOrder = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    const orderId = "VK" + Date.now().toString().slice(-8);
+    
+    const orderPayload = {
+      customerName: form.name,
+      customerEmail: form.email,
+      customerPhone: form.phone,
+      shippingAddress: {
+        address: form.address,
+        city: form.city,
+        state: form.state,
+        pin: form.pin,
+      },
+      items: lines.map((l) => ({
+        productId: l.product.id || l.product.sku,
+        name: l.product.name,
+        price: l.product.price,
+        qty: l.qty,
+        sku: l.product.sku,
+      })),
+      subtotal,
+      shippingFee: shipping,
+      totalAmount: total,
+      paymentMethod: form.payment,
+    };
+
+    let orderId = "VK" + Date.now().toString().slice(-8);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+      const data = await response.json();
+      if (data.success && data.data?.orderNumber) {
+        orderId = data.data.orderNumber;
+      }
+    } catch (err) {
+      console.warn("Backend order sync fallback:", err);
+    }
+
     clearCart();
     navigate(`/order-success?order=${orderId}&total=${total}`);
   };
