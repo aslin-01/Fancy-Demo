@@ -1,7 +1,8 @@
-const API_BASE = 'http://localhost:5000/api';
+export const API_BASE = 'http://localhost:5000/api';
+export const STORE_URL = 'http://localhost:3000';
 
 const getHeaders = () => {
-  const token = localStorage.getItem('vk_admin_token');
+  const token = localStorage.getItem('cf_admin_token');
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -9,15 +10,10 @@ const getHeaders = () => {
 };
 
 const handleResponse = async (res, fallbackMsg) => {
-  if (res.status === 401) {
-    localStorage.removeItem('vk_admin_token');
-    localStorage.removeItem('vk_admin_user');
-    window.dispatchEvent(new CustomEvent('auth:unauthorized'));
-    const data = await res.json().catch(() => ({}));
-    throw new Error(data.message || 'Session expired or unauthorized. Please log in again.');
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || fallbackMsg || `Request failed with status ${res.status}`);
   }
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || fallbackMsg);
   return data;
 };
 
@@ -25,45 +21,26 @@ export const api = {
   // Check backend status
   async checkHealth() {
     try {
-      const res = await fetch(`${API_BASE}/health`);
-      return res.ok;
+      const res = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(4000) });
+      if (!res.ok) return { online: false, data: null };
+      const data = await res.json();
+      return { online: true, data };
     } catch {
-      return false;
+      return { online: false, data: null };
     }
-  },
-
-  // Auth
-  async login(email, password) {
-    const res = await fetch(`${API_BASE}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Login failed');
-    return data;
-  },
-
-  async getProfile() {
-    const res = await fetch(`${API_BASE}/auth/profile`, { headers: getHeaders() });
-    return handleResponse(res, 'Failed to fetch profile');
-  },
-
-  async getCustomers() {
-    const res = await fetch(`${API_BASE}/auth/customers`, { headers: getHeaders() });
-    return handleResponse(res, 'Failed to fetch customers');
   },
 
   // Products
   async getProducts(params = {}) {
     const query = new URLSearchParams(params).toString();
-    const res = await fetch(`${API_BASE}/products?${query}`);
-    return res.json();
+    const url = query ? `${API_BASE}/products?${query}` : `${API_BASE}/products`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+    return handleResponse(res, 'Failed to fetch products');
   },
 
   async getProductById(id) {
     const res = await fetch(`${API_BASE}/products/${id}`);
-    return res.json();
+    return handleResponse(res, 'Failed to fetch product details');
   },
 
   async createProduct(productData) {
@@ -92,30 +69,39 @@ export const api = {
     return handleResponse(res, 'Failed to delete product');
   },
 
-  // Orders
-  async getOrders(params = {}) {
-    const query = new URLSearchParams(params).toString();
-    const res = await fetch(`${API_BASE}/orders?${query}`, { headers: getHeaders() });
-    return handleResponse(res, 'Failed to fetch orders');
-  },
-
-  async getOrderById(id) {
-    const res = await fetch(`${API_BASE}/orders/${id}`, { headers: getHeaders() });
-    return handleResponse(res, 'Failed to fetch order');
-  },
-
-  async updateOrderStatus(id, updateData) {
-    const res = await fetch(`${API_BASE}/orders/${id}/status`, {
-      method: 'PUT',
-      headers: getHeaders(),
-      body: JSON.stringify(updateData),
-    });
-    return handleResponse(res, 'Failed to update order status');
+  async getCategories() {
+    try {
+      const res = await fetch(`${API_BASE}/products/categories/list`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.categories && Array.isArray(data.categories)) return data.categories;
+      }
+    } catch {
+      // fallback
+    }
+    return ['Silk', 'Cotton', 'Designer', 'Wedding', 'Party Wear', 'Bridal', 'Festive', 'Other'];
   },
 
   // Dashboard Stats
   async getDashboardStats() {
-    const res = await fetch(`${API_BASE}/dashboard/stats`, { headers: getHeaders() });
+    const res = await fetch(`${API_BASE}/dashboard/stats`, {
+      headers: getHeaders(),
+      signal: AbortSignal.timeout(6000),
+    });
     return handleResponse(res, 'Failed to fetch dashboard stats');
+  },
+
+  // Customers & User Access
+  async getCustomers() {
+    try {
+      const res = await fetch(`${API_BASE}/auth/customers`, {
+        headers: getHeaders(),
+        signal: AbortSignal.timeout(6000),
+      });
+      return handleResponse(res, 'Failed to fetch customer users');
+    } catch (err) {
+      console.warn('Could not fetch customers from API:', err);
+      return { success: false, data: [] };
+    }
   },
 };

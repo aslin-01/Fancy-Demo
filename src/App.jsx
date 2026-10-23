@@ -1,153 +1,200 @@
-import React, { useState, useEffect } from 'react';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Sidebar } from './components/Sidebar';
-import { Navbar } from './components/Navbar';
-import { DashboardPage } from './pages/DashboardPage';
-import { ProductsPage } from './pages/ProductsPage';
-import { OrdersPage } from './pages/OrdersPage';
-import { CustomersPage } from './pages/CustomersPage';
-import { AnalyticsPage } from './pages/AnalyticsPage';
-import { SettingsPage } from './pages/SettingsPage';
-import { LoginPage } from './pages/LoginPage';
-import { api } from './services/api';
-import { theme } from './theme';
+import { Header } from './components/Header';
+import { DashboardView } from './components/DashboardView';
+import { ProductsView } from './components/ProductsView';
+import { UserAccessView } from './components/UserAccessView';
+import { AddProductModal } from './components/AddProductModal';
+import { api, STORE_URL } from './services/api';
+import { Check, ExternalLink, X, AlertCircle } from 'lucide-react';
 
-const MainLayout = () => {
-  const { isAuthenticated } = useAuth();
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [stats, setStats] = useState(null);
+export function App() {
+  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'products' | 'user-access'
   const [products, setProducts] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [customers, setCustomers] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [backendOnline, setBackendOnline] = useState(true);
+
+  // Add / Edit Modal state
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+
+  // Toast Notification state
   const [toast, setToast] = useState(null);
 
-  const showNotification = (message, type = 'success') => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 4000);
+  const showToast = (message, type = 'success', link = STORE_URL) => {
+    setToast({ message, type, link });
+    setTimeout(() => {
+      setToast(null);
+    }, 6000);
   };
 
-  const loadData = async () => {
-    setIsRefreshing(true);
+  // Fetch all initial data
+  const loadData = useCallback(async (isSilent = false) => {
+    if (!isSilent) setIsRefreshing(true);
     try {
-      const [statsRes, productsRes, ordersRes, customersRes] = await Promise.allSettled([
-        api.getDashboardStats(),
-        api.getProducts(),
-        api.getOrders(),
-        api.getCustomers(),
-      ]);
+      // 1. Check backend health
+      const health = await api.checkHealth();
+      setBackendOnline(health.online);
 
-      if (statsRes.status === 'fulfilled' && statsRes.value?.data) {
-        setStats(statsRes.value.data);
-      }
-      if (productsRes.status === 'fulfilled' && productsRes.value?.data) {
-        setProducts(productsRes.value.data);
-      }
-      if (ordersRes.status === 'fulfilled' && ordersRes.value?.data) {
-        setOrders(ordersRes.value.data);
-      }
-      if (customersRes.status === 'fulfilled' && customersRes.value?.data) {
-        setCustomers(customersRes.value.data);
+      // 2. Fetch products
+      const productsRes = await api.getProducts().catch(() => ({ data: [] }));
+      const fetchedProducts = Array.isArray(productsRes.data)
+        ? productsRes.data
+        : Array.isArray(productsRes)
+        ? productsRes
+        : [];
+      setProducts(fetchedProducts);
+
+      // 3. Fetch dashboard stats
+      const statsRes = await api.getDashboardStats().catch(() => null);
+      if (statsRes?.data) {
+        setStats(statsRes.data);
       }
     } catch (err) {
-      console.warn('API sync notice:', err);
+      console.error('Error fetching data from backend:', err);
+      setBackendOnline(false);
     } finally {
+      setLoading(false);
       setIsRefreshing(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      loadData();
+    loadData();
+
+    // Periodic health check every 30s
+    const timer = setInterval(() => {
+      api.checkHealth().then((h) => setBackendOnline(h.online));
+    }, 30000);
+
+    return () => clearInterval(timer);
+  }, [loadData]);
+
+  // Handle Add Product opening
+  const handleOpenAddProduct = () => {
+    setEditingProduct(null);
+    setIsAddModalOpen(true);
+  };
+
+  // Handle Edit Product opening
+  const handleEditProduct = (product) => {
+    setEditingProduct(product);
+    setIsAddModalOpen(true);
+  };
+
+  // Handle Product Added / Updated
+  const handleProductSuccess = (savedProduct) => {
+    showToast(
+      `Product "${savedProduct.name}" is now live! View it on localhost:3000`,
+      'success',
+      STORE_URL
+    );
+    loadData(true);
+  };
+
+  // Handle Delete Product
+  const handleDeleteProduct = async (product) => {
+    if (confirm(`Are you sure you want to delete "${product.name}"? This will remove it from http://localhost:3000/.`)) {
+      try {
+        await api.deleteProduct(product._id || product.id);
+        setProducts((prev) => prev.filter((p) => (p._id || p.id) !== (product._id || product.id)));
+        showToast(`Product "${product.name}" removed from store`, 'info');
+        loadData(true);
+      } catch (err) {
+        alert(`Failed to delete product: ${err.message}`);
+      }
     }
-  }, [isAuthenticated]);
-
-  if (!isAuthenticated) {
-    return <LoginPage onNotify={showNotification} />;
-  }
-
-  const titles = {
-    dashboard: { title: 'Dashboard Overview', subtitle: 'CF Handlooms sales and operations performance' },
-    products: { title: 'Saree Inventory & Catalog', subtitle: `${products.length} active weaves in collection` },
-    orders: { title: 'Customer Orders', subtitle: `${orders.length} orders tracked in system` },
-    customers: { title: 'Registered Customers', subtitle: 'Customer lifetime records & contacts' },
-    analytics: { title: 'Revenue Analytics', subtitle: 'Category performance and sales breakdowns' },
-    settings: { title: 'Portal Settings', subtitle: 'Store configurations, shipping & API' },
   };
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+    <div className="min-h-screen bg-[#FAF8F2] flex text-[#12100D] font-sans selection:bg-[#B87802] selection:text-white">
+      
+      {/* Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0C0A07] text-white shadow-2xl border border-[#F5B815]/40 animate-in slide-in-from-bottom-5 max-w-md">
+          <div className="w-8 h-8 rounded-full bg-[#F5B815] text-[#0C0A07] flex items-center justify-center shrink-0 font-bold">
+            <Check className="w-4 h-4 stroke-[3]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold leading-snug">{toast.message}</p>
+            {toast.link && (
+              <a
+                href={toast.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] text-[#F5B815] hover:underline flex items-center gap-1 font-semibold mt-0.5"
+              >
+                <span>Open http://localhost:3000/</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            )}
+          </div>
+          <button
+            onClick={() => setToast(null)}
+            className="p-1 rounded-lg text-gray-400 hover:text-white transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
+      {/* Sidebar (Dashboard, Products, User Access ONLY) */}
+      <Sidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        backendOnline={backendOnline}
+        productCount={products.length}
+      />
+
+      {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        <Navbar
-          title={titles[activeTab]?.title}
-          subtitle={titles[activeTab]?.subtitle}
-          onRefresh={loadData}
+        
+        {/* Top Header */}
+        <Header
+          activeTab={activeTab}
+          onRefresh={() => loadData(false)}
           isRefreshing={isRefreshing}
+          backendOnline={backendOnline}
         />
 
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto">
+        {/* Dynamic Page Views */}
+        <main className="p-8 flex-1 overflow-y-auto">
           {activeTab === 'dashboard' && (
-            <DashboardPage
+            <DashboardView
               stats={stats}
-              orders={orders}
               products={products}
-              onNavigate={(tab) => setActiveTab(tab)}
-              onSelectOrder={() => setActiveTab('orders')}
+              onNavigateProducts={() => setActiveTab('products')}
+              onNavigateUserAccess={() => setActiveTab('user-access')}
             />
           )}
 
           {activeTab === 'products' && (
-            <ProductsPage
+            <ProductsView
               products={products}
-              onProductUpdated={loadData}
-              onNotify={showNotification}
+              loading={loading}
+              onOpenAddProduct={handleOpenAddProduct}
+              onEditProduct={handleEditProduct}
+              onDeleteProduct={handleDeleteProduct}
+              onRefresh={() => loadData(true)}
             />
           )}
 
-          {activeTab === 'orders' && (
-            <OrdersPage
-              orders={orders}
-              onOrderUpdated={loadData}
-              onNotify={showNotification}
-            />
-          )}
-
-          {activeTab === 'customers' && (
-            <CustomersPage customers={customers} />
-          )}
-
-          {activeTab === 'analytics' && (
-            <AnalyticsPage stats={stats} />
-          )}
-
-          {activeTab === 'settings' && (
-            <SettingsPage onNotify={showNotification} />
-          )}
+          {activeTab === 'user-access' && <UserAccessView />}
         </main>
       </div>
 
-      {/* Floating Toast Notification */}
-      {toast && (
-        <div
-          className={`fixed bottom-6 right-6 z-50 px-4 py-3 rounded-lg shadow-xl text-xs font-semibold flex items-center gap-2 border animate-fade-up ${
-            toast.type === 'error'
-              ? theme.colors.status.error
-              : theme.colors.status.success
-          }`}
-        >
-          <span>{toast.message}</span>
-        </div>
-      )}
+      {/* Add / Edit Product Modal */}
+      <AddProductModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSuccess={handleProductSuccess}
+        initialProduct={editingProduct}
+      />
+
     </div>
   );
-};
-
-export default function App() {
-  return (
-    <AuthProvider>
-      <MainLayout />
-    </AuthProvider>
-  );
 }
+
+export default App;

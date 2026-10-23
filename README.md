@@ -26,5 +26,5 @@ A royal, state-of-the-art Admin Management Portal built for CF Handlooms.
    Admin Portal runs at **http://localhost:5174**
 
 3. Default Admin Credentials:
-   - **Email**: `admin@cfhandlooms.com` (or `admin@vastrakala.com`)
+   - **Email**: `admin@cfhandlooms.com`
    - **Password**: `admin123`

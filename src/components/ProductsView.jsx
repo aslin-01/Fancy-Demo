@@ -1,0 +1,564 @@
+import React, { useState, useMemo } from 'react';
+import { 
+  PackagePlus, 
+  Search, 
+  Filter, 
+  Edit2, 
+  Trash2, 
+  ExternalLink, 
+  CheckCircle2, 
+  XCircle, 
+  AlertTriangle,
+  LayoutGrid,
+  List,
+  Tag,
+  Palette,
+  IndianRupee,
+  Layers,
+  Sparkles,
+  RefreshCw,
+  Star
+} from 'lucide-react';
+import { STORE_URL, api } from '../services/api';
+
+const CATEGORIES = [
+  'All',
+  'Silk',
+  'Cotton',
+  'Designer',
+  'Wedding',
+  'Party Wear',
+  'Bridal',
+  'Festive',
+];
+
+const COLORS = [
+  'All',
+  'Maroon',
+  'Mustard',
+  'Pink',
+  'Beige',
+  'Gold',
+  'Ivory',
+  'Red',
+  'Green',
+  'Navy',
+];
+
+export function ProductsView({
+  products = [],
+  loading = false,
+  onOpenAddProduct,
+  onEditProduct,
+  onDeleteProduct,
+  onRefresh,
+}) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedColor, setSelectedColor] = useState('All');
+  const [stockFilter, setStockFilter] = useState('All');
+  const [sortBy, setSortBy] = useState('newest');
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'table'
+  const [togglingId, setTogglingId] = useState(null);
+
+  // Toggle inStock directly
+  const handleToggleStock = async (product) => {
+    try {
+      setTogglingId(product._id);
+      await api.updateProduct(product._id, { inStock: !product.inStock });
+      if (onRefresh) onRefresh();
+    } catch (err) {
+      alert(`Failed to update stock: ${err.message}`);
+    } finally {
+      setTogglingId(null);
+    }
+  };
+
+  // Filter & Sort
+  const filteredProducts = useMemo(() => {
+    return products
+      .filter((p) => {
+        const matchesSearch =
+          !searchTerm ||
+          p.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          p.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          p.fabric?.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesCat =
+          selectedCategory === 'All' ||
+          p.category?.toLowerCase() === selectedCategory.toLowerCase();
+
+        const matchesColor =
+          selectedColor === 'All' ||
+          p.color?.toLowerCase() === selectedColor.toLowerCase();
+
+        const matchesStock =
+          stockFilter === 'All' ||
+          (stockFilter === 'in' && p.inStock) ||
+          (stockFilter === 'out' && !p.inStock) ||
+          (stockFilter === 'low' && p.stockCount <= 10);
+
+        return matchesSearch && matchesCat && matchesColor && matchesStock;
+      })
+      .sort((a, b) => {
+        if (sortBy === 'price-low') return (a.price || 0) - (b.price || 0);
+        if (sortBy === 'price-high') return (b.price || 0) - (a.price || 0);
+        if (sortBy === 'name') return (a.name || '').localeCompare(b.name || '');
+        // default newest
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+      });
+  }, [products, searchTerm, selectedCategory, selectedColor, stockFilter, sortBy]);
+
+  return (
+    <div className="space-y-6">
+      
+      {/* Top Banner & Quick Controls */}
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-[#B87802]" />
+            <h2 className="text-2xl font-semibold font-display text-[#12100D]">
+              Product Inventory & Catalog
+            </h2>
+            <span className="text-[11px] font-bold tracking-wide uppercase px-2.5 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
+              {filteredProducts.length} of {products.length} Products
+            </span>
+          </div>
+          <p className="text-xs text-[#6B6457] font-body mt-1">
+            Every product added or modified here synchronizes directly with the store at{' '}
+            <a
+              href={STORE_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="text-[#B87802] font-semibold hover:underline"
+            >
+              http://localhost:3000/
+            </a>
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* View toggle */}
+          <div className="flex items-center rounded-md border border-[#E8D8B5] bg-[#FAF8F2] p-1">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
+                viewMode === 'grid'
+                  ? 'bg-white shadow-xs text-[#12100D] border border-[#E8D8B5]'
+                  : 'text-[#6B6457] hover:text-[#12100D]'
+              }`}
+              title="Grid View"
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode('table')}
+              className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
+                viewMode === 'table'
+                  ? 'bg-white shadow-xs text-[#12100D] border border-[#E8D8B5]'
+                  : 'text-[#6B6457] hover:text-[#12100D]'
+              }`}
+              title="Table View"
+            >
+              <List className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Add Product CTA */}
+          <button
+            onClick={onOpenAddProduct}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase shadow-md shadow-[#B87802]/30 hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer"
+          >
+            <PackagePlus className="w-4 h-4" />
+            <span>Add Product</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#FEE63E]" />
+          </button>
+        </div>
+      </div>
+
+      {/* Filter & Search Bar */}
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 shadow-sm space-y-4">
+        
+        {/* Row 1: Search & Sorters */}
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+          {/* Search Box */}
+          <div className="sm:col-span-6 relative">
+            <Search className="w-4 h-4 absolute left-3.5 top-3 text-[#A89D8B]" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by saree name, SKU (e.g. VK-SIL-001), or fabric..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] placeholder-[#A89D8B] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3 top-2.5 text-xs text-[#6B6457] hover:text-[#12100D]"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          {/* Stock Filter */}
+          <div className="sm:col-span-3">
+            <select
+              value={stockFilter}
+              onChange={(e) => setStockFilter(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
+            >
+              <option value="All">All Stock Status</option>
+              <option value="in">In Stock Only</option>
+              <option value="out">Out of Stock</option>
+              <option value="low">Low Stock (≤ 10)</option>
+            </select>
+          </div>
+
+          {/* Sort By */}
+          <div className="sm:col-span-3">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
+            >
+              <option value="newest">Sort: Newest First</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Product Name (A-Z)</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Row 2: Category Filter Chips (Website Badge Style) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6457] shrink-0 mr-1 flex items-center gap-1">
+            <Tag className="w-3 h-3 text-[#B87802]" /> Category:
+          </span>
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors cursor-pointer ${
+                selectedCategory === cat
+                  ? 'border border-[#0C0A07] bg-[#0C0A07] text-[#F5B815] shadow-xs'
+                  : 'border border-[#E8D8B5] text-[#6B6457] hover:border-[#B87802] hover:text-[#B87802] bg-[#FAF8F2]'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Row 3: Color Filter Chips (Website Badge Style) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6457] shrink-0 mr-1 flex items-center gap-1">
+            <Palette className="w-3 h-3 text-[#B87802]" /> Color:
+          </span>
+          {COLORS.map((col) => (
+            <button
+              key={col}
+              onClick={() => setSelectedColor(col)}
+              className={`px-2.5 py-1 rounded-md text-xs font-medium shrink-0 transition-colors cursor-pointer ${
+                selectedColor === col
+                  ? 'bg-[#B87802] text-white shadow-xs border border-[#996300]'
+                  : 'border border-[#E8D8B5] text-[#6B6457] hover:border-[#B87802] hover:text-[#B87802] bg-[#FAF8F2]'
+              }`}
+            >
+              {col}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Loading State */}
+      {loading && (
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-12 text-center space-y-3">
+          <RefreshCw className="w-8 h-8 text-[#B87802] animate-spin mx-auto" />
+          <p className="text-sm font-semibold text-[#12100D] font-display">
+            Loading products from backend...
+          </p>
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!loading && filteredProducts.length === 0 && (
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-12 text-center space-y-4">
+          <div className="w-14 h-14 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] flex items-center justify-center text-[#B87802] mx-auto">
+            <Tag className="w-7 h-7" />
+          </div>
+          <div>
+            <h3 className="font-display text-2xl font-semibold text-[#12100D]">
+              No Sarees Found
+            </h3>
+            <p className="text-xs text-[#6B6457] max-w-sm mx-auto mt-1 font-body">
+              Try resetting your category or color search, or add a brand-new saree to your collection.
+            </p>
+          </div>
+          <button
+            onClick={onOpenAddProduct}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 text-xs font-medium uppercase tracking-wider shadow-md hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer"
+          >
+            <PackagePlus className="w-4 h-4" />
+            <span>Add Saree Now</span>
+          </button>
+        </div>
+      )}
+
+      {/* Products Grid View — Styled identically to http://localhost:3000/ ProductCard */}
+      {!loading && viewMode === 'grid' && filteredProducts.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredProducts.map((p) => {
+            const discount =
+              p.mrp > p.price
+                ? Math.round(((p.mrp - p.price) / p.mrp) * 100)
+                : 0;
+
+            return (
+              <div
+                key={p._id || p.id}
+                className="group relative flex flex-col overflow-hidden rounded-lg border border-[#E8D8B5] bg-white transition-all duration-300 hover:shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)] hover:border-[#B87802]"
+              >
+                {/* Image Section aspect-[4/5] */}
+                <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.target.src =
+                        'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80';
+                    }}
+                  />
+
+                  {/* Badges matching website theme */}
+                  {discount > 0 && (
+                    <span className="absolute top-3 left-3 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 px-2 py-1 text-[11px] font-semibold tracking-wide">
+                      {discount}% OFF
+                    </span>
+                  )}
+
+                  {p.isNewArrival && (
+                    <span className="absolute top-3 right-3 rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide shadow-sm">
+                      NEW
+                    </span>
+                  )}
+
+                  {p.isBestSeller && !p.isNewArrival && (
+                    <span className="absolute top-3 right-3 rounded-sm bg-[#B87802] text-white px-2 py-1 text-[11px] font-bold tracking-wide shadow-sm">
+                      BEST SELLER
+                    </span>
+                  )}
+
+                  {/* Out of Stock overlay if false */}
+                  {!p.inStock && (
+                    <span className="absolute inset-x-0 bottom-0 bg-[#0C0A07]/85 py-2 text-center text-xs tracking-widest text-[#FAF8F2] uppercase font-semibold">
+                      Out of Stock
+                    </span>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="flex flex-1 flex-col justify-between p-4 space-y-3">
+                  <div>
+                    {/* Fabric meta & Color pill */}
+                    <div className="flex items-center justify-between text-[11px] text-[#6B6457] mb-1">
+                      <span className="text-[11px] tracking-[0.2em] uppercase text-[#6B6457]">
+                        {p.fabric || p.category}
+                      </span>
+                      <span className="flex items-center gap-1 font-medium text-xs text-[#12100D]">
+                        <span className="w-2 h-2 rounded-full bg-[#B87802]" />
+                        {p.color || 'Multicolor'}
+                      </span>
+                    </div>
+
+                    {/* Saree Name */}
+                    <h4 className="font-display text-lg leading-snug font-medium text-[#12100D] transition-colors hover:text-[#B87802] line-clamp-2">
+                      {p.name}
+                    </h4>
+
+                    {/* Rating & SKU */}
+                    <div className="flex items-center justify-between text-xs mt-1.5">
+                      <div className="flex items-center gap-1 text-xs">
+                        <Star className="h-3.5 w-3.5 fill-[#F5B815] text-[#F5B815]" />
+                        <span className="font-medium text-[#12100D]">{p.rating || 4.8}</span>
+                        <span className="text-[#6B6457]">({p.reviews || 42})</span>
+                      </div>
+                      <span className="font-mono text-[10px] uppercase bg-[#FAF8F2] px-1.5 py-0.5 rounded-sm border border-[#E8D8B5] text-[#6B6457]">
+                        {p.sku}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Price Row */}
+                  <div className="pt-2 border-t border-[#E8D8B5]/50 flex items-baseline justify-between">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-lg font-semibold text-[#B87802]">
+                        ₹{Number(p.price || 0).toLocaleString('en-IN')}
+                      </span>
+                      {p.mrp > p.price && (
+                        <span className="text-sm text-[#6B6457] line-through">
+                          ₹{Number(p.mrp).toLocaleString('en-IN')}
+                        </span>
+                      )}
+                    </div>
+
+                    <button
+                      onClick={() => handleToggleStock(p)}
+                      disabled={togglingId === p._id}
+                      className="text-[11px] text-[#B87802] hover:text-[#996300] underline font-semibold cursor-pointer"
+                    >
+                      {togglingId === p._id ? 'Updating...' : p.inStock ? 'Mark Out' : 'Mark In'}
+                    </button>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="pt-2 border-t border-[#E8D8B5]/50 flex items-center gap-2">
+                    <button
+                      onClick={() => onEditProduct(p)}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-[#B87802] text-[#B87802] hover:bg-[#B87802] hover:text-white text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                      <span>Edit</span>
+                    </button>
+
+                    <button
+                      onClick={() => onDeleteProduct(p)}
+                      className="p-2 rounded-md border border-[#E8D8B5] hover:border-rose-400 hover:bg-rose-50 text-[#6B6457] hover:text-rose-600 transition-all cursor-pointer"
+                      title="Delete Product"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+
+                    <a
+                      href={STORE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-md border border-[#E8D8B5] hover:border-[#B87802] hover:bg-[#FAF8F2] text-[#6B6457] hover:text-[#B87802] transition-all"
+                      title="View on Store (localhost:3000)"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Products Table View */}
+      {!loading && viewMode === 'table' && filteredProducts.length > 0 && (
+        <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden shadow-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-[#FAF8F2] border-b border-[#E8D8B5] text-[#6B6457] uppercase tracking-wider font-bold">
+                  <th className="py-3.5 px-4">Product</th>
+                  <th className="py-3.5 px-4">SKU</th>
+                  <th className="py-3.5 px-4">Category</th>
+                  <th className="py-3.5 px-4">Color</th>
+                  <th className="py-3.5 px-4">Price / MRP</th>
+                  <th className="py-3.5 px-4">Stock</th>
+                  <th className="py-3.5 px-4">Status</th>
+                  <th className="py-3.5 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E8D8B5]/60 text-[#12100D]">
+                {filteredProducts.map((p) => (
+                  <tr key={p._id || p.id} className="hover:bg-[#FAF8F2]/60 transition-colors">
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          className="w-10 h-10 rounded-sm object-cover border border-[#E8D8B5] shrink-0"
+                          onError={(e) => {
+                            e.target.src =
+                              'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80';
+                          }}
+                        />
+                        <div className="min-w-0 max-w-xs">
+                          <p className="font-display font-medium text-base truncate">{p.name}</p>
+                          <p className="text-[11px] text-[#6B6457] truncate">{p.fabric}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 font-mono font-medium">{p.sku}</td>
+                    <td className="py-3 px-4">
+                      <span className="px-2 py-0.5 rounded-sm text-[11px] font-semibold bg-[#FAF8F2] border border-[#E8D8B5] text-[#B87802]">
+                        {p.category}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="font-medium flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#B87802]" />
+                        {p.color || 'Multicolor'}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="font-semibold text-sm text-[#B87802]">
+                        ₹{Number(p.price || 0).toLocaleString('en-IN')}
+                      </div>
+                      {p.mrp > p.price && (
+                        <div className="text-[10px] text-[#6B6457] line-through">
+                          ₹{Number(p.mrp).toLocaleString('en-IN')}
+                        </div>
+                      )}
+                    </td>
+                    <td className="py-3 px-4 font-semibold">{p.stockCount ?? 25}</td>
+                    <td className="py-3 px-4">
+                      <button
+                        onClick={() => handleToggleStock(p)}
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-[10px] font-bold cursor-pointer ${
+                          p.inStock
+                            ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                            : 'bg-rose-50 text-rose-800 border border-rose-200'
+                        }`}
+                      >
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full ${
+                            p.inStock ? 'bg-emerald-500' : 'bg-rose-500'
+                          }`}
+                        />
+                        {p.inStock ? 'In Stock' : 'Out of Stock'}
+                      </button>
+                    </td>
+                    <td className="py-3 px-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => onEditProduct(p)}
+                          className="p-1.5 rounded-sm border border-[#E8D8B5] hover:border-[#B87802] text-[#B87802] transition-all cursor-pointer"
+                          title="Edit Product"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => onDeleteProduct(p)}
+                          className="p-1.5 rounded-sm border border-[#E8D8B5] hover:border-rose-400 hover:bg-rose-50 text-[#6B6457] hover:text-rose-600 transition-all cursor-pointer"
+                          title="Delete Product"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                        <a
+                          href={STORE_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1.5 rounded-sm border border-[#E8D8B5] hover:border-[#B87802] text-[#6B6457] hover:text-[#B87802] transition-all"
+                          title="View on Store"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
