@@ -107,7 +107,7 @@ export const OrdersPage = ({ orders, onOrderUpdated, onNotify }) => {
               ) : (
                 filteredOrders.map((ord) => (
                   <tr key={ord._id || ord.orderNumber} className={theme.table.trHover}>
-                    <td className={`${theme.table.td} font-mono font-semibold text-[#B87802]`}>
+                    <td className={`${theme.table.td} font-body font-semibold tracking-wider text-[#B87802]`}>
                       {ord.orderNumber}
                     </td>
                     <td className={`${theme.table.td} text-muted-foreground`}>
@@ -185,7 +185,7 @@ const OrderDetailModal = ({ order, onClose }) => {
       >
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div>
-            <span className="text-[10px] uppercase font-mono text-[#B87802] font-bold tracking-wider">
+            <span className="text-[10px] uppercase font-body text-[#B87802] font-bold tracking-widest">
               Official Tax Invoice
             </span>
             <h3 className="text-xl font-display font-semibold text-foreground mt-0.5">

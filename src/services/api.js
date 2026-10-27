@@ -69,17 +69,126 @@ export const api = {
     return handleResponse(res, 'Failed to delete product');
   },
 
+  // Attributes: Categories, Fabrics, Occasions
   async getCategories() {
     try {
-      const res = await fetch(`${API_BASE}/products/categories/list`);
+      const res = await fetch(`${API_BASE}/attributes/categories`);
       if (res.ok) {
         const data = await res.json();
-        if (data.categories && Array.isArray(data.categories)) return data.categories;
+        if (data.data && Array.isArray(data.data)) {
+          return data.data.map((c) => (typeof c === 'string' ? c : c.name));
+        }
       }
     } catch {
       // fallback
     }
     return ['Silk', 'Cotton', 'Designer', 'Wedding', 'Party Wear', 'Bridal', 'Festive', 'Other'];
+  },
+
+  async createCategory(categoryData) {
+    const payload = typeof categoryData === 'string' ? { name: categoryData } : categoryData;
+    const res = await fetch(`${API_BASE}/attributes/categories`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(payload),
+    });
+    return handleResponse(res, 'Failed to add category');
+  },
+
+  async deleteCategory(nameOrId) {
+    const res = await fetch(`${API_BASE}/attributes/categories/${encodeURIComponent(nameOrId)}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to delete category');
+  },
+
+  async getFabrics() {
+    try {
+      const res = await fetch(`${API_BASE}/attributes/fabrics`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.data && Array.isArray(data.data)) {
+          return data.data.map((f) => (typeof f === 'string' ? f : f.name));
+        }
+      }
+    } catch {
+      // fallback
+    }
+    return [
+      'Pure Mulberry Silk',
+      'Kanchipuram Silk',
+      'Banarasi Silk',
+      'Tussar Silk',
+      'Chanderi Silk',
+      'Organza Silk',
+      'Georgette',
+      'Linen Silk',
+      'Raw Silk',
+      'Cotton Silk',
+      'Crepe Silk',
+    ];
+  },
+
+  async createFabric(fabricData) {
+    const payload = typeof fabricData === 'string' ? { name: fabricData } : fabricData;
+    const res = await fetch(`${API_BASE}/attributes/fabrics`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(payload),
+    });
+    return handleResponse(res, 'Failed to add fabric weave');
+  },
+
+  async deleteFabric(nameOrId) {
+    const res = await fetch(`${API_BASE}/attributes/fabrics/${encodeURIComponent(nameOrId)}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to delete fabric weave');
+  },
+
+  async getOccasions() {
+    try {
+      const res = await fetch(`${API_BASE}/attributes/occasions`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.data && Array.isArray(data.data)) {
+          return data.data.map((o) => (typeof o === 'string' ? o : o.name));
+        }
+      }
+    } catch {
+      // fallback
+    }
+    return [
+      'Festive',
+      'Wedding',
+      'Bridal',
+      'Party Wear',
+      'Reception',
+      'Pooja / Traditional',
+      'Casual Wear',
+      'Cocktail',
+      'Formal Event',
+    ];
+  },
+
+  async createOccasion(occasionData) {
+    const payload = typeof occasionData === 'string' ? { name: occasionData } : occasionData;
+    const res = await fetch(`${API_BASE}/attributes/occasions`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(payload),
+    });
+    return handleResponse(res, 'Failed to add occasion');
+  },
+
+  async deleteOccasion(nameOrId) {
+    const res = await fetch(`${API_BASE}/attributes/occasions/${encodeURIComponent(nameOrId)}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to delete occasion');
   },
 
   // Dashboard Stats

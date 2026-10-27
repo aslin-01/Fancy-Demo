@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, 
-  PackagePlus, 
-  Check, 
-  Sparkles, 
-  Image as ImageIcon, 
-  IndianRupee, 
-  Tag, 
-  Palette, 
-  Layers, 
-  Info, 
+import {
+  X,
+  PackagePlus,
+  Check,
+  Sparkles,
+  Image as ImageIcon,
+  IndianRupee,
+  Tag,
+  Palette,
+  Layers,
+  Info,
   ExternalLink,
   RefreshCw,
   Eye,
@@ -126,11 +126,28 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
   const [error, setError] = useState('');
   const [successInfo, setSuccessInfo] = useState(null);
 
-  // Auto-generate unique SKU
-  const generateSKU = (cat = formData.category) => {
-    const prefix = cat ? cat.substring(0, 3).toUpperCase() : 'CF';
-    const rand = Math.floor(100 + Math.random() * 900);
-    return `CF-${prefix}-${rand}`;
+  const getMaterialShortForm = (material = 'Silk') => {
+    const m = String(material || '').trim().toLowerCase();
+    if (m.includes('silk')) return 'SIL';
+    if (m.includes('cotton')) return 'COT';
+    if (m.includes('linen')) return 'LIN';
+    if (m.includes('organza')) return 'ORG';
+    if (m.includes('chiffon')) return 'CHI';
+    if (m.includes('georgette')) return 'GEO';
+    if (m.includes('designer')) return 'DES';
+    if (m.includes('wedding')) return 'WED';
+    if (m.includes('party')) return 'PAR';
+    if (m.includes('bridal')) return 'BRI';
+    if (m.includes('festive')) return 'FES';
+
+    const clean = m.replace(/[^a-z0-9]/gi, '');
+    return (clean.substring(0, 3) || 'MAT').toUpperCase();
+  };
+
+  // Auto-generate SKU starting from material short form and 001
+  const generateSKU = (material = formData.category) => {
+    const shortForm = getMaterialShortForm(material);
+    return `${shortForm}-001`;
   };
 
   useEffect(() => {
@@ -259,7 +276,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
       <div className="bg-white rounded-lg border border-[#E8D8B5] shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col my-auto overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        
+
         {/* Header matching http://localhost:3000/ */}
         <div className="px-6 py-4 border-b border-[#E8D8B5] bg-[#FAF8F2] flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -269,7 +286,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
             <div>
               <h2 className="text-xl font-semibold font-display text-[#12100D] flex items-center gap-2">
                 {isEdit ? 'Edit Product Details' : 'Add New Saree to Store'}
-                <span className="text-[10px] font-sans uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
+                <span className="text-[10px] font-body uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
                   Live Sync
                 </span>
               </h2>
@@ -333,10 +350,10 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
+
             {/* Left Column: Core Fields */}
             <div className="lg:col-span-7 space-y-5">
-              
+
               {/* Product Title / Name */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 font-body">
@@ -375,7 +392,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                     value={formData.sku}
                     onChange={handleChange}
                     placeholder="e.g. CF-SIL-001"
-                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm text-[#12100D] font-mono uppercase outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm text-[#12100D] font-body font-semibold tracking-wider uppercase outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
                     required
                   />
                 </div>
@@ -427,17 +444,15 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                         type="button"
                         key={c.name}
                         onClick={() => setFormData(p => ({ ...p, color: c.name }))}
-                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer border ${
-                          isSelected
+                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer border ${isSelected
                             ? 'ring-2 ring-[#B87802] ring-offset-1 shadow-sm border-[#B87802]'
                             : 'border-[#E8D8B5] hover:border-[#B87802]'
-                        }`}
+                          }`}
                         style={{ backgroundColor: c.bg, color: c.text }}
                       >
                         <span
-                          className={`w-2.5 h-2.5 rounded-full border ${
-                            c.border ? 'border-gray-400' : 'border-white/40'
-                          }`}
+                          className={`w-2.5 h-2.5 rounded-full border ${c.border ? 'border-gray-400' : 'border-white/40'
+                            }`}
                           style={{ backgroundColor: c.bg }}
                         />
                         <span>{c.name}</span>
@@ -670,7 +685,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
             {/* Right Column: Image URL & Live Store Card Preview */}
             <div className="lg:col-span-5 space-y-5">
-              
+
               {/* Image URL Input */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 flex items-center gap-1.5 font-body">
@@ -706,11 +721,10 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                           category: img.category,
                         }))
                       }
-                      className={`group relative rounded-sm overflow-hidden border aspect-[4/3] transition-all cursor-pointer ${
-                        formData.image === img.url
+                      className={`group relative rounded-sm overflow-hidden border aspect-[4/3] transition-all cursor-pointer ${formData.image === img.url
                           ? 'border-[#B87802] ring-2 ring-[#B87802]'
                           : 'border-[#E8D8B5] hover:opacity-90'
-                      }`}
+                        }`}
                     >
                       <img
                         src={img.url}

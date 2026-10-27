@@ -115,7 +115,7 @@ export const LoginPage = ({ onNotify }) => {
             <span>1-Click Super Admin Login</span>
           </button>
           <p className="text-[10px] text-muted-foreground text-center mt-3">
-            Default credentials: <span className="font-mono text-foreground font-semibold">admin@cfhandlooms.com / admin123</span>
+            Default credentials: <span className="font-body text-foreground font-semibold">admin@cfhandlooms.com / admin123</span>
           </p>
         </div>
       </div>

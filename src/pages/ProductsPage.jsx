@@ -16,7 +16,15 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
-  const categories = ['All', 'Silk', 'Cotton', 'Designer', 'Wedding', 'Party Wear'];
+  const categories = React.useMemo(() => {
+    const list = ['All'];
+    (products || []).forEach((p) => {
+      if (p.category && !list.some((c) => c.toLowerCase() === p.category.toLowerCase())) {
+        list.push(p.category);
+      }
+    });
+    return list;
+  }, [products]);
 
   const filteredProducts = (products || []).filter((p) => {
     const matchesSearch =
@@ -128,11 +136,10 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
               <div className="absolute top-2.5 right-2.5 z-10">
                 <button
                   onClick={() => handleToggleStock(p)}
-                  className={`px-2.5 py-1 rounded-sm text-[10px] font-bold shadow-sm transition-colors border cursor-pointer ${
-                    p.inStock
+                  className={`px-2.5 py-1 rounded-sm text-[10px] font-bold shadow-sm transition-colors border cursor-pointer ${p.inStock
                       ? theme.colors.status.success
                       : theme.colors.status.error
-                  }`}
+                    }`}
                 >
                   {p.inStock ? '● In Stock' : '○ Out of Stock'}
                 </button>

@@ -368,7 +368,7 @@ export function UserAccessView() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search user by name or email..."
-              className="w-full pl-9 pr-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+              className="w-full pl-9 pr-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:outline-none focus:border-[#B87802]"
             />
           </div>
 
@@ -540,7 +540,7 @@ export function UserAccessView() {
                   value={formData.name}
                   onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))}
                   placeholder="e.g. Ramesh Kumar"
-                  className="w-full px-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-medium outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                  className="w-full px-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-medium outline-none focus:outline-none focus:border-[#B87802]"
                   required
                 />
               </div>
@@ -553,7 +553,7 @@ export function UserAccessView() {
                     value={formData.email}
                     onChange={(e) => setFormData(p => ({ ...p, email: e.target.value }))}
                     placeholder="ramesh@example.com"
-                    className="w-full px-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-medium outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                    className="w-full px-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-medium outline-none focus:outline-none focus:border-[#B87802]"
                     required
                   />
                 </div>
@@ -564,7 +564,7 @@ export function UserAccessView() {
                     value={formData.phone}
                     onChange={(e) => setFormData(p => ({ ...p, phone: e.target.value }))}
                     placeholder="+91 98401 ..."
-                    className="w-full px-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-medium outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                    className="w-full px-3 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs font-medium outline-none focus:outline-none focus:border-[#B87802]"
                   />
                 </div>
               </div>

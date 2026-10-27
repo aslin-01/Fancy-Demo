@@ -1,23 +1,64 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Sidebar } from './components/Sidebar';
-import { Header } from './components/Header';
 import { DashboardView } from './components/DashboardView';
 import { ProductsView } from './components/ProductsView';
+import { OrdersPage } from './pages/OrdersPage';
 import { UserAccessView } from './components/UserAccessView';
-import { AddProductModal } from './components/AddProductModal';
+import { AddProductPage } from './pages/AddProductPage';
 import { api, STORE_URL } from './services/api';
 import { Check, ExternalLink, X, AlertCircle } from 'lucide-react';
+import { theme } from './theme';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'products' | 'user-access'
+  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'products' | 'orders' | 'user-access'
   const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([
+    {
+      _id: 'ord-101',
+      orderNumber: 'CF-2026-089',
+      customerName: 'Priya Sharma',
+      customerEmail: 'priya.sharma@example.com',
+      customerPhone: '+91 98401 22334',
+      items: [{ name: 'Kanchipuram Pure Silk Zari Saree', quantity: 1, price: 18499 }],
+      totalAmount: 18499,
+      orderStatus: 'Processing',
+      paymentMethod: 'Prepaid (UPI)',
+      createdAt: '2026-10-24T10:30:00Z',
+      shippingAddress: { city: 'Chennai', state: 'Tamil Nadu', pincode: '600001' }
+    },
+    {
+      _id: 'ord-102',
+      orderNumber: 'CF-2026-088',
+      customerName: 'Ananya Deshmukh',
+      customerEmail: 'ananya.d@example.com',
+      customerPhone: '+91 98202 33445',
+      items: [{ name: 'Banarasi Soft Silk Brocade', quantity: 1, price: 14299 }],
+      totalAmount: 14299,
+      orderStatus: 'Shipped',
+      paymentMethod: 'Credit Card',
+      createdAt: '2026-10-23T16:15:00Z',
+      shippingAddress: { city: 'Mumbai', state: 'Maharashtra', pincode: '400050' }
+    },
+    {
+      _id: 'ord-103',
+      orderNumber: 'CF-2026-087',
+      customerName: 'Kavitha Raman',
+      customerEmail: 'kavitha.raman@example.com',
+      customerPhone: '+91 94441 55667',
+      items: [{ name: 'Royal Crimson Wedding Silk Saree', quantity: 1, price: 30999 }],
+      totalAmount: 30999,
+      orderStatus: 'Delivered',
+      paymentMethod: 'Net Banking',
+      createdAt: '2026-10-22T11:00:00Z',
+      shippingAddress: { city: 'Bengaluru', state: 'Karnataka', pincode: '560001' }
+    }
+  ]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [backendOnline, setBackendOnline] = useState(true);
 
-  // Add / Edit Modal state
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  // Add / Edit Product page state
   const [editingProduct, setEditingProduct] = useState(null);
 
   // Toast Notification state
@@ -28,6 +69,14 @@ export function App() {
     setTimeout(() => {
       setToast(null);
     }, 6000);
+  };
+
+  // Handle Tab Switch (clears editing state if navigating away)
+  const handleTabChange = (tabId) => {
+    if (tabId !== 'add-product') {
+      setEditingProduct(null);
+    }
+    setActiveTab(tabId);
   };
 
   // Fetch all initial data
@@ -72,16 +121,16 @@ export function App() {
     return () => clearInterval(timer);
   }, [loadData]);
 
-  // Handle Add Product opening
+  // Handle Add Product opening (navigate to Add Product page)
   const handleOpenAddProduct = () => {
     setEditingProduct(null);
-    setIsAddModalOpen(true);
+    setActiveTab('add-product');
   };
 
-  // Handle Edit Product opening
+  // Handle Edit Product opening (navigate to Add/Edit Product page)
   const handleEditProduct = (product) => {
     setEditingProduct(product);
-    setIsAddModalOpen(true);
+    setActiveTab('add-product');
   };
 
   // Handle Product Added / Updated
@@ -109,7 +158,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F2] flex text-[#12100D] font-sans selection:bg-[#B87802] selection:text-white">
+    <div className={`min-h-screen bg-[#FAF8F2] flex text-[#12100D] ${theme.fonts.body} selection:bg-[#B87802] selection:text-white`}>
       
       {/* Toast Notification */}
       {toast && (
@@ -140,24 +189,17 @@ export function App() {
         </div>
       )}
 
-      {/* Sidebar (Dashboard, Products, User Access ONLY) */}
+      {/* Sidebar */}
       <Sidebar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        backendOnline={backendOnline}
+        setActiveTab={handleTabChange}
         productCount={products.length}
+        orderCount={orders.length}
       />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         
-        {/* Top Header */}
-        <Header
-          activeTab={activeTab}
-          onRefresh={() => loadData(false)}
-          isRefreshing={isRefreshing}
-          backendOnline={backendOnline}
-        />
 
         {/* Dynamic Page Views */}
         <main className="p-8 flex-1 overflow-y-auto">
@@ -181,17 +223,32 @@ export function App() {
             />
           )}
 
+          {activeTab === 'add-product' && (
+            <AddProductPage
+              initialProduct={editingProduct}
+              products={products}
+              onBack={() => {
+                setEditingProduct(null);
+                setActiveTab('products');
+              }}
+              onSuccess={handleProductSuccess}
+              onAddAnother={() => {
+                setEditingProduct(null);
+              }}
+            />
+          )}
+
+          {activeTab === 'orders' && (
+            <OrdersPage
+              orders={orders}
+              onOrderUpdated={() => loadData(true)}
+              onNotify={showToast}
+            />
+          )}
+
           {activeTab === 'user-access' && <UserAccessView />}
         </main>
       </div>
-
-      {/* Add / Edit Product Modal */}
-      <AddProductModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onSuccess={handleProductSuccess}
-        initialProduct={editingProduct}
-      />
 
     </div>
   );

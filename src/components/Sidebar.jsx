@@ -1,16 +1,12 @@
-import React from 'react';
-import { 
-  LayoutDashboard, 
-  PackagePlus, 
-  ShoppingBag, 
-  ShieldCheck, 
-  ExternalLink, 
-  Activity,
-  Sparkles
+import {
+  LayoutDashboard,
+  ShoppingBag,
+  PackageCheck,
+  ShieldCheck
 } from 'lucide-react';
-import { STORE_URL } from '../services/api';
+import { theme } from '../theme';
 
-export function Sidebar({ activeTab, setActiveTab, backendOnline, productCount }) {
+export function Sidebar({ activeTab, setActiveTab, productCount, orderCount }) {
   const navItems = [
     {
       id: 'dashboard',
@@ -25,6 +21,12 @@ export function Sidebar({ activeTab, setActiveTab, backendOnline, productCount }
       badge: productCount !== null ? productCount : null,
     },
     {
+      id: 'orders',
+      label: 'Orders',
+      icon: PackageCheck,
+      badge: orderCount !== null && orderCount !== undefined ? orderCount : 3,
+    },
+    {
       id: 'user-access',
       label: 'User Access',
       icon: ShieldCheck,
@@ -33,62 +35,58 @@ export function Sidebar({ activeTab, setActiveTab, backendOnline, productCount }
   ];
 
   return (
-    <aside className="w-72 bg-[#0C0A07] text-[#FAF8F2] flex flex-col justify-between border-r border-[#241F18] select-none h-screen sticky top-0 z-30">
-      {/* Brand Header — Styled exactly like http://localhost:3000/ Header */}
+    <aside className="w-72 shrink-0 bg-[#F7F3EA] text-[#12100D] flex flex-col justify-between border-r border-[#E8D8B5] select-none h-screen sticky top-0 z-30">
+      {/* Brand Header */}
       <div>
-        <div className="p-6 border-b border-[#241F18] bg-gradient-to-b from-[#14100B] to-[#0C0A07]">
+        <div className="p-3 border-b border-[#E8D8B5] bg-[#EFE7D8]">
           <div className="flex items-center gap-3">
-            <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#FEE63E] via-[#F5B815] to-[#B87802] text-[#0C0A07] flex items-center justify-center font-bold text-xl shadow-lg shadow-[#B87802]/30 tracking-wider">
-              CF
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-cursive text-2xl leading-none text-[#F5B815] truncate">
+            <img
+              src="/brand-logo.jpg"
+              alt="CF Handlooms Official Logo"
+              className="h-10 w-10 object-contain bg-[#0C0A07] border border-[#B87802]/40 shadow-md shadow-[#B87802]/20 shrink-0"
+            />
+            <div className="min-w-0 flex-1 overflow-visible">
+              <div className="flex items-center gap-2 overflow-visible">
+                <span className={`${theme.fonts.display} font-semibold text-2xl leading-normal text-[#996300] tracking-wide whitespace-nowrap overflow-visible`}>
                   CF Handlooms
                 </span>
-                <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-sm bg-[#B87802] text-white border border-[#F5B815]/40 shrink-0">
-                  Admin
-                </span>
               </div>
-              <p className="text-[10px] tracking-[0.25em] uppercase text-[#A89D8B] font-medium mt-0.5">
-                Handwoven Heritage
-              </p>
             </div>
           </div>
         </div>
 
-        {/* Navigation Items (Dashboard, Products, User Access ONLY) */}
+        {/* Navigation Items */}
         <nav className="px-3 py-2 space-y-1.5">
-          <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#736858]">
+          <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8C7E6A]">
             Main Menu
           </div>
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = activeTab === item.id;
+            const isActive = activeTab === item.id || (item.id === 'products' && activeTab === 'add-product');
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg text-xs tracking-wide uppercase font-semibold transition-all cursor-pointer ${
+                className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg text-xs tracking-wide uppercase font-semibold transition-colors duration-150 cursor-pointer border border-l-4 ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 shadow-lg shadow-[#B87802]/25'
-                    : 'text-[#D9CEBA] hover:bg-[#1C1813] hover:text-[#F5B815]'
+                    ? 'bg-white text-[#B87802] border-[#E8D8B5] border-l-[#B87802] shadow-sm'
+                    : 'text-[#4A4235] border-transparent border-l-transparent hover:bg-[#EAE0CE] hover:text-[#B87802]'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Icon
-                    className={`w-4 h-4 ${
-                      isActive ? 'text-[#FEE63E]' : 'text-[#A89D8B]'
+                    className={`w-4 h-4 shrink-0 transition-colors ${
+                      isActive ? 'text-[#B87802]' : 'text-[#8C7E6A]'
                     }`}
                   />
                   <span>{item.label}</span>
                 </div>
                 {item.badge && (
                   <span
-                    className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    className={`text-[10px] px-2 py-0.5 rounded-full font-bold transition-colors ${
                       isActive
-                        ? 'bg-[#0C0A07]/40 text-[#FEE63E]'
-                        : 'bg-[#241F18] text-[#F5B815] border border-[#382E21]'
+                        ? 'bg-[#FAF8F2] text-[#B87802] border border-[#E8D8B5]'
+                        : 'bg-[#E5DAC6] text-[#B87802] border border-[#D9CDB7]'
                     }`}
                   >
                     {item.badge}
@@ -100,56 +98,17 @@ export function Sidebar({ activeTab, setActiveTab, backendOnline, productCount }
         </nav>
       </div>
 
-      {/* Bottom Footer Section: Store Link & Live Status */}
-      <div className="p-4 border-t border-[#241F18] space-y-3 bg-[#080705]">
-        {/* Link to http://localhost:3000 with website brand colors */}
-        <a
-          href={STORE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-[#14100B] border border-[#B87802]/40 hover:border-[#F5B815] text-[#F5B815] hover:text-[#FEE63E] transition-all text-xs font-semibold group shadow-sm"
-          title="Open live customer store at http://localhost:3000/"
-        >
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="tracking-wide">Store Preview</span>
-          </div>
-          <div className="flex items-center gap-1 text-[11px] text-[#A89D8B] group-hover:text-[#F5B815]">
-            <span>localhost:3000</span>
-            <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-          </div>
-        </a>
-
-        {/* Backend Connectivity Status */}
-        <div className="px-3 py-2 rounded-md bg-[#120F0B] flex items-center justify-between text-xs text-[#8F8372]">
-          <div className="flex items-center gap-2">
-            <Activity className="w-3.5 h-3.5 text-[#B87802]" />
-            <span className="text-[11px]">Backend API</span>
-          </div>
-          <span
-            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
-              backendOnline
-                ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                : 'bg-rose-950 text-rose-400 border border-rose-800'
-            }`}
-          >
-            <span
-              className={`w-1.5 h-1.5 rounded-full ${
-                backendOnline ? 'bg-emerald-400' : 'bg-rose-400'
-              }`}
-            />
-            {backendOnline ? 'Online (5000)' : 'Offline'}
-          </span>
-        </div>
+      {/* Bottom Footer Section: User Profile */}
+      <div className="p-4 border-t border-[#E8D8B5] bg-[#EFE7D8]">
 
         {/* User Access Identity Badge */}
         <div className="flex items-center gap-3 pt-1 px-1">
-          <div className="w-8 h-8 rounded-full bg-[#1C1813] border border-[#B87802]/50 flex items-center justify-center text-xs font-bold text-[#F5B815]">
+          <div className="w-8 h-8 rounded-full bg-white border border-[#B87802] flex items-center justify-center text-xs font-bold text-[#B87802] shadow-xs">
             SA
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-white truncate">Super Admin</p>
-            <p className="text-[10px] uppercase tracking-wider text-[#A89D8B] truncate">CF Handlooms</p>
+            <p className="text-xs font-semibold text-[#12100D] truncate">Super Admin</p>
+            <p className="text-[10px] uppercase tracking-wider text-[#736858] truncate">CF Handlooms</p>
           </div>
         </div>
       </div>

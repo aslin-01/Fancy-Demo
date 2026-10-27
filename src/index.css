@@ -51,7 +51,9 @@
   --color-beige: var(--beige);
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "Jost", ui-sans-serif, system-ui, sans-serif;
-  --font-cursive: "Great Vibes", cursive;
+  --font-cursive: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Jost", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -113,8 +115,54 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
+  }
+
+  /* Clean inputs: completely eliminate black shade, outlines, and box-shadows during active/focus */
+  input:focus,
+  input:active,
+  select:focus,
+  select:active,
+  textarea:focus,
+  textarea:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* When input or textarea contains text, switch background to warm ivory background (#FAF8F2) */
+  input:not(:placeholder-shown):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not(.bg-transparent):not(.custom-dropdown-input),
+  textarea:not(:placeholder-shown) {
+    background-color: #FAF8F2 !important;
+  }
+
+  /* Custom dropdown inputs should always stay 100% transparent */
+  .custom-dropdown-input,
+  .custom-dropdown-input:focus,
+  .custom-dropdown-input:active,
+  .custom-dropdown-input:not(:placeholder-shown),
+  .custom-dropdown-input:-webkit-autofill,
+  .custom-dropdown-input:-webkit-autofill:hover,
+  .custom-dropdown-input:-webkit-autofill:focus {
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+
+  /* Autofill support matching warm ivory background */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #FAF8F2 inset !important;
+    -webkit-text-fill-color: #12100D !important;
+    transition: background-color 5000s ease-in-out 0s;
   }
 }
 
@@ -123,20 +171,24 @@
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: #F3EBDD;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #E8D8B5;
   border-radius: 9999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #B87802;
 }
 
-/* Cursive brand accent */
+/* Brand accent flourish - Cormorant Garamond italic */
 @utility font-cursive {
-  font-family: var(--font-cursive);
+  font-family: var(--font-display);
+  font-style: italic;
 }
 
 /* Gold divider flourish - exact logo gold gradient */
@@ -155,8 +207,49 @@
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Custom Dropdown Styling Matching Sidebar (#F7F3EA, #E8D8B5, #B87802) */
+select {
+  background-color: #F7F3EA !important;
+  border-color: #E8D8B5 !important;
+  color: #12100D !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23B87802' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 1rem 1rem !important;
+  padding-right: 2.5rem !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+select:hover {
+  border-color: #B87802 !important;
+  background-color: #F2ECE0 !important;
+}
+
+select:focus {
+  border-color: #B87802 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 1.5px #B87802 !important;
+}
+
+select option {
+  background-color: #FAF8F2 !important;
+  color: #12100D !important;
+  padding: 8px 12px;
+}
+
+/* Hide default browser datalist indicators when custom ChevronDown is used */
+input[list]::-webkit-calendar-picker-indicator {
+  display: none !important;
+  -webkit-appearance: none;
 }

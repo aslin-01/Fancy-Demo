@@ -253,7 +253,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
               <tbody className="divide-y divide-border">
                 {recentOrdersList.map((order) => (
                   <tr key={order._id || order.orderNumber} className={theme.table.trHover}>
-                    <td className={`${theme.table.td} font-mono font-semibold text-[#B87802]`}>
+                    <td className={`${theme.table.td} font-body font-semibold tracking-wider text-[#B87802]`}>
                       {order.orderNumber}
                     </td>
                     <td className={theme.table.td}>

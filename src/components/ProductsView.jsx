@@ -21,30 +21,6 @@ import {
 } from 'lucide-react';
 import { STORE_URL, api } from '../services/api';
 
-const CATEGORIES = [
-  'All',
-  'Silk',
-  'Cotton',
-  'Designer',
-  'Wedding',
-  'Party Wear',
-  'Bridal',
-  'Festive',
-];
-
-const COLORS = [
-  'All',
-  'Maroon',
-  'Mustard',
-  'Pink',
-  'Beige',
-  'Gold',
-  'Ivory',
-  'Red',
-  'Green',
-  'Navy',
-];
-
 export function ProductsView({
   products = [],
   loading = false,
@@ -73,6 +49,27 @@ export function ProductsView({
       setTogglingId(null);
     }
   };
+
+  // Dynamic categories and colors list derived from actual database products
+  const availableCategories = useMemo(() => {
+    const list = ['All'];
+    products.forEach((p) => {
+      if (p.category && !list.some((c) => c.toLowerCase() === p.category.toLowerCase())) {
+        list.push(p.category);
+      }
+    });
+    return list;
+  }, [products]);
+
+  const availableColors = useMemo(() => {
+    const list = ['All'];
+    products.forEach((p) => {
+      if (p.color && !list.some((c) => c.toLowerCase() === p.color.toLowerCase())) {
+        list.push(p.color);
+      }
+    });
+    return list;
+  }, [products]);
 
   // Filter & Sort
   const filteredProducts = useMemo(() => {
@@ -177,36 +174,68 @@ export function ProductsView({
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 shadow-sm space-y-4">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 shadow-sm space-y-3">
         
-        {/* Row 1: Search & Sorters */}
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+        {/* Search & Filter Controls Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-3">
           {/* Search Box */}
-          <div className="sm:col-span-6 relative">
+          <div className="sm:col-span-2 md:col-span-3 lg:col-span-4 relative">
             <Search className="w-4 h-4 absolute left-3.5 top-3 text-[#A89D8B]" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by saree name, SKU (e.g. VK-SIL-001), or fabric..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] placeholder-[#A89D8B] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+              placeholder="Search by saree name, SKU, or fabric..."
+              className="w-full pl-10 pr-14 py-2.5 rounded-lg border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] placeholder-[#A89D8B] outline-none focus:outline-none focus:border-[#B87802]"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-2.5 text-xs text-[#6B6457] hover:text-[#12100D]"
+                className="absolute right-3 top-2.5 text-xs text-[#6B6457] hover:text-[#12100D] cursor-pointer"
               >
                 Clear
               </button>
             )}
           </div>
 
+          {/* Category Dropdown */}
+          <div className="sm:col-span-1 lg:col-span-2">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-lg border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
+            >
+              <option value="All">All Categories</option>
+              {availableCategories.filter((c) => c !== 'All').map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Color Dropdown */}
+          <div className="sm:col-span-1 lg:col-span-2">
+            <select
+              value={selectedColor}
+              onChange={(e) => setSelectedColor(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-lg border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
+            >
+              <option value="All">All Colors</option>
+              {availableColors.filter((c) => c !== 'All').map((col) => (
+                <option key={col} value={col}>
+                  {col}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Stock Filter */}
-          <div className="sm:col-span-3">
+          <div className="sm:col-span-1 lg:col-span-2">
             <select
               value={stockFilter}
               onChange={(e) => setStockFilter(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
+              className="w-full px-3 py-2.5 rounded-lg border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
             >
               <option value="All">All Stock Status</option>
               <option value="in">In Stock Only</option>
@@ -216,11 +245,11 @@ export function ProductsView({
           </div>
 
           {/* Sort By */}
-          <div className="sm:col-span-3">
+          <div className="sm:col-span-1 lg:col-span-2">
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
+              className="w-full px-3 py-2.5 rounded-lg border border-[#E8D8B5] bg-card text-xs font-body text-[#12100D] outline-none focus:border-[#B87802] cursor-pointer"
             >
               <option value="newest">Sort: Newest First</option>
               <option value="price-low">Price: Low to High</option>
@@ -230,45 +259,49 @@ export function ProductsView({
           </div>
         </div>
 
-        {/* Row 2: Category Filter Chips (Website Badge Style) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6457] shrink-0 mr-1 flex items-center gap-1">
-            <Tag className="w-3 h-3 text-[#B87802]" /> Category:
-          </span>
-          {CATEGORIES.map((cat) => (
+        {/* Active Filters Summary */}
+        {(searchTerm || selectedCategory !== 'All' || selectedColor !== 'All' || stockFilter !== 'All') && (
+          <div className="flex items-center justify-between pt-2 border-t border-[#E8D8B5]/60 text-xs">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[#6B6457] text-[11px] font-medium">Active:</span>
+              {selectedCategory !== 'All' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FAF8F2] border border-[#E8D8B5] text-[#12100D] text-[11px]">
+                  Category: <strong className="text-[#B87802]">{selectedCategory}</strong>
+                  <button onClick={() => setSelectedCategory('All')} className="hover:text-red-600 cursor-pointer ml-0.5">×</button>
+                </span>
+              )}
+              {selectedColor !== 'All' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FAF8F2] border border-[#E8D8B5] text-[#12100D] text-[11px]">
+                  Color: <strong className="text-[#B87802]">{selectedColor}</strong>
+                  <button onClick={() => setSelectedColor('All')} className="hover:text-red-600 cursor-pointer ml-0.5">×</button>
+                </span>
+              )}
+              {stockFilter !== 'All' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FAF8F2] border border-[#E8D8B5] text-[#12100D] text-[11px]">
+                  Stock: <strong className="text-[#B87802]">{stockFilter}</strong>
+                  <button onClick={() => setStockFilter('All')} className="hover:text-red-600 cursor-pointer ml-0.5">×</button>
+                </span>
+              )}
+              {searchTerm && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FAF8F2] border border-[#E8D8B5] text-[#12100D] text-[11px]">
+                  Search: <strong className="text-[#B87802]">"{searchTerm}"</strong>
+                  <button onClick={() => setSearchTerm('')} className="hover:text-red-600 cursor-pointer ml-0.5">×</button>
+                </span>
+              )}
+            </div>
             <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors cursor-pointer ${
-                selectedCategory === cat
-                  ? 'border border-[#0C0A07] bg-[#0C0A07] text-[#F5B815] shadow-xs'
-                  : 'border border-[#E8D8B5] text-[#6B6457] hover:border-[#B87802] hover:text-[#B87802] bg-[#FAF8F2]'
-              }`}
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('All');
+                setSelectedColor('All');
+                setStockFilter('All');
+              }}
+              className="text-[#B87802] hover:underline text-[11px] font-semibold cursor-pointer shrink-0"
             >
-              {cat}
+              Clear all
             </button>
-          ))}
-        </div>
-
-        {/* Row 3: Color Filter Chips (Website Badge Style) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6457] shrink-0 mr-1 flex items-center gap-1">
-            <Palette className="w-3 h-3 text-[#B87802]" /> Color:
-          </span>
-          {COLORS.map((col) => (
-            <button
-              key={col}
-              onClick={() => setSelectedColor(col)}
-              className={`px-2.5 py-1 rounded-md text-xs font-medium shrink-0 transition-colors cursor-pointer ${
-                selectedColor === col
-                  ? 'bg-[#B87802] text-white shadow-xs border border-[#996300]'
-                  : 'border border-[#E8D8B5] text-[#6B6457] hover:border-[#B87802] hover:text-[#B87802] bg-[#FAF8F2]'
-              }`}
-            >
-              {col}
-            </button>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Loading State */}
@@ -326,8 +359,7 @@ export function ProductsView({
                     alt={p.name}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     onError={(e) => {
-                      e.target.src =
-                        'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80';
+                      e.target.style.opacity = '0.3';
                     }}
                   />
 
@@ -364,12 +396,14 @@ export function ProductsView({
                     {/* Fabric meta & Color pill */}
                     <div className="flex items-center justify-between text-[11px] text-[#6B6457] mb-1">
                       <span className="text-[11px] tracking-[0.2em] uppercase text-[#6B6457]">
-                        {p.fabric || p.category}
+                        {p.fabric || p.category || ''}
                       </span>
-                      <span className="flex items-center gap-1 font-medium text-xs text-[#12100D]">
-                        <span className="w-2 h-2 rounded-full bg-[#B87802]" />
-                        {p.color || 'Multicolor'}
-                      </span>
+                      {p.color && (
+                        <span className="flex items-center gap-1 font-medium text-xs text-[#12100D]">
+                          <span className="w-2 h-2 rounded-full bg-[#B87802]" />
+                          {p.color}
+                        </span>
+                      )}
                     </div>
 
                     {/* Saree Name */}
@@ -379,12 +413,16 @@ export function ProductsView({
 
                     {/* Rating & SKU */}
                     <div className="flex items-center justify-between text-xs mt-1.5">
-                      <div className="flex items-center gap-1 text-xs">
-                        <Star className="h-3.5 w-3.5 fill-[#F5B815] text-[#F5B815]" />
-                        <span className="font-medium text-[#12100D]">{p.rating || 4.8}</span>
-                        <span className="text-[#6B6457]">({p.reviews || 42})</span>
-                      </div>
-                      <span className="font-mono text-[10px] uppercase bg-[#FAF8F2] px-1.5 py-0.5 rounded-sm border border-[#E8D8B5] text-[#6B6457]">
+                      {p.rating ? (
+                        <div className="flex items-center gap-1 text-xs">
+                          <Star className="h-3.5 w-3.5 fill-[#F5B815] text-[#F5B815]" />
+                          <span className="font-medium text-[#12100D]">{p.rating}</span>
+                          {p.reviews ? <span className="text-[#6B6457]">({p.reviews})</span> : null}
+                        </div>
+                      ) : (
+                        <span />
+                      )}
+                      <span className="font-body font-semibold tracking-wider text-[10px] uppercase bg-[#FAF8F2] px-1.5 py-0.5 rounded-sm border border-[#E8D8B5] text-[#6B6457]">
                         {p.sku}
                       </span>
                     </div>
@@ -474,8 +512,7 @@ export function ProductsView({
                           alt={p.name}
                           className="w-10 h-10 rounded-sm object-cover border border-[#E8D8B5] shrink-0"
                           onError={(e) => {
-                            e.target.src =
-                              'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80';
+                            e.target.style.opacity = '0.3';
                           }}
                         />
                         <div className="min-w-0 max-w-xs">
@@ -484,17 +521,21 @@ export function ProductsView({
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 font-mono font-medium">{p.sku}</td>
+                    <td className="py-3 px-4 font-body font-semibold tracking-wider text-xs">{p.sku}</td>
                     <td className="py-3 px-4">
                       <span className="px-2 py-0.5 rounded-sm text-[11px] font-semibold bg-[#FAF8F2] border border-[#E8D8B5] text-[#B87802]">
                         {p.category}
                       </span>
                     </td>
                     <td className="py-3 px-4">
-                      <span className="font-medium flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#B87802]" />
-                        {p.color || 'Multicolor'}
-                      </span>
+                      {p.color ? (
+                        <span className="font-medium flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#B87802]" />
+                          {p.color}
+                        </span>
+                      ) : (
+                        <span className="text-[#A89D8B]">—</span>
+                      )}
                     </td>
                     <td className="py-3 px-4">
                       <div className="font-semibold text-sm text-[#B87802]">
@@ -506,7 +547,7 @@ export function ProductsView({
                         </div>
                       )}
                     </td>
-                    <td className="py-3 px-4 font-semibold">{p.stockCount ?? 25}</td>
+                    <td className="py-3 px-4 font-semibold">{p.stockCount ?? 0}</td>
                     <td className="py-3 px-4">
                       <button
                         onClick={() => handleToggleStock(p)}

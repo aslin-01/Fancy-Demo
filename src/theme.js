@@ -63,16 +63,24 @@ export const theme = {
     },
   },
 
+  // Common Font Families (Exclusively Cormorant Garamond & Jost)
+  fonts: {
+    display: "font-display", // Cormorant Garamond (Headings, titles, brand display)
+    body: "font-body",       // Jost (Body text, forms, inputs, tables, labels)
+  },
+
   // 2. Typography Styles
   typography: {
     fontDisplay: "font-display",
     fontBody: "font-body",
-    fontCursive: "font-cursive",
+    display: "font-display",
+    body: "font-body",
+    fontCursive: "font-display italic",
 
-    // Cursive flourishes & subtitles
-    cursiveEyebrow: "font-cursive text-2xl text-[#B87802]",
-    cursiveBanner: "font-cursive text-3xl text-gold sm:text-4xl",
-    cursiveBrand: "font-cursive text-3xl leading-none text-[#0C0A07]",
+    // Flourishes & subtitles
+    cursiveEyebrow: "font-display italic text-2xl text-[#B87802]",
+    cursiveBanner: "font-display italic text-3xl text-gold sm:text-4xl",
+    cursiveBrand: "font-display text-3xl leading-none text-[#0C0A07]",
 
     // Headings
     h1Page: "font-display text-4xl font-semibold text-foreground",
@@ -166,18 +174,19 @@ export const theme = {
   // 6. Form Elements
   forms: {
     input:
-      "w-full rounded-sm border border-input bg-card px-3 py-2.5 text-sm outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]",
+      "w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm outline-none focus:outline-none focus:border-[#B87802] focus:ring-0 focus:shadow-none transition-colors",
     inputError:
-      "w-full rounded-sm border border-destructive bg-card px-3 py-2.5 text-sm outline-none focus:border-destructive",
+      "w-full rounded-lg border border-destructive bg-card px-3 py-2.5 text-sm outline-none focus:outline-none focus:border-destructive focus:ring-0 focus:shadow-none transition-colors",
     textarea:
-      "w-full rounded-sm border border-input bg-card px-3 py-2.5 text-sm outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]",
+      "w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm outline-none focus:outline-none focus:border-[#B87802] focus:ring-0 focus:shadow-none transition-colors",
     textareaError:
-      "w-full rounded-sm border border-destructive bg-card px-3 py-2.5 text-sm outline-none focus:border-destructive",
+      "w-full rounded-lg border border-destructive bg-card px-3 py-2.5 text-sm outline-none focus:outline-none focus:border-destructive focus:ring-0 focus:shadow-none transition-colors",
     select:
-      "appearance-none rounded-sm border border-border bg-card py-2 pr-9 pl-4 text-sm outline-none focus:border-[#B87802] cursor-pointer",
+      "appearance-none rounded-lg border border-[#E8D8B5] bg-[#F7F3EA] py-2.5 pr-10 pl-3.5 text-sm text-[#12100D] font-body outline-none focus:outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#B87802] hover:border-[#B87802] hover:bg-[#F2ECE0] cursor-pointer transition-colors",
     radio: "accent-[#B87802] cursor-pointer",
-    checkbox: "accent-[#B87802] cursor-pointer",
-    label: "text-xs font-semibold tracking-[0.15em] uppercase text-foreground",
+    label: "block text-base font-bold text-[#12100D] font-display mb-1.5",
+    labelInline: "text-base font-bold text-[#12100D] font-display",
+    filled: "bg-[#FAF8F2]",
     errorText: "mt-1 text-xs text-destructive",
   },
 
@@ -230,5 +239,9 @@ export const theme = {
     goldLeft: "divider-gold mt-3 w-24",
   },
 };
+
+export const fonts = theme.fonts;
+export const typography = theme.typography;
+export const forms = theme.forms;
 
 export default theme;
