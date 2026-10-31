@@ -59,7 +59,7 @@ export function DashboardView({
     <div className="space-y-6">
       
       {/* Welcome Banner — Website Onyx (#0C0A07) & Emblem Gold (#F5B815) */}
-      <div className="relative overflow-hidden rounded-lg bg-[#0C0A07] border border-[#F5B815]/30 p-8 text-white shadow-xl">
+      <div className="relative overflow-hidden rounded-lg bg-[#0C0A07] border border-[#F5B815]/30 p-8 text-white">
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="space-y-2 max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#1A1610] text-[#F5B815] border border-[#F5B815]/40 text-xs font-semibold tracking-wider uppercase">
@@ -79,7 +79,7 @@ export function DashboardView({
               href={STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-md border border-[#F5B815]/50 bg-[#14100B] text-[#F5B815] hover:bg-[#B87802] hover:text-white text-xs font-semibold uppercase tracking-wider transition-all duration-200 group shadow-md"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-md border border-[#F5B815]/50 bg-[#14100B] text-[#F5B815] hover:bg-[#B87802] hover:text-white text-xs font-semibold uppercase tracking-wider transition-all duration-200 group"
             >
               <span>View Storefront (localhost:3000)</span>
               <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -91,13 +91,13 @@ export function DashboardView({
         <div className="absolute -right-10 -bottom-10 w-72 h-72 bg-[#F5B815]/10 rounded-full blur-3xl pointer-events-none" />
       </div>
 
-      {/* 4 Stat Cards with website luxury hover shadow [0_16px_40px_-16px_rgba(184,120,2,0.25)] */}
+      {/* 4 Stat Cards with brand gold hover border */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* Total Products */}
         <div 
           onClick={onNavigateProducts}
-          className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-300 hover:shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)] hover:border-[#B87802] cursor-pointer group"
+          className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-200 hover:border-[#B87802] cursor-pointer group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#6B6457]">
@@ -122,7 +122,7 @@ export function DashboardView({
         </div>
 
         {/* Total Revenue */}
-        <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-300 hover:shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)] hover:border-[#B87802]">
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-200 hover:border-[#B87802]">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#6B6457]">
               Store Revenue
@@ -145,7 +145,7 @@ export function DashboardView({
         </div>
 
         {/* Total Orders */}
-        <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-300 hover:shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)] hover:border-[#B87802]">
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-200 hover:border-[#B87802]">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#6B6457]">
               Customer Orders
@@ -170,7 +170,7 @@ export function DashboardView({
         {/* User Access Setup Pill */}
         <div 
           onClick={onNavigateUserAccess}
-          className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-300 hover:shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)] hover:border-[#B87802] cursor-pointer group"
+          className="bg-white rounded-lg border border-[#E8D8B5] p-5 transition-all duration-200 hover:border-[#B87802] cursor-pointer group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#6B6457]">
@@ -200,7 +200,7 @@ export function DashboardView({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Revenue Trend Area Chart */}
-        <div className="lg:col-span-7 bg-white rounded-lg border border-[#E8D8B5] p-6 shadow-sm">
+        <div className="lg:col-span-7 bg-white rounded-lg border border-[#E8D8B5] p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-display text-xl font-semibold text-[#12100D]">
@@ -249,7 +249,7 @@ export function DashboardView({
         </div>
 
         {/* Category Distribution Bar Chart */}
-        <div className="lg:col-span-5 bg-white rounded-lg border border-[#E8D8B5] p-6 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-5 bg-white rounded-lg border border-[#E8D8B5] p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-display text-xl font-semibold text-[#12100D]">
@@ -299,7 +299,7 @@ export function DashboardView({
       </div>
 
       {/* Recent Products Showcase */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 shadow-sm space-y-4">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-display text-2xl font-semibold text-[#12100D]">
@@ -322,7 +322,7 @@ export function DashboardView({
           {products.slice(0, 4).map((p) => (
             <div
               key={p._id || p.id}
-              className="rounded-lg border border-[#E8D8B5] p-3 bg-[#FAF8F2] flex items-center gap-3 hover:border-[#B87802] hover:shadow-sm transition-all"
+              className="rounded-lg border border-[#E8D8B5] p-3 bg-[#FAF8F2] flex items-center gap-3 hover:border-[#B87802] transition-colors"
             >
               <img
                 src={p.image}

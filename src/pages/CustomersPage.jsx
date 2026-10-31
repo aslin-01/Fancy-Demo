@@ -77,11 +77,11 @@ export const CustomersPage = ({ customers }) => {
         {filtered.map((cust) => (
           <div
             key={cust._id}
-            className={`${theme.cards.base} p-5 hover:border-[#B87802]/40 hover:shadow-md transition-all flex flex-col justify-between`}
+            className={`${theme.cards.base} p-5 hover:border-[#B87802] transition-colors flex flex-col justify-between`}
           >
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#B87802] to-[#996300] text-white flex items-center justify-center font-bold text-sm shadow-sm border border-[#F5B815]/30">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#B87802] to-[#996300] text-white flex items-center justify-center font-bold text-sm border border-[#F5B815]/30">
                   {cust.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div>

@@ -7,7 +7,7 @@ export const Navbar = ({ title, subtitle, onRefresh, isRefreshing }) => {
   const { backendOnline, logout } = useAuth();
 
   return (
-    <header className="h-18 bg-card/95 backdrop-blur border-b border-border px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+    <header className="h-18 bg-card/95 backdrop-blur border-b border-border px-8 flex items-center justify-between sticky top-0 z-30">
       <div>
         <h2 className="text-xl font-semibold font-display text-foreground">{title}</h2>
         {subtitle && <p className={theme.typography.bodyMuted}>{subtitle}</p>}
@@ -48,7 +48,7 @@ export const Navbar = ({ title, subtitle, onRefresh, isRefreshing }) => {
           href="http://localhost:5173"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-[#B87802] px-4 py-1.5 text-xs font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white hover:shadow-sm active:scale-[0.98] cursor-pointer"
+          className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-[#B87802] px-4 py-1.5 text-xs font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white active:scale-[0.98] cursor-pointer"
         >
           <span>Live Store</span>
           <ExternalLink className="w-3 h-3" />

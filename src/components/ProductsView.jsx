@@ -110,7 +110,7 @@ export function ProductsView({
     <div className="space-y-6">
       
       {/* Top Banner & Quick Controls */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-[#B87802]" />
@@ -141,7 +141,7 @@ export function ProductsView({
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
                 viewMode === 'grid'
-                  ? 'bg-white shadow-xs text-[#12100D] border border-[#E8D8B5]'
+                  ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
                   : 'text-[#6B6457] hover:text-[#12100D]'
               }`}
               title="Grid View"
@@ -152,7 +152,7 @@ export function ProductsView({
               onClick={() => setViewMode('table')}
               className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
                 viewMode === 'table'
-                  ? 'bg-white shadow-xs text-[#12100D] border border-[#E8D8B5]'
+                  ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
                   : 'text-[#6B6457] hover:text-[#12100D]'
               }`}
               title="Table View"
@@ -164,7 +164,7 @@ export function ProductsView({
           {/* Add Product CTA */}
           <button
             onClick={onOpenAddProduct}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase shadow-md shadow-[#B87802]/30 hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer"
           >
             <PackagePlus className="w-4 h-4" />
             <span>Add Product</span>
@@ -174,7 +174,7 @@ export function ProductsView({
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 shadow-sm space-y-3">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 space-y-3">
         
         {/* Search & Filter Controls Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-3">
@@ -330,7 +330,7 @@ export function ProductsView({
           </div>
           <button
             onClick={onOpenAddProduct}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 text-xs font-medium uppercase tracking-wider shadow-md hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 text-xs font-medium uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer"
           >
             <PackagePlus className="w-4 h-4" />
             <span>Add Saree Now</span>
@@ -350,7 +350,7 @@ export function ProductsView({
             return (
               <div
                 key={p._id || p.id}
-                className="group relative flex flex-col overflow-hidden rounded-lg border border-[#E8D8B5] bg-white transition-all duration-300 hover:shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)] hover:border-[#B87802]"
+                className="group relative flex flex-col overflow-hidden rounded-lg border border-[#E8D8B5] bg-white transition-all duration-200 hover:border-[#B87802]"
               >
                 {/* Image Section aspect-[4/5] */}
                 <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
@@ -371,13 +371,13 @@ export function ProductsView({
                   )}
 
                   {p.isNewArrival && (
-                    <span className="absolute top-3 right-3 rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide shadow-sm">
+                    <span className="absolute top-3 right-3 rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide">
                       NEW
                     </span>
                   )}
 
                   {p.isBestSeller && !p.isNewArrival && (
-                    <span className="absolute top-3 right-3 rounded-sm bg-[#B87802] text-white px-2 py-1 text-[11px] font-bold tracking-wide shadow-sm">
+                    <span className="absolute top-3 right-3 rounded-sm bg-[#B87802] text-white px-2 py-1 text-[11px] font-bold tracking-wide">
                       BEST SELLER
                     </span>
                   )}
@@ -487,7 +487,7 @@ export function ProductsView({
 
       {/* Products Table View */}
       {!loading && viewMode === 'table' && filteredProducts.length > 0 && (
-        <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden shadow-sm">
+        <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>

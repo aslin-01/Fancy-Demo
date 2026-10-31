@@ -208,7 +208,7 @@ export function UserAccessView() {
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#B87802]" />
@@ -226,7 +226,7 @@ export function UserAccessView() {
 
         <button
           onClick={() => openAddModal()}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase shadow-md shadow-[#B87802]/30 hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer"
         >
           <UserPlus className="w-4 h-4" />
           <span>Grant New User Access</span>
@@ -236,7 +236,7 @@ export function UserAccessView() {
       {/* Role Hierarchy & Policy Setup Matrix */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Super Admin */}
-        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 shadow-sm space-y-2 hover:border-[#B87802] transition-colors">
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 space-y-2 hover:border-[#B87802] transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
               Level 1
@@ -250,7 +250,7 @@ export function UserAccessView() {
         </div>
 
         {/* Store Manager */}
-        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 shadow-sm space-y-2 hover:border-[#B87802] transition-colors">
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 space-y-2 hover:border-[#B87802] transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-[#FAF8F2] text-[#B87802] border border-[#B87802]/40">
               Level 2
@@ -264,7 +264,7 @@ export function UserAccessView() {
         </div>
 
         {/* Catalog Editor */}
-        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 shadow-sm space-y-2 hover:border-[#B87802] transition-colors">
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 space-y-2 hover:border-[#B87802] transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-[#F5B815]/20 text-[#0C0A07] border border-[#F5B815]/40 font-semibold">
               Level 3
@@ -278,7 +278,7 @@ export function UserAccessView() {
         </div>
 
         {/* Customer / Viewer */}
-        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 shadow-sm space-y-2 hover:border-[#B87802] transition-colors">
+        <div className="bg-white rounded-lg border border-[#E8D8B5] p-4 space-y-2 hover:border-[#B87802] transition-colors">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-gray-100 text-gray-700 border border-gray-300">
               Customer
@@ -293,7 +293,7 @@ export function UserAccessView() {
       </div>
 
       {/* Access Settings & Security Controls */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 shadow-sm">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5">
         <div className="flex items-center gap-2 mb-3">
           <Sliders className="w-4 h-4 text-[#B87802]" />
           <h3 className="font-display text-base font-semibold text-[#12100D]">
@@ -357,7 +357,7 @@ export function UserAccessView() {
       </div>
 
       {/* User Directory Table */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden shadow-sm space-y-4 p-5">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden space-y-4 p-5">
         
         {/* Table Filters */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -509,7 +509,7 @@ export function UserAccessView() {
       {/* Grant Access / Edit Modal */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="bg-white rounded-lg border border-[#E8D8B5] shadow-2xl max-w-lg w-full p-6 space-y-5 animate-in fade-in zoom-in-95">
+          <div className="bg-white rounded-lg border border-[#E8D8B5] max-w-lg w-full p-6 space-y-5 animate-in fade-in zoom-in-95">
             <div className="flex items-center justify-between border-b border-[#E8D8B5] pb-3">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-md bg-[#FAF8F2] border border-[#E8D8B5] flex items-center justify-center text-[#B87802]">
@@ -622,7 +622,7 @@ export function UserAccessView() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase shadow-md hover:from-[#C98704] hover:to-[#A86E02] transition-colors cursor-pointer"
+                  className="px-5 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] transition-colors cursor-pointer"
                 >
                   {editingUser ? 'Save Access Changes' : 'Grant Access'}
                 </button>

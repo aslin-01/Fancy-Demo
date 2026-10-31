@@ -52,7 +52,7 @@ export const OrdersPage = ({ orders, onOrderUpdated, onNotify }) => {
       </div>
 
       {/* Filter Tabs & Search */}
-      <div className={`${theme.cards.base} p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs`}>
+      <div className={`${theme.cards.base} p-4 flex flex-col md:flex-row items-center justify-between gap-4`}>
         <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
           {statuses.map((s) => (
             <button
@@ -82,7 +82,7 @@ export const OrdersPage = ({ orders, onOrderUpdated, onNotify }) => {
       </div>
 
       {/* Orders Table */}
-      <div className={`${theme.cards.base} overflow-hidden shadow-xs`}>
+      <div className={`${theme.cards.base} overflow-hidden`}>
         <div className={theme.table.container}>
           <table className={theme.table.table}>
             <thead className="bg-secondary/40 border-b border-border">
@@ -180,7 +180,7 @@ const OrderDetailModal = ({ order, onClose }) => {
   return (
     <div className={theme.modal.backdrop} onClick={onClose}>
       <div
-        className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 shadow-xl space-y-5 my-8"
+        className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 space-y-5 my-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-border pb-3">

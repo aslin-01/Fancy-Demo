@@ -275,12 +275,12 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-white rounded-lg border border-[#E8D8B5] shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col my-auto overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white rounded-lg border border-[#E8D8B5] max-w-4xl w-full max-h-[92vh] flex flex-col my-auto overflow-hidden animate-in fade-in zoom-in-95 duration-200">
 
         {/* Header matching http://localhost:3000/ */}
         <div className="px-6 py-4 border-b border-[#E8D8B5] bg-[#FAF8F2] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-md bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 flex items-center justify-center shadow-md">
+            <div className="w-10 h-10 rounded-md bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 flex items-center justify-center">
               <PackagePlus className="w-5 h-5" />
             </div>
             <div>
@@ -305,7 +305,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
         {/* Success Banner if Product Just Saved */}
         {successInfo && (
-          <div className="m-6 p-4 rounded-md bg-emerald-50 border border-emerald-300 text-emerald-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+          <div className="m-6 p-4 rounded-md bg-emerald-50 border border-emerald-300 text-emerald-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold">
                 <Check className="w-5 h-5" />
@@ -324,7 +324,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 href={STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 text-xs font-medium uppercase tracking-wider shadow-sm hover:from-[#C98704] hover:to-[#A86E02]"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 text-xs font-medium uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02]"
               >
                 <span>Check Live Store</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -445,7 +445,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                         key={c.name}
                         onClick={() => setFormData(p => ({ ...p, color: c.name }))}
                         className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer border ${isSelected
-                            ? 'ring-2 ring-[#B87802] ring-offset-1 shadow-sm border-[#B87802]'
+                            ? 'border-2 border-[#B87802] font-semibold'
                             : 'border-[#E8D8B5] hover:border-[#B87802]'
                           }`}
                         style={{ backgroundColor: c.bg, color: c.text }}
@@ -740,7 +740,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
               </div>
 
               {/* Live Card Preview (Matches localhost:3000 Store Card exactly) */}
-              <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] shadow-sm">
+              <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] flex items-center gap-1.5 font-body">
                     <Eye className="w-3.5 h-3.5 text-[#B87802]" />
@@ -752,7 +752,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 </div>
 
                 {/* Simulated Customer Product Card from http://localhost:3000/ */}
-                <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden shadow-sm max-w-[280px] mx-auto transition-all">
+                <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden max-w-[280px] mx-auto transition-all">
                   <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
                     {formData.image ? (
                       <img
@@ -779,13 +779,13 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                     )}
 
                     {formData.isNewArrival && (
-                      <span className="absolute top-3 right-3 rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide shadow-sm">
+                      <span className="absolute top-3 right-3 rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide">
                         NEW
                       </span>
                     )}
 
                     {formData.isBestSeller && !formData.isNewArrival && (
-                      <span className="absolute top-3 right-3 rounded-sm bg-[#B87802] text-white px-2 py-1 text-[11px] font-bold tracking-wide shadow-sm">
+                      <span className="absolute top-3 right-3 rounded-sm bg-[#B87802] text-white px-2 py-1 text-[11px] font-bold tracking-wide">
                         BEST SELLER
                       </span>
                     )}
@@ -848,7 +848,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase shadow-md shadow-[#B87802]/30 hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
             >
               {loading ? (
                 <>

@@ -3,6 +3,8 @@ import { Sidebar } from './components/Sidebar';
 import { DashboardView } from './components/DashboardView';
 import { ProductsView } from './components/ProductsView';
 import { OrdersPage } from './pages/OrdersPage';
+import { ReturnsPage } from './pages/ReturnsPage';
+import { LowStockPage } from './pages/LowStockPage';
 import { UserAccessView } from './components/UserAccessView';
 import { AddProductPage } from './pages/AddProductPage';
 import { api, STORE_URL } from './services/api';
@@ -162,7 +164,7 @@ export function App() {
       
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0C0A07] text-white shadow-2xl border border-[#F5B815]/40 animate-in slide-in-from-bottom-5 max-w-md">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0C0A07] text-white border border-[#F5B815]/40 animate-in slide-in-from-bottom-5 max-w-md">
           <div className="w-8 h-8 rounded-full bg-[#F5B815] text-[#0C0A07] flex items-center justify-center shrink-0 font-bold">
             <Check className="w-4 h-4 stroke-[3]" />
           </div>
@@ -195,6 +197,11 @@ export function App() {
         setActiveTab={handleTabChange}
         productCount={products.length}
         orderCount={orders.length}
+        lowStockCount={
+          products.length > 0
+            ? products.filter((p) => (p.stockCount ?? 0) <= 10 || !p.inStock).length
+            : 5
+        }
       />
 
       {/* Main Content Area */}
@@ -223,6 +230,15 @@ export function App() {
             />
           )}
 
+          {activeTab === 'low-stock' && (
+            <LowStockPage
+              products={products}
+              onEditProduct={handleEditProduct}
+              onRefresh={() => loadData(true)}
+              onNotify={showToast}
+            />
+          )}
+
           {activeTab === 'add-product' && (
             <AddProductPage
               initialProduct={editingProduct}
@@ -244,6 +260,10 @@ export function App() {
               onOrderUpdated={() => loadData(true)}
               onNotify={showToast}
             />
+          )}
+
+          {activeTab === 'returns' && (
+            <ReturnsPage onNotify={showToast} orders={orders} />
           )}
 
           {activeTab === 'user-access' && <UserAccessView />}

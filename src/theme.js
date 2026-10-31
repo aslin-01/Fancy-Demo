@@ -120,13 +120,13 @@ export const theme = {
   },
 
   shadows: {
-    subtle: "shadow-sm",
-    card: "shadow",
-    hover: "hover:shadow-lg transition-shadow",
+    subtle: "",
+    card: "",
+    hover: "",
     glowGold:
-      "shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)]",
+      "",
     glowMaroon:
-      "shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)]",
+      "",
   },
 
   // 4. Layouts & Section Containers
@@ -150,25 +150,25 @@ export const theme = {
   // 5. Buttons & Interactive Controls (Modern Luxury Feel)
   buttons: {
     primary:
-      "inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center shadow-md",
+      "inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center",
     primaryWide:
-      "w-full inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center shadow-md",
+      "w-full inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center",
     gold:
-      "inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center shadow-md",
+      "inline-flex items-center justify-center rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer text-center",
     outlineMaroon:
-      "inline-flex items-center justify-center rounded-md border border-[#B87802] px-8 py-3 text-sm font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white hover:shadow-md hover:shadow-[#B87802]/25 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
+      "inline-flex items-center justify-center rounded-md border border-[#B87802] px-8 py-3 text-sm font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
     outline:
-      "inline-flex items-center justify-center rounded-md border border-[#B87802] px-8 py-3 text-sm font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white hover:shadow-md hover:shadow-[#B87802]/25 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
+      "inline-flex items-center justify-center rounded-md border border-[#B87802] px-8 py-3 text-sm font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
     outlineLight:
-      "inline-flex items-center justify-center rounded-md border border-white/60 bg-white/10 backdrop-blur-sm px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase text-white transition-all duration-200 hover:bg-white hover:text-[#0C0A07] hover:border-white hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
+      "inline-flex items-center justify-center rounded-md border border-white/60 bg-white/10 backdrop-blur-sm px-8 py-3.5 text-sm font-medium tracking-[0.08em] uppercase text-white transition-all duration-200 hover:bg-white hover:text-[#0C0A07] hover:border-white hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer text-center",
     actionCard:
-      "flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-2.5 text-xs font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer shadow-md",
+      "flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-2.5 text-xs font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer",
     actionDark:
-      "flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-2.5 text-xs font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer shadow-md",
+      "flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 py-2.5 text-xs font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer",
     iconRound:
-      "grid place-items-center rounded-full bg-card/90 shadow-md backdrop-blur-sm transition-all duration-200 cursor-pointer hover:bg-[#F5B815] hover:text-[#0C0A07] hover:scale-110",
+      "grid place-items-center rounded-full bg-card/90 border border-[#E8D8B5] backdrop-blur-sm transition-all duration-200 cursor-pointer hover:bg-[#F5B815] hover:text-[#0C0A07] hover:border-[#F5B815] hover:scale-110",
     secondarySm:
-      "rounded-md border border-border bg-card px-4 py-2 text-sm text-foreground transition-all duration-200 hover:border-[#B87802] hover:text-[#B87802] hover:shadow-sm active:scale-[0.98] cursor-pointer",
+      "rounded-md border border-border bg-card px-4 py-2 text-sm text-foreground transition-all duration-200 hover:border-[#B87802] hover:text-[#B87802] active:scale-[0.98] cursor-pointer",
   },
 
   // 6. Form Elements
@@ -195,14 +195,14 @@ export const theme = {
     base: "rounded-lg border border-border bg-card",
     padded: "rounded-lg border border-border bg-card p-6",
     interactive:
-      "group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow duration-300 hover:shadow-[0_16px_40px_-16px_rgba(184,120,2,0.25)]",
+      "group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors duration-200 hover:border-[#B87802]",
     feature:
-      "rounded-lg border border-border bg-card p-6 text-center transition-shadow hover:shadow-lg hover:border-[#E8D8B5]",
+      "rounded-lg border border-border bg-card p-6 text-center transition-colors duration-200 hover:border-[#B87802]",
   },
   modal: {
     backdrop: "fixed inset-0 z-50 bg-black/70 backdrop-blur-sm",
     container:
-      "fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 shadow-xl",
+      "fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6",
     title: "font-display text-2xl font-semibold text-foreground",
     description: "text-sm text-muted-foreground",
   },
@@ -219,15 +219,15 @@ export const theme = {
     discount:
       "rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 px-2 py-1 text-[11px] font-semibold tracking-wide",
     newArrival:
-      "rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide shadow-sm",
+      "rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide",
     outOfStock:
       "absolute inset-x-0 bottom-0 bg-[#0C0A07]/80 py-2 text-center text-xs tracking-widest text-[#FAF8F2] uppercase",
     counterMaroon:
-      "absolute -top-2 -right-2 grid h-4 w-4 place-items-center rounded-full bg-[#F5B815] text-[10px] font-bold text-[#0C0A07] shadow",
+      "absolute -top-2 -right-2 grid h-4 w-4 place-items-center rounded-full bg-[#F5B815] text-[10px] font-bold text-[#0C0A07]",
     counterGold:
-      "absolute -top-2 -right-2 grid h-4 w-4 place-items-center rounded-full bg-[#F5B815] text-[10px] font-bold text-[#0C0A07] shadow",
+      "absolute -top-2 -right-2 grid h-4 w-4 place-items-center rounded-full bg-[#F5B815] text-[10px] font-bold text-[#0C0A07]",
     filterChipActive:
-      "rounded-full border border-[#0C0A07] bg-[#0C0A07] text-[#F5B815] px-3 py-1 text-xs font-medium transition-colors cursor-pointer shadow-sm",
+      "rounded-full border border-[#0C0A07] bg-[#0C0A07] text-[#F5B815] px-3 py-1 text-xs font-medium transition-colors cursor-pointer",
     filterChipInactive:
       "rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:border-[#B87802] hover:text-[#B87802] transition-colors cursor-pointer",
   },

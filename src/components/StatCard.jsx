@@ -4,7 +4,7 @@ import { theme } from '../theme';
 
 export const StatCard = ({ title, value, change, isPositive, icon: Icon }) => {
   return (
-    <div className="bg-card border border-border rounded-lg p-5 hover:shadow-md hover:border-[#B87802]/40 transition-all group">
+    <div className="bg-card border border-border rounded-lg p-5 hover:border-[#B87802] transition-colors group">
       <div className="flex items-center justify-between mb-3">
         <span className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
           {title}

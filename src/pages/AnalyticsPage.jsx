@@ -46,7 +46,7 @@ export const AnalyticsPage = ({ stats }) => {
                     borderRadius: '6px',
                     color: '#12100D',
                     fontSize: '12px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                    boxShadow: 'none',
                   }}
                   formatter={(val) => [`₹${Number(val).toLocaleString('en-IN')}`, 'Revenue']}
                 />
@@ -73,7 +73,7 @@ export const AnalyticsPage = ({ stats }) => {
                     borderRadius: '6px',
                     color: '#12100D',
                     fontSize: '12px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                    boxShadow: 'none',
                   }}
                 />
                 <Bar dataKey="sales" fill="#0C0A07" radius={[4, 4, 0, 0]} />

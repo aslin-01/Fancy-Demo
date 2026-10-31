@@ -213,4 +213,67 @@ export const api = {
       return { success: false, data: [] };
     }
   },
+
+  // ── Exchange Requests ──────────────────────────────────────────────────────
+
+  // GET /api/exchanges?status=&search=
+  async getExchanges(params = {}) {
+    try {
+      const query = new URLSearchParams(params).toString();
+      const url = query ? `${API_BASE}/exchanges?${query}` : `${API_BASE}/exchanges`;
+      const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+      return handleResponse(res, 'Failed to fetch exchange requests');
+    } catch (err) {
+      console.warn('Could not fetch exchanges from API:', err);
+      return { success: false, data: [] };
+    }
+  },
+
+  // GET /api/exchanges/stats
+  async getExchangeStats() {
+    try {
+      const res = await fetch(`${API_BASE}/exchanges/stats`, {
+        signal: AbortSignal.timeout(6000),
+      });
+      return handleResponse(res, 'Failed to fetch exchange stats');
+    } catch (err) {
+      console.warn('Could not fetch exchange stats:', err);
+      return { success: false, data: null };
+    }
+  },
+
+  // GET /api/exchanges/:id
+  async getExchangeById(id) {
+    const res = await fetch(`${API_BASE}/exchanges/${id}`);
+    return handleResponse(res, 'Failed to fetch exchange request');
+  },
+
+  // POST /api/exchanges
+  async createExchange(exchangeData) {
+    const res = await fetch(`${API_BASE}/exchanges`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(exchangeData),
+    });
+    return handleResponse(res, 'Failed to create exchange request');
+  },
+
+  // PUT /api/exchanges/:id/status
+  async updateExchangeStatus(id, status, adminNotes = '') {
+    const res = await fetch(`${API_BASE}/exchanges/${id}/status`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify({ status, adminNotes }),
+    });
+    return handleResponse(res, 'Failed to update exchange status');
+  },
+
+  // DELETE /api/exchanges/:id
+  async deleteExchange(id) {
+    const res = await fetch(`${API_BASE}/exchanges/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to delete exchange request');
+  },
 };

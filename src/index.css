@@ -239,7 +239,7 @@ select:hover {
 select:focus {
   border-color: #B87802 !important;
   outline: none !important;
-  box-shadow: 0 0 0 1.5px #B87802 !important;
+  box-shadow: none !important;
 }
 
 select option {

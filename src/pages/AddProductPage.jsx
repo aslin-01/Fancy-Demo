@@ -1445,7 +1445,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                         >
                           {/* Color preview circle */}
                           <span
-                            className="w-4 h-4 rounded-full border border-black/20 shrink-0 shadow-inner"
+                            className="w-4 h-4 rounded-full border border-black/20 shrink-0"
                             style={{ backgroundColor: c.code }}
                           />
                           <span className={isActive ? 'text-[#12100D] font-bold' : 'text-[#12100D]'}>{c.name}</span>
@@ -1508,7 +1508,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 </label>
                 <div className="flex items-center gap-2">
                   {/* Native Color Picker Swatch */}
-                  <div className="relative w-11 h-11 rounded-lg border border-[#E8D8B5] overflow-hidden shrink-0 bg-white shadow-xs hover:border-[#B87802] cursor-pointer flex items-center justify-center">
+                  <div className="relative w-11 h-11 rounded-lg border border-[#E8D8B5] overflow-hidden shrink-0 bg-white hover:border-[#B87802] cursor-pointer flex items-center justify-center">
                     <input
                       type="color"
                       value={colorPickerHex}
@@ -1520,7 +1520,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                       title="Pick a color swatch"
                     />
                     <span
-                      className="w-6 h-6 rounded-md border border-black/20 shadow-xs pointer-events-none"
+                      className="w-6 h-6 rounded-md border border-black/20 pointer-events-none"
                       style={{ backgroundColor: colorPickerHex }}
                     />
                   </div>
@@ -1545,7 +1545,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   <button
                     type="button"
                     onClick={() => handleAddColor(colorInput)}
-                    className="h-11 px-4 rounded-lg bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer shrink-0 shadow-xs flex items-center gap-1.5"
+                    className="h-11 px-4 rounded-lg bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer shrink-0 flex items-center gap-1.5"
                   >
                     <Plus className="w-4 h-4 stroke-[2.5]" />
                     <span>Add Color</span>
@@ -1577,7 +1577,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     type="button"
                     onClick={() => setGalleryMode('upload')}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-sm font-medium transition-all cursor-pointer ${galleryMode === 'upload'
-                      ? 'bg-white text-[#12100D] shadow-xs border border-[#E8D8B5]'
+                      ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
                       : 'text-[#6B6457] hover:text-[#12100D]'
                       }`}
                   >
@@ -1588,7 +1588,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     type="button"
                     onClick={() => setGalleryMode('url')}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-sm font-medium transition-all cursor-pointer ${galleryMode === 'url'
-                      ? 'bg-white text-[#12100D] shadow-xs border border-[#E8D8B5]'
+                      ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
                       : 'text-[#6B6457] hover:text-[#12100D]'
                       }`}
                   >
@@ -1646,7 +1646,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                       </p>
                       <button
                         type="button"
-                        className="px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-semibold uppercase tracking-wider shadow-sm hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer"
+                        className="px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer"
                       >
                         Browse Desktop Files
                       </button>
@@ -1697,7 +1697,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     {currentPhotos.map((imgUrl, idx) => (
                       <div
                         key={idx}
-                        className="relative group aspect-3/4 rounded-lg overflow-hidden border border-[#E8D8B5] bg-white shadow-xs"
+                        className="relative group aspect-3/4 rounded-lg overflow-hidden border border-[#E8D8B5] bg-white"
                       >
                         <img
                           src={imgUrl}
@@ -1713,7 +1713,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                         <button
                           type="button"
                           onClick={() => handleRemoveGalleryImage(idx)}
-                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-700 cursor-pointer shadow-sm"
+                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-700 cursor-pointer"
                           title="Remove image"
                         >
                           <X className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -1793,7 +1793,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
       {/* Small Modal for Adding Category / Fabric / Occasion */}
       {attributeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="w-full max-w-md bg-white rounded-xl border border-[#E8D8B5] shadow-2xl overflow-hidden p-6 space-y-4">
+          <div className="w-full max-w-md bg-white rounded-xl border border-[#E8D8B5] overflow-hidden p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#E8D8B5]">
               <div className="flex items-center gap-2.5">
                 <span className="w-8 h-8 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] text-[#B87802] flex items-center justify-center font-bold">
@@ -1878,7 +1878,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     return currentList.map((item) => (
                       <div
                         key={item}
-                        className="group relative inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full text-xs font-semibold bg-white border border-[#E8D8B5] text-[#12100D] hover:border-[#B87802] shadow-2xs transition-all"
+                        className="group relative inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full text-xs font-semibold bg-white border border-[#E8D8B5] text-[#12100D] hover:border-[#B87802] transition-all"
                       >
                         <span className="truncate max-w-[170px]">{item}</span>
                         <button
@@ -1888,7 +1888,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                             handleDeleteAttribute(item, attributeModal.type);
                           }}
                           disabled={attrDeleting === item}
-                          className="w-4 h-4 rounded-full bg-rose-100 hover:bg-rose-600 text-rose-700 hover:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shrink-0 shadow-xs"
+                          className="w-4 h-4 rounded-full bg-rose-100 hover:bg-rose-600 text-rose-700 hover:text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shrink-0"
                           title={`Remove "${item}"`}
                         >
                           {attrDeleting === item ? (
@@ -1915,7 +1915,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 <button
                   type="submit"
                   disabled={attrLoading || !attrForm.name.trim()}
-                  className="flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-bold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer disabled:opacity-50 shadow-sm"
+                  className="flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-bold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer disabled:opacity-50"
                 >
                   {attrLoading ? (
                     <>

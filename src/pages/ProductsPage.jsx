@@ -78,7 +78,7 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className={`${theme.cards.base} p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs`}>
+      <div className={`${theme.cards.base} p-4 flex flex-col md:flex-row items-center justify-between gap-4`}>
         {/* Category Tabs */}
         <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
           {categories.map((cat) => (
@@ -136,7 +136,7 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
               <div className="absolute top-2.5 right-2.5 z-10">
                 <button
                   onClick={() => handleToggleStock(p)}
-                  className={`px-2.5 py-1 rounded-sm text-[10px] font-bold shadow-sm transition-colors border cursor-pointer ${p.inStock
+                  className={`px-2.5 py-1 rounded-sm text-[10px] font-bold transition-colors border cursor-pointer ${p.inStock
                       ? theme.colors.status.success
                       : theme.colors.status.error
                     }`}
@@ -222,7 +222,7 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
       {deleteId && (
         <div className={theme.modal.backdrop} onClick={() => setDeleteId(null)}>
           <div
-            className="fixed left-1/2 top-1/2 z-50 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 shadow-xl space-y-4"
+            className="fixed left-1/2 top-1/2 z-50 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 space-y-4"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className={theme.modal.title}>Remove Saree?</h3>
@@ -285,7 +285,7 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
   return (
     <div className={theme.modal.backdrop} onClick={onClose}>
       <div
-        className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 shadow-xl space-y-5 my-8 max-h-[90vh] overflow-y-auto"
+        className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 space-y-5 my-8 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-border pb-3">

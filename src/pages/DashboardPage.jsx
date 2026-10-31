@@ -54,7 +54,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
   return (
     <div className="space-y-6">
       {/* Top Banner & Quick Actions */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0C0A07] text-[#FAF8F2] border border-[#B87802]/30 p-6 rounded-lg shadow-lg relative overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0C0A07] text-[#FAF8F2] border border-[#B87802]/30 p-6 rounded-lg relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#B87802]/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -153,7 +153,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                     borderRadius: '6px',
                     color: '#12100D',
                     fontSize: '12px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                    boxShadow: 'none',
                   }}
                   formatter={(value) => [`₹${Number(value).toLocaleString('en-IN')}`, 'Revenue']}
                 />

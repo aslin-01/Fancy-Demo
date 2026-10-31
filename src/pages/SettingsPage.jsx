@@ -31,7 +31,7 @@ export const SettingsPage = ({ onNotify }) => {
       </div>
 
       {/* Backend Status Card */}
-      <div className={`${theme.cards.base} p-6 flex items-center justify-between shadow-xs`}>
+      <div className={`${theme.cards.base} p-6 flex items-center justify-between`}>
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-md bg-secondary border border-border flex items-center justify-center text-[#B87802]">
             <Database className="w-6 h-6" />
@@ -53,7 +53,7 @@ export const SettingsPage = ({ onNotify }) => {
       </div>
 
       {/* Store Profile Form */}
-      <form onSubmit={handleSave} className={`${theme.cards.padded} space-y-4 text-xs shadow-xs`}>
+      <form onSubmit={handleSave} className={`${theme.cards.padded} space-y-4 text-xs`}>
         <h3 className="text-sm font-semibold text-foreground border-b border-border pb-3 flex items-center gap-2">
           <Store className="w-4 h-4 text-[#B87802]" />
           <span>General Store Details</span>

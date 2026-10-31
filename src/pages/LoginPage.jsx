@@ -40,13 +40,13 @@ export const LoginPage = ({ onNotify }) => {
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#F5B815]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#B87802]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-md w-full bg-card border border-border rounded-lg p-8 shadow-xl relative z-10">
+      <div className="max-w-md w-full bg-card border border-border rounded-lg p-8 relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-6">
           <img
             src="/favicon.png"
             alt="CF Handlooms logo"
-            className="w-16 h-16 mx-auto object-contain mb-3 drop-shadow-sm"
+            className="w-16 h-16 mx-auto object-contain mb-3"
           />
           <div className="flex flex-col items-center">
             <span className={theme.typography.cursiveBrand}>

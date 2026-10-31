@@ -2,11 +2,13 @@ import {
   LayoutDashboard,
   ShoppingBag,
   PackageCheck,
-  ShieldCheck
+  ShieldCheck,
+  RotateCcw,
+  AlertTriangle
 } from 'lucide-react';
 import { theme } from '../theme';
 
-export function Sidebar({ activeTab, setActiveTab, productCount, orderCount }) {
+export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, returnsCount, lowStockCount }) {
   const navItems = [
     {
       id: 'dashboard',
@@ -21,10 +23,22 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount }) {
       badge: productCount !== null ? productCount : null,
     },
     {
+      id: 'low-stock',
+      label: 'Low Stock',
+      icon: AlertTriangle,
+      badge: lowStockCount !== null && lowStockCount !== undefined && lowStockCount > 0 ? lowStockCount : null,
+    },
+    {
       id: 'orders',
       label: 'Orders',
       icon: PackageCheck,
       badge: orderCount !== null && orderCount !== undefined ? orderCount : 3,
+    },
+    {
+      id: 'returns',
+      label: 'Exchange',
+      icon: RotateCcw,
+      badge: returnsCount !== null && returnsCount !== undefined ? returnsCount : null,
     },
     {
       id: 'user-access',
@@ -43,7 +57,7 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount }) {
             <img
               src="/brand-logo.jpg"
               alt="CF Handlooms Official Logo"
-              className="h-10 w-10 object-contain bg-[#0C0A07] border border-[#B87802]/40 shadow-md shadow-[#B87802]/20 shrink-0"
+              className="h-10 w-10 object-contain bg-[#0C0A07] border border-[#B87802]/40 shrink-0"
             />
             <div className="min-w-0 flex-1 overflow-visible">
               <div className="flex items-center gap-2 overflow-visible">
@@ -69,7 +83,7 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount }) {
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg text-xs tracking-wide uppercase font-semibold transition-colors duration-150 cursor-pointer border border-l-4 ${
                   isActive
-                    ? 'bg-white text-[#B87802] border-[#E8D8B5] border-l-[#B87802] shadow-sm'
+                    ? 'bg-white text-[#B87802] border-[#E8D8B5] border-l-[#B87802]'
                     : 'text-[#4A4235] border-transparent border-l-transparent hover:bg-[#EAE0CE] hover:text-[#B87802]'
                 }`}
               >
@@ -103,7 +117,7 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount }) {
 
         {/* User Access Identity Badge */}
         <div className="flex items-center gap-3 pt-1 px-1">
-          <div className="w-8 h-8 rounded-full bg-white border border-[#B87802] flex items-center justify-center text-xs font-bold text-[#B87802] shadow-xs">
+          <div className="w-8 h-8 rounded-full bg-white border border-[#B87802] flex items-center justify-center text-xs font-bold text-[#B87802]">
             SA
           </div>
           <div className="flex-1 min-w-0">

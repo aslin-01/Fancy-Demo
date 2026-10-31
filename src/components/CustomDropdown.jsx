@@ -76,7 +76,7 @@ export function CustomDropdown({
         }}
         className={`w-full h-11 px-3.5 rounded-lg border bg-[#F7F3EA] text-[#12100D] text-sm font-medium transition-all cursor-pointer flex items-center justify-between gap-2 select-none ${
           isOpen
-            ? 'border-[#B87802] ring-1 ring-[#B87802] bg-[#F2ECE0] shadow-sm'
+            ? 'border-[#B87802] bg-[#F2ECE0]'
             : 'border-[#E8D8B5] hover:border-[#B87802] hover:bg-[#F2ECE0]'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
@@ -135,7 +135,7 @@ export function CustomDropdown({
 
       {/* Floating Options Menu matching the sidebar */}
       {isOpen && (
-        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-lg border border-[#E8D8B5] bg-[#F7F3EA] shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-lg border border-[#B87802] bg-[#F7F3EA] overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
           <div className="max-h-56 overflow-y-auto py-1 divide-y divide-[#E8D8B5]/40">
             {filteredOptions.length === 0 ? (
               <div className="px-3.5 py-3 text-xs text-[#8C7E6A] italic">
@@ -156,7 +156,7 @@ export function CustomDropdown({
                     onClick={() => handleSelect(opt.value)}
                     className={`px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider flex items-center justify-between cursor-pointer transition-colors duration-150 ${
                       isSelected
-                        ? 'bg-white text-[#B87802] border-l-4 border-l-[#B87802] shadow-xs'
+                        ? 'bg-white text-[#B87802] border-l-4 border-l-[#B87802]'
                         : 'text-[#4A4235] hover:bg-[#EAE0CE] hover:text-[#B87802] border-l-4 border-l-transparent'
                     }`}
                   >
