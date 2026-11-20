@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
-import { formatINR, products } from "@/data/products";
+import { formatINR } from "@/data/products";
 import { useStore } from "@/lib/store";
 import { theme } from "@/theme";
 
 const COUPONS = { FESTIVE10: 0.1, WELCOME5: 0.05 };
 
 export function CartPage() {
-  const { cart, setQty, removeFromCart, subtotal } = useStore();
+  const { cart, setQty, removeFromCart, subtotal, products } = useStore();
   const [coupon, setCoupon] = useState("");
   const [applied, setApplied] = useState(null);
   const [couponMsg, setCouponMsg] = useState(null);
@@ -16,13 +16,13 @@ export function CartPage() {
   const lines = cart
     .map((l) => ({
       ...l,
-      product: products.find((p) => p.id === l.productId),
+      product: products.find((p) => String(p.id) === String(l.productId) || String(p._id) === String(l.productId)),
     }))
     .filter((l) => l.product);
 
   const discountRate = applied ? COUPONS[applied] ?? 0 : 0;
   const discount = Math.round(subtotal * discountRate);
-  const shipping = subtotal - discount >= 2999 || subtotal === 0 ? 0 : 149;
+  const shipping = subtotal - discount >= 5000 || subtotal === 0 ? 0 : 149;
   const total = subtotal - discount + shipping;
 
   const applyCoupon = (e) => {

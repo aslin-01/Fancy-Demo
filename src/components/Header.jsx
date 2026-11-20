@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   ArrowRight,
@@ -8,81 +8,166 @@ import {
   Menu,
   Search,
   ShoppingCart,
-  Sparkles,
   User,
   X,
 } from "lucide-react";
 import { useStore } from "@/lib/store";
-import { products } from "@/data/products";
 import { theme } from "@/theme";
-import hero from "@/assets/hero.jpg";
-import sareeSilk from "@/assets/saree-silk.jpg";
-import sareeCotton from "@/assets/saree-cotton.jpg";
-import sareeDesigner from "@/assets/saree-designer.jpg";
-import sareeBridal from "@/assets/saree-bridal.jpg";
-import sareeOrganza from "@/assets/saree-organza.jpg";
 
 const mainNavLinks = [
   { label: "Home", to: "/" },
   // "Shop All" with sub-menu is inserted between Home and Offers
-  { label: "Offers", to: "/festive" },
+  { label: "Offers", to: "/shop?occasion=Festive" },
 ];
 
-const categorySubmenu = [
+const DEFAULT_CATEGORIES = [
   {
-    name: "All Sarees",
-    desc: "Complete catalog of authentic handloom weaves",
-    to: "/shop",
-    badge: "All",
-    image: hero,
+    name: "Cotton Sarees",
+    slug: "Cotton",
+    subcategories: [
+      { name: "Chanderi Silk", desc: "Lightweight sheer drape with gold zari accents" },
+      { name: "Mulmul Cotton", desc: "Featherlight breathable all-day handloom" },
+      { name: "Chettinad Cotton", desc: "Vibrant temple borders & bold heritage stripes" },
+      { name: "Kota Doria", desc: "Fine checkered translucent hand-woven craft" },
+      { name: "Linen Cotton", desc: "Earthy natural textures for effortless elegance" },
+      { name: "Jamdani Cotton", desc: "Intricate supplementary weft floral motifs" },
+    ],
   },
   {
     name: "Silk Sarees",
-    desc: "Kanchipuram & Banarasi pure silk brocades",
-    to: "/shop?category=Silk",
-    badge: "Pure Silk",
-    image: sareeSilk,
-  },
-  {
-    name: "Cotton Sarees",
-    desc: "Breathable all-day handloom comfort",
-    to: "/shop?category=Cotton",
-    badge: "Handloom",
-    image: sareeCotton,
+    slug: "Silk",
+    subcategories: [
+      { name: "Kanchipuram Silk", desc: "Pure South Indian mulberry silk with rich gold zari" },
+      { name: "Banarasi Silk", desc: "Opulent Varanasi antique brocades & floral jaal" },
+      { name: "Chanderi Silk", desc: "Delicate glossy finish with gossamer touch" },
+      { name: "Tussar Silk", desc: "Rich textured natural wild forest silk" },
+      { name: "Raw Silk & Matka", desc: "Slubbed rustic texture with regal drape" },
+      { name: "Organza Silk", desc: "Crisp, sheer modern luxury drapes" },
+    ],
   },
   {
     name: "Designer Sarees",
-    desc: "Modern aesthetics with opulent zari accents",
-    to: "/shop?category=Designer",
-    badge: "Designer",
-    image: sareeOrganza,
+    slug: "Designer",
+    subcategories: [
+      { name: "Organza & Tissue", desc: "Shimmering metallic high-sheen drape" },
+      { name: "Modern Brocades", desc: "Contemporary motifs with antique zari" },
+      { name: "Embroidered Sheer", desc: "Delicate cutwork & thread embroidery" },
+      { name: "Sequin Drapes", desc: "Evening glamour & cocktail shimmer" },
+      { name: "Floral Pastels", desc: "Chic digital & block print pastels" },
+    ],
   },
   {
     name: "Wedding Sarees",
-    desc: "Regal bridal heirlooms with antique gold zari",
-    to: "/shop?category=Wedding",
-    badge: "Bridal",
-    image: sareeBridal,
+    slug: "Wedding",
+    subcategories: [
+      { name: "Bridal Kanchipuram", desc: "Royal heirloom wedding drapes in crimson" },
+      { name: "Muhurtham Silks", desc: "Auspicious pure gold zari brocades" },
+      { name: "Antique Zari Brocade", desc: "Opulent heritage weaves for receptions" },
+      { name: "Royal Red & Maroon", desc: "Timeless traditional bridal palette" },
+      { name: "Pastel Bridal", desc: "Modern champagne, peach & rose gold heirlooms" },
+    ],
   },
   {
     name: "Party Wear",
-    desc: "Effortless shimmer, sequins & fluid drapes",
-    to: "/shop?category=Party Wear",
-    badge: "Party",
-    image: sareeDesigner,
+    slug: "Party Wear",
+    subcategories: [
+      { name: "Chiffon & Georgette", desc: "Weightless fluid silhouettes that glide" },
+      { name: "Cocktail Shimmer", desc: "Dazzling sequin border embellishments" },
+      { name: "Ready-to-Wear", desc: "Pre-pleated effortless contemporary style" },
+      { name: "Modern Pastels", desc: "Sophisticated monochrome evening tones" },
+    ],
   },
 ];
 
 export function Header() {
-  const { cartCount, wishlist } = useStore();
+  const { cartCount, wishlist, products, categories } = useStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopMenuOpen, setShopMenuOpen] = useState(false);
   const [mobileShopOpen, setMobileShopOpen] = useState(true);
+  const [activeCategorySlug, setActiveCategorySlug] = useState("Cotton");
   const [query, setQuery] = useState("");
+  const [authorizedEmail, setAuthorizedEmail] = useState(() => {
+    return localStorage.getItem("cf_authorized_email") || "";
+  });
   const navigate = useNavigate();
   const location = useLocation();
   const navContainerRef = useRef(null);
   const timeoutRef = useRef(null);
+
+  // Compute dynamic categories merged with store categories and products
+  const menuCategories = useMemo(() => {
+    const activeStoreCats = (categories || []).filter((c) => c.isActive !== false);
+
+    const subcatLookup = {};
+    DEFAULT_CATEGORIES.forEach((dc) => {
+      subcatLookup[dc.slug.toLowerCase()] = dc.subcategories;
+      subcatLookup[dc.name.toLowerCase()] = dc.subcategories;
+    });
+
+    const productSubcatsByCat = {};
+    (products || []).forEach((p) => {
+      if (!p.category || !p.subcategory) return;
+      const key = p.category.toLowerCase().trim();
+      if (!productSubcatsByCat[key]) productSubcatsByCat[key] = new Set();
+      productSubcatsByCat[key].add(p.subcategory.trim());
+    });
+
+    if (activeStoreCats.length > 0) {
+      return activeStoreCats.map((sc) => {
+        const slugKey = (sc.slug || sc.name).toLowerCase();
+        const nameKey = sc.name.toLowerCase();
+        const defaultSubs = subcatLookup[slugKey] || subcatLookup[nameKey] || [];
+        const adminProductSubs = Array.from(productSubcatsByCat[slugKey] || productSubcatsByCat[nameKey] || []);
+
+        const combined = [...defaultSubs];
+        adminProductSubs.forEach((adminSub) => {
+          if (!combined.some((item) => item.name.toLowerCase() === adminSub.toLowerCase())) {
+            combined.unshift({ name: adminSub, desc: `Exclusive ${sc.name} weave` });
+          }
+        });
+
+        return {
+          name: sc.name,
+          slug: sc.slug || sc.name,
+          subcategories: combined.length > 0 ? combined : [
+            { name: `All ${sc.name}`, desc: `Explore all ${sc.name} weaves` }
+          ],
+        };
+      });
+    }
+
+    return DEFAULT_CATEGORIES.map((dc) => {
+      const key = dc.slug.toLowerCase();
+      const adminProductSubs = Array.from(productSubcatsByCat[key] || []);
+      const combined = [...dc.subcategories];
+      adminProductSubs.forEach((adminSub) => {
+        if (!combined.some((item) => item.name.toLowerCase() === adminSub.toLowerCase())) {
+          combined.unshift({ name: adminSub, desc: `Handcrafted ${dc.name} weave` });
+        }
+      });
+      return {
+        ...dc,
+        subcategories: combined,
+      };
+    });
+  }, [categories, products]);
+
+  // Currently active/hovered category
+  const currentCategory = useMemo(() => {
+    if (!menuCategories || menuCategories.length === 0) return null;
+    const found = menuCategories.find(
+      (c) => c.slug.toLowerCase() === (activeCategorySlug || "").toLowerCase()
+    );
+    return found || menuCategories[0];
+  }, [menuCategories, activeCategorySlug]);
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setAuthorizedEmail(localStorage.getItem("cf_authorized_email") || "");
+    };
+    window.addEventListener("cf_auth_state_changed", handleAuthChange);
+    return () => window.removeEventListener("cf_auth_state_changed", handleAuthChange);
+  }, []);
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
@@ -164,7 +249,7 @@ export function Header() {
       {/* Announcement bar - Onyx Black with Royal Gold Text from Logo */}
       <div className="bg-[#0C0A07] text-[#F5B815] border-b border-[#F5B815]/20">
         <p className="mx-auto max-w-7xl px-4 py-2 text-center text-xs tracking-[0.18em] uppercase font-medium">
-          Festive Offer — Free shipping across India on orders above ₹2,999
+          Festive Offer — Free shipping across India on orders above ₹5,000
         </p>
       </div>
 
@@ -213,6 +298,26 @@ export function Header() {
           </form>
 
           <div className="ml-auto flex shrink-0 items-center gap-4 sm:gap-6">
+            {authorizedEmail && (
+              <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF8F2] border border-[#E8D8B5] text-[11px]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                <span className="font-semibold text-[#12100D] max-w-[120px] truncate">
+                  {authorizedEmail}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    localStorage.removeItem("cf_authorized_email");
+                    localStorage.removeItem("cf_authorized_user");
+                    window.dispatchEvent(new Event("cf_auth_state_changed"));
+                  }}
+                  className="ml-1 text-[10px] text-[#B87802] hover:text-rose-600 font-semibold cursor-pointer underline"
+                  title="Exit / Switch user email"
+                >
+                  Exit
+                </button>
+              </div>
+            )}
             <Link
               to="/admin/dashboard"
               className="group flex flex-col items-center justify-center gap-1 text-foreground/85 hover:text-[#B87802] transition-colors"
@@ -331,120 +436,101 @@ export function Header() {
         </nav>
 
         {/* Desktop Category Sub-Menu / Hover Mega Menu (Attached directly below the nav bar) */}
-        {shopMenuOpen && (
+        {shopMenuOpen && currentCategory && (
           <div
             id="shop-all-submenu"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="absolute left-0 right-0 top-full z-50 border-b border-[#F5B815]/30 bg-background/98 shadow-2xl backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-top-2"
+            className="absolute left-0 right-0 top-full z-50 border-b border-[#E8D8B5] bg-[#FAF8F2]/98 shadow-2xl backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-top-2"
           >
             {/* Gold highlight accent strip */}
             <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#F5B815] to-transparent" />
 
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
-              {/* Sub-menu Top Bar */}
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#F5B815]/20 text-[#B87802]">
-                    <Sparkles className="h-3.5 w-3.5" />
-                  </span>
-                  <div>
-                    <h3 className="text-xs font-semibold tracking-[0.2em] uppercase text-[#B87802]">
-                      Shop by Category
-                    </h3>
-                    <p className="text-[11px] text-muted-foreground">
-                      Explore authentic handlooms or browse our complete collection
-                    </p>
+            <div className="mx-auto max-w-5xl px-6 py-6 sm:px-8">
+              <div className="flex gap-8 items-start min-h-[300px]">
+                
+                {/* Left Panel: Categories List */}
+                <div className="w-64 shrink-0 border-r border-[#E8D8B5]/80 pr-6">
+                  <p className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#B87802] mb-3 px-3">
+                    Categories
+                  </p>
+                  <div className="space-y-1">
+                    {menuCategories.map((cat) => {
+                      const isHovered = currentCategory.slug.toLowerCase() === cat.slug.toLowerCase();
+                      return (
+                        <Link
+                          key={cat.slug}
+                          to={`/shop?category=${encodeURIComponent(cat.slug)}`}
+                          onMouseEnter={() => setActiveCategorySlug(cat.slug)}
+                          onClick={() => setShopMenuOpen(false)}
+                          className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                            isHovered
+                              ? "bg-[#F5B815]/15 text-[#B87802] font-semibold shadow-xs"
+                              : "text-foreground/80 hover:bg-[#F5B815]/10 hover:text-[#B87802]"
+                          }`}
+                        >
+                          <span className="group-hover:translate-x-0.5 transition-transform">
+                            {cat.name}
+                          </span>
+                          <ChevronRight
+                            className={`h-4 w-4 transition-all ${
+                              isHovered
+                                ? "text-[#B87802] translate-x-1"
+                                : "text-muted-foreground/35 group-hover:text-[#B87802] group-hover:translate-x-0.5"
+                            }`}
+                          />
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
 
-                <Link
-                  to="/shop"
-                  onClick={() => setShopMenuOpen(false)}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#B87802] to-[#996300] px-4 py-1.5 text-xs font-medium tracking-wider text-white shadow-sm shadow-[#B87802]/30 transition-all hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]"
-                >
-                  View All Products ({products.length})
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-
-              {/* Sub-menu Category Cards Grid */}
-              <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-6">
-                {categorySubmenu.map((cat) => (
-                  <Link
-                    key={cat.name}
-                    to={cat.to}
-                    onClick={() => setShopMenuOpen(false)}
-                    className="group relative flex flex-col overflow-hidden rounded-lg border border-border/60 bg-card p-2 text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#F5B815]/50 hover:shadow-lg hover:shadow-[#F5B815]/10"
-                  >
-                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-muted">
-                      <img
-                        src={cat.image}
-                        alt={cat.name}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
-                      />
-                      <span className="absolute top-1.5 right-1.5 rounded bg-[#0C0A07]/80 px-1.5 py-0.5 text-[9px] font-medium tracking-wider text-[#F5B815] uppercase backdrop-blur-sm">
-                        {cat.badge}
+                {/* Right Panel: Sub-Categories of Hovered Category */}
+                <div className="flex-1 pl-2">
+                  <div className="flex items-center justify-between border-b border-[#E8D8B5]/80 pb-3 mb-4">
+                    <div>
+                      <span className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#B87802]">
+                        Sub-Categories
                       </span>
+                      <h3 className="font-display text-lg font-semibold text-foreground mt-0.5">
+                        {currentCategory.name}
+                      </h3>
                     </div>
-                    <div className="mt-2.5 flex-1">
-                      <p className="text-xs font-semibold text-foreground group-hover:text-[#B87802] transition-colors">
-                        {cat.name}
-                      </p>
-                      <p className="mt-0.5 text-[10px] leading-tight text-muted-foreground line-clamp-2">
-                        {cat.desc}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    <Link
+                      to={`/shop?category=${encodeURIComponent(currentCategory.slug)}`}
+                      onClick={() => setShopMenuOpen(false)}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#B87802] hover:text-[#0C0A07] transition-colors"
+                    >
+                      <span>View All {currentCategory.name}</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
 
-              {/* Quick filters footer strip */}
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-lg bg-muted/40 px-4 py-2.5 text-xs border border-border/40">
-                <span className="text-muted-foreground text-[11px] font-medium uppercase tracking-wider">
-                  Quick Filters:
-                </span>
-                <div className="flex flex-wrap items-center gap-3">
-                  <Link
-                    to="/shop?sort=newest"
-                    onClick={() => setShopMenuOpen(false)}
-                    className="text-[11px] text-foreground/80 hover:text-[#B87802] transition-colors font-medium"
-                  >
-                    ✦ New Arrivals
-                  </Link>
-                  <span className="text-border">•</span>
-                  <Link
-                    to="/shop?sort=popularity"
-                    onClick={() => setShopMenuOpen(false)}
-                    className="text-[11px] text-foreground/80 hover:text-[#B87802] transition-colors font-medium"
-                  >
-                    ✦ Best Sellers
-                  </Link>
-                  <span className="text-border">•</span>
-                  <Link
-                    to="/shop?occasion=Festive"
-                    onClick={() => setShopMenuOpen(false)}
-                    className="text-[11px] text-foreground/80 hover:text-[#B87802] transition-colors font-medium"
-                  >
-                    ✦ Festive Specials
-                  </Link>
-                  <span className="text-border">•</span>
-                  <Link
-                    to="/shop?category=Wedding"
-                    onClick={() => setShopMenuOpen(false)}
-                    className="text-[11px] text-foreground/80 hover:text-[#B87802] transition-colors font-medium"
-                  >
-                    ✦ Bridal Collection
-                  </Link>
-                  <span className="text-border">•</span>
-                  <Link
-                    to="/shop"
-                    onClick={() => setShopMenuOpen(false)}
-                    className="text-[11px] font-semibold text-[#B87802] hover:text-[#F5B815] transition-colors"
-                  >
-                    ✦ Browse All Sarees →
-                  </Link>
+                  {/* Sub-Category Grid */}
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                    {currentCategory.subcategories.map((sub) => (
+                      <Link
+                        key={sub.name}
+                        to={`/shop?category=${encodeURIComponent(currentCategory.slug)}&subcategory=${encodeURIComponent(sub.name)}`}
+                        onClick={() => setShopMenuOpen(false)}
+                        className="group rounded-xl border border-[#E8D8B5]/60 bg-white/70 p-3.5 hover:bg-white hover:border-[#B87802] hover:shadow-xs transition-all duration-200"
+                      >
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-semibold text-foreground/90 group-hover:text-[#B87802] transition-colors">
+                            {sub.name}
+                          </p>
+                          <ArrowRight className="h-3 w-3 text-[#B87802] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                        </div>
+                        {sub.desc && (
+                          <p className="text-[11px] text-muted-foreground mt-1 line-clamp-1 leading-normal">
+                            {sub.desc}
+                          </p>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -501,19 +587,29 @@ export function Header() {
                 </div>
 
                 {mobileShopOpen && (
-                  <ul className="mt-2 space-y-1.5 pl-3 border-l-2 border-[#F5B815]/40 mb-2">
-                    {categorySubmenu.map((cat) => (
-                      <li key={cat.name}>
+                  <ul className="mt-2 space-y-2.5 pl-3 border-l-2 border-[#F5B815]/40 mb-2">
+                    {menuCategories.map((cat) => (
+                      <li key={cat.slug} className="space-y-1">
                         <Link
-                          to={cat.to}
+                          to={`/shop?category=${encodeURIComponent(cat.slug)}`}
                           onClick={() => setMobileOpen(false)}
-                          className="flex items-center justify-between py-1.5 text-xs text-foreground/80 hover:text-[#B87802]"
+                          className="flex items-center justify-between text-xs font-semibold uppercase text-foreground/90 hover:text-[#B87802]"
                         >
                           <span>{cat.name}</span>
-                          <span className="text-[10px] text-muted-foreground">
-                            {cat.badge}
-                          </span>
+                          <ChevronRight className="h-3 w-3 text-muted-foreground" />
                         </Link>
+                        <div className="flex flex-wrap gap-1.5 pl-1">
+                          {cat.subcategories.slice(0, 4).map((sub) => (
+                            <Link
+                              key={sub.name}
+                              to={`/shop?category=${encodeURIComponent(cat.slug)}&subcategory=${encodeURIComponent(sub.name)}`}
+                              onClick={() => setMobileOpen(false)}
+                              className="text-[11px] text-muted-foreground hover:text-[#B87802] bg-[#FAF8F2] px-2 py-0.5 rounded border border-[#E8D8B5]/50"
+                            >
+                              {sub.name}
+                            </Link>
+                          ))}
+                        </div>
                       </li>
                     ))}
                   </ul>

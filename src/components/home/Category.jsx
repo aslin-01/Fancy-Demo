@@ -9,14 +9,27 @@ export function Category() {
   const { categories } = useStore();
   const activeCategories = categories.filter((c) => c.isActive !== false);
 
+  if (activeCategories.length === 0) return null;
+
+  const gridClass =
+    activeCategories.length === 1
+      ? "grid grid-cols-1 max-w-xs mx-auto gap-4"
+      : activeCategories.length === 2
+        ? "grid grid-cols-2 max-w-2xl mx-auto gap-4"
+        : activeCategories.length === 3
+          ? "grid grid-cols-2 sm:grid-cols-3 max-w-4xl mx-auto gap-4"
+          : activeCategories.length === 4
+            ? "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
+            : "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5";
+
   return (
     <section id="categories" className={theme.layout.sectionContainer}>
       <SectionHeading eyebrow="Curated for You" title="Shop by Category" />
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <div className={gridClass}>
         {activeCategories.map((cat) => (
           <Link
-            key={cat.slug || cat.name}
-            to={`/shop?category=${encodeURIComponent(cat.slug || cat.name)}`}
+            key={cat._id || cat.slug || cat.name}
+            to={`/shop?category=${encodeURIComponent(cat.name || cat.slug)}`}
             className="group relative overflow-hidden rounded-lg"
           >
             <img

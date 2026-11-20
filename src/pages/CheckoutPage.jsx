@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { formatINR, products } from "@/data/products";
+import { formatINR } from "@/data/products";
 import { useStore } from "@/lib/store";
 import { theme } from "@/theme";
 
@@ -17,7 +17,7 @@ const initial = {
 };
 
 export function CheckoutPage() {
-  const { cart, subtotal, clearCart } = useStore();
+  const { cart, subtotal, clearCart, products } = useStore();
   const navigate = useNavigate();
   const [form, setForm] = useState(initial);
   const [errors, setErrors] = useState({});
@@ -25,11 +25,11 @@ export function CheckoutPage() {
   const lines = cart
     .map((l) => ({
       ...l,
-      product: products.find((p) => p.id === l.productId),
+      product: products.find((p) => String(p.id) === String(l.productId) || String(p._id) === String(l.productId)),
     }))
     .filter((l) => l.product);
 
-  const shipping = subtotal >= 2999 || subtotal === 0 ? 0 : 149;
+  const shipping = subtotal >= 5000 || subtotal === 0 ? 0 : 149;
   const total = subtotal + shipping;
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));

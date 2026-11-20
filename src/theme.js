@@ -89,6 +89,8 @@ export const theme = {
     metaSku: "text-xs tracking-[0.25em] uppercase text-muted-foreground",
     priceBig: "text-3xl font-semibold text-[#B87802]",
     priceStrike: "text-lg text-muted-foreground line-through",
+    priceStrikethrough: "text-lg text-muted-foreground line-through",
+    priceDisplay: "font-display text-3xl font-semibold text-[#B87802]",
     bodyMuted: "text-sm text-muted-foreground",
     bodyBase: "text-sm leading-relaxed text-foreground/80",
   },

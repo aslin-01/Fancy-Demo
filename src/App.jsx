@@ -18,9 +18,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
 // Direct section components for individual routes
 import Category from "@/components/home/Category";
 import Sellers from "@/components/home/Sellers";
-import Bridal from "@/components/home/Bridal";
 import Arrivals from "@/components/home/Arrivals";
-import Festive from "@/components/home/Festive";
 import Inspiration from "@/components/home/Inspiration";
 import Touch from "@/components/home/Touch";
 
@@ -36,9 +34,7 @@ export function App() {
             {/* Individual section paths */}
             <Route path="categories" element={<Category />} />
             <Route path="sellers" element={<Sellers />} />
-            <Route path="bridal" element={<Bridal />} />
             <Route path="arrivals" element={<Arrivals />} />
-            <Route path="festive" element={<Festive />} />
             <Route path="inspiration" element={<Inspiration />} />
             <Route path="touch" element={<Touch />} />
 

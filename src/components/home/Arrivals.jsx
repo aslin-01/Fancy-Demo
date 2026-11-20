@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "@/lib/store";
 import { SectionHeading } from "@/components/common/SectionHeading";
@@ -7,7 +7,15 @@ import { theme } from "@/theme";
 
 export function Arrivals() {
   const { products } = useStore();
-  const newArrivals = products.filter((p) => p.isNew).slice(0, 4);
+  const newArrivals = useMemo(() => {
+    const flagged = products.filter((p) => p.isNew);
+    if (flagged.length > 0) return flagged.slice(0, 4);
+    return [...products]
+      .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+      .slice(0, 4);
+  }, [products]);
+
+  if (newArrivals.length === 0) return null;
 
   return (
     <section id="arrivals" className="bg-secondary/50">

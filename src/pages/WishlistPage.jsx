@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
-import { products } from "@/data/products";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/common/ProductCard";
 import { theme } from "@/theme";
 
 export function WishlistPage() {
-  const { wishlist } = useStore();
-  const items = products.filter((p) => wishlist.includes(p.id));
+  const { wishlist, products } = useStore();
+  const items = products.filter((p) => wishlist.includes(p.id) || wishlist.includes(p._id));
 
   return (
     <div className={theme.layout.pageContainer}>

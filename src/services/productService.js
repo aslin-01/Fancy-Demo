@@ -1,4 +1,3 @@
-import { products as initialProducts, categories as initialCategories } from '@/data/products';
 import sareeSilk from "@/assets/saree-silk.jpg";
 import sareeCotton from "@/assets/saree-cotton.jpg";
 import sareeBridal from "@/assets/saree-bridal.jpg";
@@ -31,19 +30,55 @@ class ProductService {
     this.syncWithBackend();
   }
 
-  // Load products with fallback to initial data
+  // Load products (starts empty - no hardcoded/demo products)
   loadProducts() {
-    if (typeof window === 'undefined') return initialProducts;
+    if (typeof window === 'undefined') return [];
     try {
       const stored = window.localStorage.getItem(STORAGE_PRODUCTS_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map((p) => {
-            const foundPreset = PRESET_IMAGES.find((img) => img.id === p.presetImageId || img.src === p.image);
+          const demoIds = new Set([
+            'kanchipuram-silk-maroon',
+            'banarasi-silk-heritage',
+            'cotton-handloom-ivory',
+            'bridal-red-zari',
+            'organza-blush-pink',
+            'chiffon-emerald',
+            'designer-navy-sequin',
+            'festive-mustard-temple',
+            'soft-silk-rose',
+            'linen-sage-everyday',
+            'georgette-emerald-evening',
+            'bridal-gold-kanchipuram',
+          ]);
+          const demoNames = new Set([
+            'kanchipuram pure silk saree — maroon & gold',
+            'banarasi silk saree — heritage brocade',
+            'handloom cotton saree — ivory & beige',
+            'bridal wedding saree — royal red zari',
+            'shimmer organza saree — blush pink',
+            'chiffon saree — emerald with gold buttis',
+            'traditional festive saree — mustard temple border',
+            'soft silk saree — rose gold sheen',
+            'linen saree — natural sand',
+            'bridal kanchipuram saree — antique gold',
+          ]);
+          const filtered = parsed.filter(
+            (p) =>
+              !demoIds.has(p.id) &&
+              !demoIds.has(p._id) &&
+              !demoNames.has(String(p.name || '').toLowerCase().trim())
+          );
+          return filtered.map((p) => {
+            const resolvedImg = p.image || (Array.isArray(p.gallery) && p.gallery[0]) || (Array.isArray(p.images) && p.images[0]) || (Array.isArray(p.colors) && p.colors[0]?.images && p.colors[0].images[0]) || sareeSilk;
             return {
               ...p,
-              image: foundPreset ? foundPreset.src : (p.image || sareeSilk),
+              id: p._id || p.id,
+              image: resolvedImg,
+              gallery: Array.isArray(p.gallery) ? p.gallery : (Array.isArray(p.images) ? p.images : []),
+              images: Array.isArray(p.images) ? p.images : (Array.isArray(p.gallery) ? p.gallery : []),
+              colors: Array.isArray(p.colors) ? p.colors : [],
               isActive: p.isActive !== false,
               inStock: p.inStock !== false,
             };
@@ -51,46 +86,57 @@ class ProductService {
         }
       }
     } catch (e) {
-      console.warn('Failed to parse stored products, falling back to defaults:', e);
+      console.warn('Failed to parse stored products:', e);
     }
-    const normalized = initialProducts.map((p) => ({
-      ...p,
-      isActive: true,
-      inStock: p.inStock !== false,
-      createdAt: p.createdAt || new Date().toISOString(),
-    }));
-    this.saveProducts(normalized);
-    return normalized;
+    return [];
   }
 
-  // Load categories
+  // Load categories (starts empty or derives from stored products - no hardcoded categories)
+  deriveCategoriesFromProducts(productsList) {
+    const map = new Map();
+    (productsList || []).forEach((p) => {
+      if (p.isActive === false) return;
+      const catName = String(p.category || '').trim();
+      if (!catName) return;
+      const key = catName.toLowerCase();
+      if (!map.has(key)) {
+        map.set(key, {
+          name: catName,
+          slug: catName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+          image: p.image || sareeSilk,
+          isActive: true,
+        });
+      }
+    });
+    return Array.from(map.values());
+  }
+
   loadCategories() {
-    if (typeof window === 'undefined') return initialCategories;
+    if (typeof window === 'undefined') return [];
     try {
       const stored = window.localStorage.getItem(STORAGE_CATEGORIES_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map((c) => {
-            const foundPreset = PRESET_IMAGES.find((img) => img.id === c.presetImageId || img.src === c.image);
-            return {
-              ...c,
-              image: foundPreset ? foundPreset.src : (c.image || sareeSilk),
-              isActive: c.isActive !== false,
-            };
-          });
+          // Ignore legacy hardcoded fallback categories that were previously cached without backend _id
+          const legacyNames = new Set(['Silk Sarees', 'Cotton Sarees', 'Designer Sarees', 'Wedding Sarees', 'Party Wear']);
+          const isLegacyDefault = parsed.every((c) => !c._id && legacyNames.has(c.name));
+          if (!isLegacyDefault) {
+            return parsed.map((c) => {
+              const foundPreset = PRESET_IMAGES.find((img) => img.id === c.presetImageId || img.src === c.image);
+              return {
+                ...c,
+                image: foundPreset ? foundPreset.src : (c.image || sareeSilk),
+                isActive: c.isActive !== false,
+              };
+            });
+          }
         }
       }
     } catch (e) {
-      console.warn('Failed to parse stored categories, falling back to defaults:', e);
+      console.warn('Failed to parse stored categories:', e);
     }
-    const normalized = initialCategories.map((c) => ({
-      ...c,
-      isActive: true,
-      description: c.description || `Handcrafted ${c.name} collection for festive & everyday luxury.`,
-    }));
-    this.saveCategories(normalized);
-    return normalized;
+    return this.deriveCategoriesFromProducts(this.products);
   }
 
   saveProducts(list) {
@@ -98,7 +144,15 @@ class ProductService {
     try {
       window.localStorage.setItem(STORAGE_PRODUCTS_KEY, JSON.stringify(list));
     } catch (e) {
-      console.error('Failed to save products to localStorage:', e);
+      console.warn('Full products list exceeded localStorage quota, saving lightweight catalog:', e);
+      try {
+        const lightList = list.map((p) => ({
+          ...p,
+          image: p.image && p.image.length > 50000 ? p.image.slice(0, 50000) : p.image,
+          gallery: Array.isArray(p.gallery) ? p.gallery.slice(0, 6).map((img) => img && img.length > 50000 ? img.slice(0, 50000) : img) : [],
+        }));
+        window.localStorage.setItem(STORAGE_PRODUCTS_KEY, JSON.stringify(lightList));
+      } catch (inner) {}
     }
   }
 
@@ -129,13 +183,65 @@ class ProductService {
   // Backend sync helper
   async syncWithBackend() {
     try {
-      const res = await fetch(`${API_URL}/products`, { cache: 'no-store' });
-      if (res.ok) {
-        const json = await res.json();
+      const [prodRes, catRes] = await Promise.allSettled([
+        fetch(`${API_URL}/products`, { cache: 'no-store' }),
+        fetch(`${API_URL}/categories`, { cache: 'no-store' }),
+      ]);
+
+      let updated = false;
+
+      if (prodRes.status === 'fulfilled' && prodRes.value.ok) {
+        const json = await prodRes.value.json();
         const serverProducts = json.data || json;
-        if (Array.isArray(serverProducts) && serverProducts.length > 0) {
-          console.log(`Synced ${serverProducts.length} products from backend API`);
+        if (Array.isArray(serverProducts)) {
+          this.products = serverProducts.map((p) => {
+            const resolvedImg = p.image || (Array.isArray(p.gallery) && p.gallery[0]) || (Array.isArray(p.images) && p.images[0]) || (Array.isArray(p.colors) && p.colors[0]?.images && p.colors[0].images[0]) || sareeSilk;
+            return {
+              ...p,
+              id: p._id || p.id,
+              image: resolvedImg,
+              gallery: Array.isArray(p.gallery) ? p.gallery : (Array.isArray(p.images) ? p.images : []),
+              images: Array.isArray(p.images) ? p.images : (Array.isArray(p.gallery) ? p.gallery : []),
+              colors: Array.isArray(p.colors) ? p.colors : [],
+              isActive: p.isActive !== false,
+              inStock: p.inStock !== false,
+            };
+          });
+          this.saveProducts(this.products);
+          updated = true;
         }
+      }
+
+      let loadedServerCategories = false;
+      if (catRes.status === 'fulfilled' && catRes.value.ok) {
+        const catJson = await catRes.value.json();
+        const serverCats = catJson.data || catJson;
+        if (Array.isArray(serverCats) && serverCats.length > 0) {
+          this.categories = serverCats.map((c) => {
+            const foundPreset = PRESET_IMAGES.find((img) => img.id === c.presetImageId || img.src === c.image);
+            const matchingProd = this.products.find(
+              (p) => p.category && c.name && p.category.toLowerCase() === c.name.toLowerCase()
+            );
+            return {
+              ...c,
+              image: c.image || (foundPreset ? foundPreset.src : matchingProd?.image || sareeSilk),
+              isActive: c.isActive !== false,
+            };
+          });
+          this.saveCategories(this.categories);
+          loadedServerCategories = true;
+          updated = true;
+        }
+      }
+
+      if (!loadedServerCategories) {
+        this.categories = this.deriveCategoriesFromProducts(this.products);
+        this.saveCategories(this.categories);
+        updated = true;
+      }
+
+      if (updated) {
+        this.notify();
       }
     } catch (e) {}
   }
