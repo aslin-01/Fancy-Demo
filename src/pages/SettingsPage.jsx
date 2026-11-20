@@ -38,7 +38,7 @@ export const SettingsPage = ({ onNotify }) => {
           </div>
           <div>
             <h3 className="text-sm font-semibold text-foreground">REST API Backend Connection</h3>
-            <p className="text-xs text-muted-foreground">Target: http://localhost:5000/api</p>
+            <p className="text-xs text-muted-foreground">Target: Active REST API Backend</p>
           </div>
         </div>
         <span

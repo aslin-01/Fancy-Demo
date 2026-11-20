@@ -17,6 +17,22 @@ import {
   Star
 } from 'lucide-react';
 import { api, STORE_URL } from '../services/api';
+import { SuggestionInput } from './SuggestionInput';
+
+const WASH_CARE_SUGGESTIONS = [
+  'Dry clean only',
+  'Dry clean recommended',
+  'Gentle hand wash',
+  'Dry clean or gentle hand wash',
+  'Hand wash with mild detergent',
+];
+
+const BLOUSE_PIECE_SUGGESTIONS = [
+  'Attached (80 cm)',
+  'Included — running blouse',
+  'Included — unstitched blouse piece (80 cm)',
+  'Without blouse piece',
+];
 
 const SAMPLE_IMAGES = [
   {
@@ -111,6 +127,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
     price: '',
     mrp: '',
     stockCount: 25,
+    lowStockAlert: 10,
     inStock: true,
     image: '',
     gallery: '',
@@ -162,6 +179,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
         price: initialProduct.price || '',
         mrp: initialProduct.mrp || '',
         stockCount: initialProduct.stockCount ?? 25,
+        lowStockAlert: initialProduct.lowStockAlert ?? 10,
         inStock: initialProduct.inStock ?? true,
         image: initialProduct.image || '',
         gallery: Array.isArray(initialProduct.gallery) ? initialProduct.gallery.join(', ') : '',
@@ -243,6 +261,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
         price: Number(formData.price),
         mrp: Number(formData.mrp),
         stockCount: Number(formData.stockCount) || 0,
+        lowStockAlert: formData.lowStockAlert !== undefined && formData.lowStockAlert !== '' ? Number(formData.lowStockAlert) : 10,
         inStock: Boolean(formData.inStock),
         image: formData.image.trim(),
         gallery: formData.gallery
@@ -277,7 +296,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
       <div className="bg-white rounded-lg border border-[#E8D8B5] max-w-4xl w-full max-h-[92vh] flex flex-col my-auto overflow-hidden animate-in fade-in zoom-in-95 duration-200">
 
-        {/* Header matching http://localhost:3000/ */}
+        {/* Storefront Header */}
         <div className="px-6 py-4 border-b border-[#E8D8B5] bg-[#FAF8F2] flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-md bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 flex items-center justify-center">
@@ -291,7 +310,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 </span>
               </h2>
               <p className="text-xs text-[#6B6457] font-body">
-                Configured with category, colors, and prices. Automatically updates http://localhost:3000/.
+                Configured with category, colors, and prices. Automatically updates the storefront catalog.
               </p>
             </div>
           </div>
@@ -315,7 +334,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                   {isEdit ? 'Product updated successfully!' : 'Product added successfully!'}
                 </p>
                 <p className="text-xs text-emerald-800 font-body">
-                  "{successInfo.name}" is now live in the database and visible on http://localhost:3000/.
+                  "{successInfo.name}" is now live in the database and visible on the storefront.
                 </p>
               </div>
             </div>
@@ -647,36 +666,40 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 />
               </div>
 
-              {/* Specifications: Length, Blouse, Wash Care */}
+              {/* Specifications: Low Stock Alert, Blouse Piece, Wash Care */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div>
-                  <label className="block font-semibold text-[#12100D] mb-1">Length</label>
+                  <label className="block font-semibold text-[#12100D] mb-1">Low Stock Alert</label>
                   <input
-                    type="text"
-                    name="length"
-                    value={formData.length}
+                    type="number"
+                    name="lowStockAlert"
+                    value={formData.lowStockAlert ?? ''}
                     onChange={handleChange}
-                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card"
+                    placeholder="e.g. 10"
+                    min="0"
+                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D]"
                   />
                 </div>
                 <div>
                   <label className="block font-semibold text-[#12100D] mb-1">Blouse Piece</label>
-                  <input
-                    type="text"
+                  <SuggestionInput
                     name="blousePiece"
                     value={formData.blousePiece}
                     onChange={handleChange}
-                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card"
+                    placeholder="e.g. Attached (80 cm)"
+                    suggestions={BLOUSE_PIECE_SUGGESTIONS}
+                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D] outline-none focus:border-[#B87802]"
                   />
                 </div>
                 <div>
                   <label className="block font-semibold text-[#12100D] mb-1">Wash Care</label>
-                  <input
-                    type="text"
+                  <SuggestionInput
                     name="washCare"
                     value={formData.washCare}
                     onChange={handleChange}
-                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card"
+                    placeholder="e.g. Dry Clean Only"
+                    suggestions={WASH_CARE_SUGGESTIONS}
+                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D] outline-none focus:border-[#B87802]"
                   />
                 </div>
               </div>
@@ -739,19 +762,19 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 </div>
               </div>
 
-              {/* Live Card Preview (Matches localhost:3000 Store Card exactly) */}
+              {/* Live Card Preview */}
               <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5]">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] flex items-center gap-1.5 font-body">
                     <Eye className="w-3.5 h-3.5 text-[#B87802]" />
-                    Live Store Card Preview (localhost:3000)
+                    Live Store Card Preview
                   </span>
                   <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
                     Exact Match
                   </span>
                 </div>
 
-                {/* Simulated Customer Product Card from http://localhost:3000/ */}
+                {/* Simulated Customer Product Card */}
                 <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden max-w-[280px] mx-auto transition-all">
                   <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
                     {formData.image ? (
@@ -826,7 +849,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 </div>
 
                 <p className="text-[11px] text-center text-[#6B6457] mt-3 font-body">
-                  Renders with this exact styling on <strong className="text-[#12100D]">localhost:3000</strong> once submitted!
+                  Renders with this exact styling on the <strong className="text-[#12100D]">storefront</strong> once submitted!
                 </p>
               </div>
 

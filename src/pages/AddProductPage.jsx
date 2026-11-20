@@ -29,6 +29,25 @@ import {
 import { api, STORE_URL } from '../services/api';
 import { theme } from '../theme';
 import { CustomDropdown } from '../components/CustomDropdown';
+import { SuggestionInput } from '../components/SuggestionInput';
+
+export const WASH_CARE_SUGGESTIONS = [
+  'Dry clean only',
+  'Dry clean recommended',
+  'Gentle hand wash',
+  'Dry clean or gentle hand wash',
+  'Hand wash with mild detergent',
+  'Cold water gentle wash',
+];
+
+export const BLOUSE_PIECE_SUGGESTIONS = [
+  'Attached (80 cm)',
+  'Included — running blouse',
+  'Included — unstitched blouse piece (80 cm)',
+  'Attached blouse piece',
+  'Without blouse piece',
+  'Running blouse piece',
+];
 
 // Helper to convert desktop image file to an optimized, lightweight base64 Data URL
 export const processImageFile = (file, maxWidth = 1000, maxHeight = 1000, quality = 0.8) => {
@@ -434,6 +453,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
     price: '',
     mrp: '',
     stockCount: 0,
+    lowStockAlert: 10,
     inStock: true,
     image: '',
     gallery: [],
@@ -736,6 +756,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
         price: initialProduct.price || '',
         mrp: initialProduct.mrp || '',
         stockCount: initialProduct.stockCount ?? 0,
+        lowStockAlert: initialProduct.lowStockAlert ?? 10,
         inStock: initialProduct.inStock ?? true,
         image: initialProduct.image || existingGallery[0] || '',
         gallery: existingGallery,
@@ -828,6 +849,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
           price: initialProduct.price || '',
           mrp: initialProduct.mrp || '',
           stockCount: initialProduct.stockCount ?? 0,
+          lowStockAlert: initialProduct.lowStockAlert ?? 10,
           inStock: initialProduct.inStock ?? true,
           image: initialProduct.image || existingGallery[0] || '',
           gallery: existingGallery,
@@ -891,6 +913,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
         price: Number(formData.price),
         mrp: Number(formData.mrp),
         stockCount: Number(formData.stockCount) || 0,
+        lowStockAlert: formData.lowStockAlert !== undefined && formData.lowStockAlert !== '' ? Number(formData.lowStockAlert) : 10,
         inStock: Boolean(formData.inStock),
         image: primaryImage,
         gallery: allImages,
@@ -999,8 +1022,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 {isEdit ? 'Saree Details Updated Successfully!' : 'Saree Published Successfully to Store!'}
               </h3>
               <p className="text-xs text-emerald-800 font-body mt-0.5">
-                "{successInfo.name}" is now live in the inventory database and visible on{' '}
-                <span className="font-semibold underline">http://localhost:3000/</span>.
+                "{successInfo.name}" is now live in the inventory database and visible on the storefront.
               </p>
             </div>
           </div>
@@ -1295,46 +1317,59 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 />
               </div>
             </div>
-          </div>
 
-          {/* SECTION 3: Saree Specifications & Description */}
-          <div className="space-y-4">
-            {/* Specifications: Length, Blouse, Wash Care */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            {/* Row 2: Low Stock Alert, Blouse Piece & Wash Care in One Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-start">
+              {/* Low Stock Alert */}
               <div>
-                <label className={theme.forms.label}>Length</label>
+                <div className="flex items-center justify-between">
+                  <label className={theme.forms.label}>
+                    Low Stock Alert <span className="text-[#B87802]">*</span>
+                  </label>
+                  <span className="text-[11px] text-[#8C7E6A] font-medium">Threshold</span>
+                </div>
                 <input
-                  type="text"
-                  name="length"
-                  value={formData.length}
+                  type="number"
+                  name="lowStockAlert"
+                  value={formData.lowStockAlert ?? ''}
                   onChange={handleChange}
-                  placeholder="e.g. 6.3 Mts with Blouse"
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm text-[#12100D] outline-none focus:outline-none focus:border-[#B87802] transition-colors"
+                  placeholder="e.g. 10"
+                  min="0"
+                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm font-semibold text-[#12100D] outline-none focus:border-[#B87802]"
                 />
+                <p className="text-[10px] text-[#8C7E6A] mt-1">
+                  Product shows in Low Stock Alerts only when stock is ≤ this value
+                </p>
               </div>
+
+              {/* Blouse Piece */}
               <div>
                 <label className={theme.forms.label}>Blouse Piece</label>
-                <input
-                  type="text"
+                <SuggestionInput
                   name="blousePiece"
                   value={formData.blousePiece}
                   onChange={handleChange}
                   placeholder="e.g. Attached (80 cm)"
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm text-[#12100D] outline-none focus:outline-none focus:border-[#B87802] transition-colors"
+                  suggestions={BLOUSE_PIECE_SUGGESTIONS}
                 />
               </div>
+
+              {/* Wash Care */}
               <div>
                 <label className={theme.forms.label}>Wash Care</label>
-                <input
-                  type="text"
+                <SuggestionInput
                   name="washCare"
                   value={formData.washCare}
                   onChange={handleChange}
                   placeholder="e.g. Dry Clean Only"
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm text-[#12100D] outline-none focus:outline-none focus:border-[#B87802] transition-colors"
+                  suggestions={WASH_CARE_SUGGESTIONS}
                 />
               </div>
             </div>
+          </div>
+
+          {/* SECTION 3: Description */}
+          <div className="space-y-4">
 
             {/* Description */}
             <div>

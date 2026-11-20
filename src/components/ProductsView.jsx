@@ -93,7 +93,7 @@ export function ProductsView({
           stockFilter === 'All' ||
           (stockFilter === 'in' && p.inStock) ||
           (stockFilter === 'out' && !p.inStock) ||
-          (stockFilter === 'low' && p.stockCount <= 10);
+          (stockFilter === 'low' && ((p.stockCount ?? 0) <= (p.lowStockAlert !== undefined && p.lowStockAlert !== null && p.lowStockAlert !== '' ? Number(p.lowStockAlert) : 10) || !p.inStock));
 
         return matchesSearch && matchesCat && matchesColor && matchesStock;
       })
@@ -109,77 +109,12 @@ export function ProductsView({
   return (
     <div className="space-y-6">
       
-      {/* Top Banner & Quick Controls */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#B87802]" />
-            <h2 className="text-2xl font-semibold font-display text-[#12100D]">
-              Product Inventory & Catalog
-            </h2>
-            <span className="text-[11px] font-bold tracking-wide uppercase px-2.5 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
-              {filteredProducts.length} of {products.length} Products
-            </span>
-          </div>
-          <p className="text-xs text-[#6B6457] font-body mt-1">
-            Every product added or modified here synchronizes directly with the store at{' '}
-            <a
-              href={STORE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#B87802] font-semibold hover:underline"
-            >
-              http://localhost:3000/
-            </a>
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {/* View toggle */}
-          <div className="flex items-center rounded-md border border-[#E8D8B5] bg-[#FAF8F2] p-1">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
-                viewMode === 'grid'
-                  ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
-                  : 'text-[#6B6457] hover:text-[#12100D]'
-              }`}
-              title="Grid View"
-            >
-              <LayoutGrid className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
-                viewMode === 'table'
-                  ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
-                  : 'text-[#6B6457] hover:text-[#12100D]'
-              }`}
-              title="Table View"
-            >
-              <List className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Add Product CTA */}
-          <button
-            onClick={onOpenAddProduct}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer"
-          >
-            <PackagePlus className="w-4 h-4" />
-            <span>Add Product</span>
-            <Sparkles className="w-3.5 h-3.5 text-[#FEE63E]" />
-          </button>
-        </div>
-      </div>
-
-      {/* Filter & Search Bar */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 space-y-3">
-        
-        {/* Search & Filter Controls Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-3">
+      {/* Search, Filters & Quick Actions - Single Unified Card */}
+      <div className="bg-white rounded-lg border border-[#E8D8B5] p-5 space-y-4">
+        {/* Top Action Row: Search Bar, View Mode Toggle & Add Product Button */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Search Box */}
-          <div className="sm:col-span-2 md:col-span-3 lg:col-span-4 relative">
+          <div className="relative flex-1 max-w-md">
             <Search className="w-4 h-4 absolute left-3.5 top-3 text-[#A89D8B]" />
             <input
               type="text"
@@ -198,8 +133,50 @@ export function ProductsView({
             )}
           </div>
 
+          {/* Quick Actions: View Toggle + Add Product CTA */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* View toggle */}
+            <div className="flex items-center rounded-md border border-[#E8D8B5] bg-[#FAF8F2] p-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
+                  viewMode === 'grid'
+                    ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
+                    : 'text-[#6B6457] hover:text-[#12100D]'
+                }`}
+                title="Grid View"
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode('table')}
+                className={`p-1.5 rounded-sm text-xs font-medium transition-all cursor-pointer ${
+                  viewMode === 'table'
+                    ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
+                    : 'text-[#6B6457] hover:text-[#12100D]'
+                }`}
+                title="Table View"
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Add Product CTA */}
+            <button
+              onClick={onOpenAddProduct}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer"
+            >
+              <PackagePlus className="w-4 h-4" />
+              <span>Add Product</span>
+              <Sparkles className="w-3.5 h-3.5 text-[#FEE63E]" />
+            </button>
+          </div>
+        </div>
+
+        {/* Filter Dropdowns Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-[#E8D8B5]/60">
           {/* Category Dropdown */}
-          <div className="sm:col-span-1 lg:col-span-2">
+          <div>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
@@ -215,7 +192,7 @@ export function ProductsView({
           </div>
 
           {/* Color Dropdown */}
-          <div className="sm:col-span-1 lg:col-span-2">
+          <div>
             <select
               value={selectedColor}
               onChange={(e) => setSelectedColor(e.target.value)}
@@ -231,7 +208,7 @@ export function ProductsView({
           </div>
 
           {/* Stock Filter */}
-          <div className="sm:col-span-1 lg:col-span-2">
+          <div>
             <select
               value={stockFilter}
               onChange={(e) => setStockFilter(e.target.value)}
@@ -240,12 +217,12 @@ export function ProductsView({
               <option value="All">All Stock Status</option>
               <option value="in">In Stock Only</option>
               <option value="out">Out of Stock</option>
-              <option value="low">Low Stock (≤ 10)</option>
+              <option value="low">Low Stock Alerts</option>
             </select>
           </div>
 
           {/* Sort By */}
-          <div className="sm:col-span-1 lg:col-span-2">
+          <div>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -338,7 +315,7 @@ export function ProductsView({
         </div>
       )}
 
-      {/* Products Grid View — Styled identically to http://localhost:3000/ ProductCard */}
+      {/* Products Grid View — Styled identically to Storefront ProductCard */}
       {!loading && viewMode === 'grid' && filteredProducts.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((p) => {
@@ -473,7 +450,7 @@ export function ProductsView({
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 rounded-md border border-[#E8D8B5] hover:border-[#B87802] hover:bg-[#FAF8F2] text-[#6B6457] hover:text-[#B87802] transition-all"
-                      title="View on Store (localhost:3000)"
+                      title="View on Storefront"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>

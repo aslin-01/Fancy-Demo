@@ -191,6 +191,28 @@ export const api = {
     return handleResponse(res, 'Failed to delete occasion');
   },
 
+  // Orders
+  async getOrders(params = {}) {
+    try {
+      const query = new URLSearchParams(params).toString();
+      const url = query ? `${API_BASE}/orders?${query}` : `${API_BASE}/orders`;
+      const res = await fetch(url, { headers: getHeaders(), signal: AbortSignal.timeout(6000) });
+      return handleResponse(res, 'Failed to fetch orders');
+    } catch (err) {
+      console.warn('Could not fetch orders from API:', err);
+      return { success: false, data: [] };
+    }
+  },
+
+  async updateOrderStatus(id, updates) {
+    const res = await fetch(`${API_BASE}/orders/${id}/status`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(updates),
+    });
+    return handleResponse(res, 'Failed to update order status');
+  },
+
   // Dashboard Stats
   async getDashboardStats() {
     const res = await fetch(`${API_BASE}/dashboard/stats`, {
@@ -275,5 +297,109 @@ export const api = {
       headers: getHeaders(),
     });
     return handleResponse(res, 'Failed to delete exchange request');
+  },
+
+  // ── Authorized Website Users & Access Control ──────────────────────────────
+
+  // GET /api/auth/authorized-users
+  async getAuthorizedUsers() {
+    try {
+      const res = await fetch(`${API_BASE}/auth/authorized-users`, {
+        headers: getHeaders(),
+        signal: AbortSignal.timeout(6000),
+      });
+      return handleResponse(res, 'Failed to fetch authorized users');
+    } catch (err) {
+      console.warn('Could not fetch authorized users from API:', err);
+      return { success: false, data: [] };
+    }
+  },
+
+  // POST /api/auth/authorized-users
+  async createAuthorizedUser(userData) {
+    const res = await fetch(`${API_BASE}/auth/authorized-users`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(userData),
+    });
+    return handleResponse(res, 'Failed to create authorized user');
+  },
+
+  // PUT /api/auth/authorized-users/:id
+  async updateUserAccess(id, updates) {
+    const res = await fetch(`${API_BASE}/auth/authorized-users/${id}`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(updates),
+    });
+    return handleResponse(res, 'Failed to update user access');
+  },
+
+  // DELETE /api/auth/authorized-users/:id
+  async deleteAuthorizedUser(id) {
+    const res = await fetch(`${API_BASE}/auth/authorized-users/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to delete authorized user');
+  },
+
+  // GET /api/auth/verify-access?email=...
+  async verifyWebsiteAccess(email) {
+    const res = await fetch(`${API_BASE}/auth/verify-access?email=${encodeURIComponent(email)}`);
+    return handleResponse(res, 'Failed to verify website access');
+  },
+
+  // ── Hero Banner / Advertisement Slider API ────────────────────────────────
+  // GET /api/banners?all=true
+  async getBanners(params = { all: true }) {
+    const query = new URLSearchParams(params).toString();
+    const url = query ? `${API_BASE}/banners?${query}` : `${API_BASE}/banners`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+    return handleResponse(res, 'Failed to fetch hero banners');
+  },
+
+  // GET /api/banners/:id
+  async getBannerById(id) {
+    const res = await fetch(`${API_BASE}/banners/${id}`);
+    return handleResponse(res, 'Failed to fetch banner details');
+  },
+
+  // POST /api/banners
+  async createBanner(bannerData) {
+    const res = await fetch(`${API_BASE}/banners`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(bannerData),
+    });
+    return handleResponse(res, 'Failed to create banner');
+  },
+
+  // PUT /api/banners/:id
+  async updateBanner(id, bannerData) {
+    const res = await fetch(`${API_BASE}/banners/${id}`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(bannerData),
+    });
+    return handleResponse(res, 'Failed to update banner');
+  },
+
+  // DELETE /api/banners/:id
+  async deleteBanner(id) {
+    const res = await fetch(`${API_BASE}/banners/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to delete banner');
+  },
+
+  // POST /api/banners/reset
+  async resetBanners() {
+    const res = await fetch(`${API_BASE}/banners/reset`, {
+      method: 'POST',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to reset banners');
   },
 };

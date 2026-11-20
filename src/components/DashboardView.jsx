@@ -64,7 +64,7 @@ export function DashboardView({
           <div className="space-y-2 max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#1A1610] text-[#F5B815] border border-[#F5B815]/40 text-xs font-semibold tracking-wider uppercase">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              Connected to Storefront: http://localhost:3000/
+              Connected to Live Storefront
             </div>
             <h2 className="text-3xl sm:text-4xl font-semibold font-display tracking-tight text-[#FAF8F2]">
               CF Handlooms Admin Portal
@@ -81,7 +81,7 @@ export function DashboardView({
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-3.5 rounded-md border border-[#F5B815]/50 bg-[#14100B] text-[#F5B815] hover:bg-[#B87802] hover:text-white text-xs font-semibold uppercase tracking-wider transition-all duration-200 group"
             >
-              <span>View Storefront (localhost:3000)</span>
+              <span>View Storefront</span>
               <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>
@@ -306,7 +306,7 @@ export function DashboardView({
               Recently Added Handloom Sarees
             </h3>
             <p className="text-xs text-[#6B6457] font-body">
-              Latest products synchronized with the live catalog at localhost:3000
+              Latest products synchronized with the live storefront catalog
             </p>
           </div>
           <button

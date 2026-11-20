@@ -17,114 +17,38 @@ import {
 import { theme } from '../theme';
 import { STORE_URL, api } from '../services/api';
 
-// ─── Threshold Config ─────────────────────────────────────────────────────────
-const THRESHOLDS = {
-  OUT_OF_STOCK: 0,       // stockCount === 0 or inStock === false
-  CRITICAL:     3,       // 1 – 3
-  LOW:          10,      // 4 – 10
-  MODERATE:     25,      // 11 – 25  (watch zone)
-};
+// ─── Threshold Config & Helpers ───────────────────────────────────────────────
+export function getAlertThreshold(product) {
+  if (product && product.lowStockAlert !== undefined && product.lowStockAlert !== null && product.lowStockAlert !== '') {
+    const val = Number(product.lowStockAlert);
+    if (!isNaN(val)) return Math.max(0, val);
+  }
+  return 10; // Default alert threshold if not set
+}
 
 // ─── Demo Products Fallback (displayed when backend is offline or empty) ─────
-const DEMO_PRODUCTS = [
-  {
-    _id: 'demo-ls-1',
-    name: 'Kanchipuram Pure Silk Zari Saree',
-    sku: 'VK-KP-001',
-    category: 'Silk',
-    fabric: 'Pure Kanchipuram Silk',
-    color: 'Royal Red',
-    price: 18499,
-    mrp: 22999,
-    stockCount: 0,
-    inStock: false,
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    _id: 'demo-ls-2',
-    name: 'Banarasi Soft Silk Brocade Saree',
-    sku: 'VK-BN-004',
-    category: 'Silk',
-    fabric: 'Banarasi Brocade',
-    color: 'Emerald Green',
-    price: 14299,
-    mrp: 17500,
-    stockCount: 2,
-    inStock: true,
-    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    _id: 'demo-ls-3',
-    name: 'Chanderi Silk Cotton Festive Saree',
-    sku: 'VK-CH-008',
-    category: 'Cotton',
-    fabric: 'Chanderi Silk Cotton',
-    color: 'Ivory Gold',
-    price: 7499,
-    mrp: 9999,
-    stockCount: 5,
-    inStock: true,
-    image: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    _id: 'demo-ls-4',
-    name: 'Mysore Crepe Silk Temple Border Saree',
-    sku: 'VK-MY-012',
-    category: 'Silk',
-    fabric: 'Mysore Crepe Silk',
-    color: 'Mustard Yellow',
-    price: 9999,
-    mrp: 12499,
-    stockCount: 8,
-    inStock: true,
-    image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    _id: 'demo-ls-5',
-    name: 'Royal Crimson Wedding Silk Saree',
-    sku: 'VK-WD-019',
-    category: 'Wedding',
-    fabric: 'Heavy Bridal Silk',
-    color: 'Deep Crimson',
-    price: 30999,
-    mrp: 36000,
-    stockCount: 18,
-    inStock: true,
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    _id: 'demo-ls-6',
-    name: 'Pochampally Handwoven Ikat Silk Saree',
-    sku: 'VK-PC-025',
-    category: 'Designer',
-    fabric: 'Pochampally Ikat',
-    color: 'Indigo Blue',
-    price: 11299,
-    mrp: 13999,
-    stockCount: 0,
-    inStock: false,
-    image: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80',
-  },
-];
+const DEMO_PRODUCTS = [];
 
 // ─── Alert Level Helper ───────────────────────────────────────────────────────
 function getAlertLevel(product) {
   const count = product.stockCount ?? 0;
   if (!product.inStock || count === 0) return 'out';
-  if (count <= THRESHOLDS.CRITICAL)   return 'critical';
-  if (count <= THRESHOLDS.LOW)        return 'low';
-  if (count <= THRESHOLDS.MODERATE)   return 'moderate';
-  return null;
+
+  const threshold = getAlertThreshold(product);
+  // ONLY show when product stock is below or equal to its low stock alert threshold
+  if (count > threshold) return null;
+
+  if (count <= 3) return 'critical';
+  return 'low';
 }
 
 const LEVEL_CONFIG = {
   out:      { label: 'Out of Stock', classes: 'text-rose-800 bg-rose-50 border border-rose-300',     dot: 'bg-rose-500',     icon: PackageX,       sort: 0 },
   critical: { label: 'Critical',     classes: 'text-rose-700 bg-rose-50 border border-rose-200',     dot: 'bg-rose-400',     icon: ShieldAlert,    sort: 1 },
   low:      { label: 'Low Stock',    classes: 'text-amber-800 bg-amber-50 border border-amber-200',  dot: 'bg-amber-500',    icon: AlertTriangle,  sort: 2 },
-  moderate: { label: 'Watch Zone',   classes: 'text-sky-800 bg-sky-50 border border-sky-200',        dot: 'bg-sky-400',      icon: TrendingDown,   sort: 3 },
 };
 
-const FILTER_TABS = ['All Alerts', 'Out of Stock', 'Critical (≤3)', 'Low Stock (≤10)', 'Watch (≤25)'];
+const FILTER_TABS = ['All Alerts', 'Out of Stock', 'Critical (≤3)', 'Low Stock'];
 
 // ─── Alert Badge ──────────────────────────────────────────────────────────────
 function AlertBadge({ level }) {
@@ -140,13 +64,13 @@ function AlertBadge({ level }) {
 }
 
 // ─── Stock Bar ────────────────────────────────────────────────────────────────
-function StockBar({ count, max = 25 }) {
-  const pct = Math.min(100, Math.round((count / max) * 100));
+function StockBar({ count, threshold = 10, max = 25 }) {
+  const displayMax = Math.max(max, threshold * 1.5, 1);
+  const pct = Math.min(100, Math.round((count / displayMax) * 100));
   const color =
     count === 0       ? 'bg-rose-500' :
     count <= 3        ? 'bg-rose-400' :
-    count <= 10       ? 'bg-amber-400' :
-                        'bg-sky-400';
+                        'bg-amber-400';
   return (
     <div className="flex items-center gap-2 min-w-[80px]">
       <div className="flex-1 h-1.5 bg-[#F0E8D8] rounded-full overflow-hidden">
@@ -159,7 +83,7 @@ function StockBar({ count, max = 25 }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify }) {
-  const isDemo = products.length === 0;
+  const isDemo = DEMO_PRODUCTS.length > 0 && products.length === 0;
   const [demoState, setDemoState] = useState(DEMO_PRODUCTS);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All Alerts');
@@ -186,7 +110,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
     out:      alertedProducts.filter((p) => p._alertLevel === 'out').length,
     critical: alertedProducts.filter((p) => p._alertLevel === 'critical').length,
     low:      alertedProducts.filter((p) => p._alertLevel === 'low').length,
-    moderate: alertedProducts.filter((p) => p._alertLevel === 'moderate').length,
+    total:    alertedProducts.length,
   }), [alertedProducts]);
 
   // Active filter
@@ -195,8 +119,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
 
     if (activeFilter === 'Out of Stock')     list = list.filter((p) => p._alertLevel === 'out');
     if (activeFilter === 'Critical (≤3)')    list = list.filter((p) => p._alertLevel === 'critical');
-    if (activeFilter === 'Low Stock (≤10)')  list = list.filter((p) => p._alertLevel === 'low');
-    if (activeFilter === 'Watch (≤25)')      list = list.filter((p) => p._alertLevel === 'moderate');
+    if (activeFilter === 'Low Stock')        list = list.filter((p) => p._alertLevel === 'low');
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -254,31 +177,6 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
         </div>
       )}
 
-      {/* ── Page Header ── */}
-      <div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 mb-1">
-            <div className="w-9 h-9 rounded-lg bg-[#0C0A07] flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-4.5 h-4.5 text-[#F5B815]" strokeWidth={2.5} />
-            </div>
-            <h1 className={theme.typography.h1Page}>Low Stock Alerts</h1>
-          </div>
-          {onRefresh && (
-            <button
-              onClick={onRefresh}
-              className={`${theme.buttons.secondarySm} flex items-center gap-2`}
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              Refresh
-            </button>
-          )}
-        </div>
-        <div className={`${theme.dividers.goldLeft} mb-2`} />
-        <p className={`${theme.typography.bodyMuted} mt-2`}>
-          Track real-time inventory levels, out-of-stock items, and critical stock depletion alerts.
-        </p>
-      </div>
-
       {/* ── No Alerts State ── */}
       {alertedProducts.length === 0 && (
         <div className={`${theme.cards.padded} text-center py-20 space-y-4`}>
@@ -296,42 +194,6 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
 
       {alertedProducts.length > 0 && (
         <>
-          {/* ── Stats Row ── */}
-          <div className={theme.layout.grid4Cols}>
-            {[
-              { label: 'Out of Stock', value: counts.out,      icon: PackageX,      color: 'text-rose-600',   bg: 'bg-rose-50 border-rose-200'  },
-              { label: 'Critical (≤3)', value: counts.critical, icon: ShieldAlert,   color: 'text-rose-500',   bg: 'bg-rose-50 border-rose-100'  },
-              { label: 'Low Stock (≤10)', value: counts.low,    icon: AlertTriangle, color: 'text-amber-600',  bg: 'bg-amber-50 border-amber-200'},
-              { label: 'Watch Zone (≤25)', value: counts.moderate, icon: TrendingDown,color: 'text-sky-600',  bg: 'bg-sky-50 border-sky-200'    },
-            ].map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div key={stat.label} className={`${theme.cards.padded} flex items-center gap-4`}>
-                  <div className={`w-10 h-10 rounded-lg border flex items-center justify-center shrink-0 ${stat.bg}`}>
-                    <Icon className={`w-5 h-5 ${stat.color}`} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-semibold text-foreground font-display">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider leading-tight">{stat.label}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* ── Critical Urgent Alert Banner ── */}
-          {(counts.out + counts.critical) > 0 && (
-            <div className="flex items-start gap-3 rounded-lg border border-rose-300 bg-rose-50 px-4 py-3">
-              <ShieldAlert className="w-4.5 h-4.5 text-rose-600 shrink-0 mt-0.5" />
-              <p className="text-xs text-rose-800 leading-relaxed">
-                <span className="font-bold">Urgent Action Required:</span>{' '}
-                {counts.out > 0 && <span><strong>{counts.out}</strong> product{counts.out > 1 ? 's are' : ' is'} out of stock. </span>}
-                {counts.critical > 0 && <span><strong>{counts.critical}</strong> product{counts.critical > 1 ? 's have' : ' has'} critically low stock (≤ 3 units left). </span>}
-                Restock now to prevent checkout disruptions on the storefront.
-              </p>
-            </div>
-          )}
-
           {/* ── Filter Bar ── */}
           <div className={`${theme.cards.base} px-4 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between`}>
             {/* Filter chips */}
@@ -346,10 +208,9 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
                   {tab !== 'All Alerts' && (
                     <span className="ml-1 opacity-70">
                       ({
-                        tab === 'Out of Stock'     ? counts.out :
-                        tab === 'Critical (≤3)'   ? counts.critical :
-                        tab === 'Low Stock (≤10)' ? counts.low :
-                        counts.moderate
+                        tab === 'Out of Stock'   ? counts.out :
+                        tab === 'Critical (≤3)' ? counts.critical :
+                        counts.low
                       })
                     </span>
                   )}
@@ -360,16 +221,28 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
               ))}
             </div>
 
-            {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Search by saree name, SKU, fabric…"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={`${theme.forms.input} pl-9 !w-64`}
-              />
+            {/* Search & Refresh */}
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search by saree name, SKU, fabric…"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={`${theme.forms.input} pl-9 !w-64`}
+                />
+              </div>
+              {onRefresh && (
+                <button
+                  onClick={onRefresh}
+                  className={`${theme.buttons.secondarySm} flex items-center gap-1.5`}
+                  title="Refresh catalog data"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Refresh</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -455,7 +328,13 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
 
                           {/* Stock Level */}
                           <td className={theme.table.td}>
-                            <StockBar count={p.stockCount ?? 0} />
+                            <StockBar count={p.stockCount ?? 0} threshold={getAlertThreshold(p)} />
+                            <div className="flex items-center gap-1 mt-1 text-[11px] text-muted-foreground whitespace-nowrap">
+                              <span>Alert threshold:</span>
+                              <span className="font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.2 rounded font-mono">
+                                ≤ {getAlertThreshold(p)}
+                              </span>
+                            </div>
                             {!p.inStock && p.stockCount > 0 && (
                               <p className="text-[10px] text-rose-600 font-semibold mt-0.5 whitespace-nowrap">Marked Out</p>
                             )}

@@ -262,6 +262,7 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
     price: product?.price || '',
     mrp: product?.mrp || '',
     stockCount: product?.stockCount || 15,
+    lowStockAlert: product?.lowStockAlert ?? 10,
     image: product?.image || 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80',
     description: product?.description || '',
     washCare: product?.washCare || 'Dry clean only',
@@ -400,6 +401,18 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
                 value={form.stockCount}
                 onChange={handleChange}
                 placeholder="15"
+                className={`mt-1.5 ${theme.forms.input}`}
+              />
+            </div>
+            <div>
+              <label className={theme.forms.label}>Low Stock Alert</label>
+              <input
+                type="number"
+                name="lowStockAlert"
+                value={form.lowStockAlert ?? ''}
+                onChange={handleChange}
+                placeholder="10"
+                min="0"
                 className={`mt-1.5 ${theme.forms.input}`}
               />
             </div>

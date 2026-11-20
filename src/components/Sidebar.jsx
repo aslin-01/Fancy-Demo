@@ -4,11 +4,12 @@ import {
   PackageCheck,
   ShieldCheck,
   RotateCcw,
-  AlertTriangle
+  AlertTriangle,
+  Tv
 } from 'lucide-react';
 import { theme } from '../theme';
 
-export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, returnsCount, lowStockCount }) {
+export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, returnsCount, lowStockCount, allowedPages }) {
   const navItems = [
     {
       id: 'dashboard',
@@ -32,7 +33,7 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
       id: 'orders',
       label: 'Orders',
       icon: PackageCheck,
-      badge: orderCount !== null && orderCount !== undefined ? orderCount : 3,
+      badge: orderCount !== null && orderCount !== undefined ? orderCount : null,
     },
     {
       id: 'returns',
@@ -41,12 +42,22 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
       badge: returnsCount !== null && returnsCount !== undefined ? returnsCount : null,
     },
     {
+      id: 'hero-banner',
+      label: 'Hero Banner',
+      icon: Tv,
+      badge: 'Hero',
+    },
+    {
       id: 'user-access',
       label: 'User Access',
       icon: ShieldCheck,
       badge: 'Roles',
     },
   ];
+
+  const visibleNavItems = allowedPages && Array.isArray(allowedPages) && allowedPages.length > 0
+    ? navItems.filter((item) => allowedPages.includes(item.id))
+    : navItems;
 
   return (
     <aside className="w-72 shrink-0 bg-[#F7F3EA] text-[#12100D] flex flex-col justify-between border-r border-[#E8D8B5] select-none h-screen sticky top-0 z-30">
@@ -74,7 +85,7 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
           <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8C7E6A]">
             Main Menu
           </div>
-          {navItems.map((item) => {
+          {visibleNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id || (item.id === 'products' && activeTab === 'add-product');
             return (
