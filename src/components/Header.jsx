@@ -21,11 +21,11 @@ const mainNavLinks = [
 ];
 
 export function Header() {
-  const { cartCount, wishlist, products, categories } = useStore();
+  const { cartCount, wishlist, products } = useStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopMenuOpen, setShopMenuOpen] = useState(false);
   const [mobileShopOpen, setMobileShopOpen] = useState(true);
-  const [hoveredCategorySlug, setHoveredCategorySlug] = useState(null);
+  const [activeCategorySlug, setActiveCategorySlug] = useState("");
   const [query, setQuery] = useState("");
   const [authorizedEmail, setAuthorizedEmail] = useState(() => {
     return localStorage.getItem("cf_authorized_email") || "";
@@ -34,38 +34,11 @@ export function Header() {
   const location = useLocation();
   const navContainerRef = useRef(null);
   const timeoutRef = useRef(null);
-  const hoverTimeoutRef = useRef(null);
 
-  // Derive categories and their actual products directly from store categories and products
+  // Derive categories and their actual products directly from admin products (no hardcoded data)
   const menuCategories = useMemo(() => {
     const catMap = new Map();
 
-    // 1. Seed categories from store/backend or standard catalog categories
-    const sourceCategories =
-      Array.isArray(categories) && categories.length > 0
-        ? categories
-        : [
-            { name: "Cotton Sarees", slug: "Cotton" },
-            { name: "Designer Sarees", slug: "Designer" },
-            { name: "Party Wear", slug: "Party Wear" },
-            { name: "Silk Sarees", slug: "Silk" },
-            { name: "Wedding Sarees", slug: "Wedding" },
-          ];
-
-    sourceCategories.forEach((c) => {
-      const catName = String(c.name || "").trim();
-      if (!catName) return;
-      const key = catName.toLowerCase();
-      if (!catMap.has(key)) {
-        catMap.set(key, {
-          name: catName,
-          slug: c.slug || catName,
-          products: [],
-        });
-      }
-    });
-
-    // 2. Associate active in-stock products with their categories
     (products || []).forEach((p) => {
       if (p.isActive === false || p.inStock === false) return;
       const catName = String(p.category || "").trim();
@@ -83,58 +56,17 @@ export function Header() {
       }
     });
 
-    // Return categories arranged order-wise (alphabetical A-Z)
-    return Array.from(catMap.values()).sort((a, b) =>
-      a.name.localeCompare(b.name)
+    return Array.from(catMap.values());
+  }, [products]);
+
+  // Active / hovered category
+  const currentCategory = useMemo(() => {
+    if (!menuCategories || menuCategories.length === 0) return null;
+    const found = menuCategories.find(
+      (c) => c.slug.toLowerCase() === (activeCategorySlug || "").toLowerCase()
     );
-  }, [categories, products]);
-
-  // Product card(s) shown strictly on hover (no default tab selection)
-  const hoveredCategory = useMemo(() => {
-    if (!hoveredCategorySlug || !menuCategories || menuCategories.length === 0) {
-      return null;
-    }
-    return (
-      menuCategories.find(
-        (c) =>
-          c.slug.toLowerCase() === hoveredCategorySlug.toLowerCase() ||
-          c.name.toLowerCase() === hoveredCategorySlug.toLowerCase()
-      ) || null
-    );
-  }, [menuCategories, hoveredCategorySlug]);
-
-  const handleCategoryMouseEnter = (slug) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-      hoverTimeoutRef.current = null;
-    }
-    setHoveredCategorySlug(slug);
-  };
-
-  const handleCategoryMouseLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredCategorySlug(null);
-    }, 200);
-  };
-
-  const handleCardsMouseEnter = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-      hoverTimeoutRef.current = null;
-    }
-  };
-
-  const handleCardsMouseLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredCategorySlug(null);
-    }, 200);
-  };
+    return found || menuCategories[0];
+  }, [menuCategories, activeCategorySlug]);
 
   useEffect(() => {
     const handleAuthChange = () => {
@@ -158,18 +90,14 @@ export function Header() {
     }
     timeoutRef.current = setTimeout(() => {
       setShopMenuOpen(false);
-      setHoveredCategorySlug(null);
     }, 180);
   };
 
-  // Clean up timers on unmount
+  // Clean up timer on unmount
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-      }
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
       }
     };
   }, []);
@@ -179,11 +107,7 @@ export function Header() {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
     setShopMenuOpen(false);
-    setHoveredCategorySlug(null);
     setMobileOpen(false);
   }, [location.pathname, location.search]);
 
@@ -195,14 +119,12 @@ export function Header() {
         !navContainerRef.current.contains(event.target)
       ) {
         setShopMenuOpen(false);
-        setHoveredCategorySlug(null);
       }
     };
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setShopMenuOpen(false);
-        setHoveredCategorySlug(null);
       }
     };
 
@@ -223,7 +145,6 @@ export function Header() {
     }
     setMobileOpen(false);
     setShopMenuOpen(false);
-    setHoveredCategorySlug(null);
   };
 
   const isShopActive = location.pathname.startsWith("/shop");
@@ -382,8 +303,8 @@ export function Header() {
                 to="/shop"
                 onClick={() => setShopMenuOpen(false)}
                 className={`inline-flex items-center gap-1.5 py-3 font-display text-[16px] tracking-[0.14em] uppercase transition-colors hover:text-[#B87802] ${shopMenuOpen || isShopActive
-                  ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
-                  : "text-foreground/85 font-medium"
+                    ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
+                    : "text-foreground/85 font-medium"
                   }`}
                 aria-expanded={shopMenuOpen}
                 aria-haspopup="true"
@@ -442,85 +363,91 @@ export function Header() {
                   </Link>
                 </div>
               ) : (
-                <div className="flex gap-8 items-start min-h-[160px]">
+                <div className="flex gap-8 items-start min-h-[260px]">
 
-                  {/* Left Column: Categories arranged order-wise */}
-                  <div className="w-56 shrink-0">
+                  {/* Left Panel: Categories List */}
+                  <div className="w-64 shrink-0 border-r border-[#E8D8B5]/80 pr-6">
                     <p className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#B87802] mb-3 px-3">
                       Categories
                     </p>
                     <div className="space-y-1">
                       {menuCategories.map((cat) => {
-                        const isHovered =
-                          hoveredCategorySlug &&
-                          (hoveredCategorySlug.toLowerCase() === cat.slug.toLowerCase() ||
-                            hoveredCategorySlug.toLowerCase() === cat.name.toLowerCase());
+                        const isHovered = currentCategory?.slug.toLowerCase() === cat.slug.toLowerCase();
                         return (
-                          <div
+                          <Link
                             key={cat.slug}
-                            onMouseEnter={() => handleCategoryMouseEnter(cat.slug)}
-                            onMouseLeave={handleCategoryMouseLeave}
-                          >
-                            <Link
-                              to={`/shop?category=${encodeURIComponent(cat.name)}`}
-                              onClick={() => {
-                                setShopMenuOpen(false);
-                                setHoveredCategorySlug(null);
-                              }}
-                              className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
-                                isHovered
-                                  ? "bg-[#F5B815]/20 text-[#B87802] font-semibold"
-                                  : "text-foreground/80 hover:bg-[#F5B815]/10 hover:text-[#B87802]"
+                            to={`/shop?category=${encodeURIComponent(cat.name)}`}
+                            onMouseEnter={() => setActiveCategorySlug(cat.slug)}
+                            onClick={() => setShopMenuOpen(false)}
+                            className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${isHovered
+                                ? "bg-[#F5B815]/15 text-[#B87802] font-semibold shadow-xs"
+                                : "text-foreground/80 hover:bg-[#F5B815]/10 hover:text-[#B87802]"
                               }`}
-                            >
-                              <span className="group-hover:translate-x-0.5 transition-transform">
-                                {cat.name}
+                          >
+                            <span className="group-hover:translate-x-0.5 transition-transform">
+                              {cat.name}
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[10px] text-muted-foreground">
+                                {cat.products.length}
                               </span>
                               <ChevronRight
-                                className={`h-4 w-4 transition-all ${
-                                  isHovered
+                                className={`h-4 w-4 transition-all ${isHovered
                                     ? "text-[#B87802] translate-x-1"
-                                    : "text-muted-foreground/35 group-hover:text-[#B87802]"
-                                }`}
+                                    : "text-muted-foreground/35 group-hover:text-[#B87802] group-hover:translate-x-0.5"
+                                  }`}
                               />
-                            </Link>
-                          </div>
+                            </div>
+                          </Link>
                         );
                       })}
                     </div>
                   </div>
 
-                  {/* ONLY ON HOVER: Show the related product card(s) */}
-                  {hoveredCategory && hoveredCategory.products.length > 0 && (
-                    <div
-                      onMouseEnter={handleCardsMouseEnter}
-                      onMouseLeave={handleCardsMouseLeave}
-                      className="flex-1 pl-4 animate-in fade-in duration-150"
-                    >
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
-                        {hoveredCategory.products.map((p) => {
+                  {/* Right Panel: Products under Hovered Category */}
+                  {currentCategory && (
+                    <div className="flex-1 pl-2">
+                      <div className="flex items-center justify-between border-b border-[#E8D8B5]/80 pb-3 mb-4">
+                        <div>
+                          <span className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#B87802]">
+                            Products
+                          </span>
+                          <h3 className="font-display text-lg font-semibold text-foreground mt-0.5">
+                            {currentCategory.name}
+                          </h3>
+                        </div>
+                        <Link
+                          to={`/shop?category=${encodeURIComponent(currentCategory.name)}`}
+                          onClick={() => setShopMenuOpen(false)}
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#B87802] hover:text-[#0C0A07] transition-colors"
+                        >
+                          <span>View All {currentCategory.name} ({currentCategory.products.length})</span>
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
+                      </div>
+
+                      {/* Products Grid */}
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                        {currentCategory.products.map((p) => {
                           const primaryTitle = p.fabric || p.name;
                           const secondaryTitle =
                             p.fabric && p.name && p.fabric.toLowerCase() !== p.name.toLowerCase()
                               ? p.name
-                              : p.occasion || "";
+                              : p.occasion || "Handloom Saree";
                           return (
                             <Link
                               key={p.id || p._id}
                               to={`/product/${p.id || p._id}`}
-                              onClick={() => {
-                                setShopMenuOpen(false);
-                                setHoveredCategorySlug(null);
-                              }}
-                              className="group rounded-xl border border-[#E8D8B5]/80 bg-white/95 p-3.5 hover:bg-white hover:border-[#B87802] hover:shadow-xs transition-all duration-200"
+                              onClick={() => setShopMenuOpen(false)}
+                              className="group rounded-xl border border-[#E8D8B5]/60 bg-white/70 p-3.5 hover:bg-white hover:border-[#B87802] hover:shadow-xs transition-all duration-200"
                             >
                               <div className="flex items-center justify-between">
-                                <p className="text-sm font-semibold text-foreground/90 group-hover:text-[#B87802] transition-colors leading-tight">
+                                <p className="text-sm font-semibold text-foreground/90 group-hover:text-[#B87802] transition-colors">
                                   {primaryTitle}
                                 </p>
-                                <ArrowRight className="h-3.5 w-3.5 text-[#B87802] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0 ml-1.5" />
+                                <ArrowRight className="h-3 w-3 text-[#B87802] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                               </div>
-                              <div className="mt-1.5 flex items-center justify-between text-xs text-muted-foreground">
+                              <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
                                 <span className="line-clamp-1">{secondaryTitle}</span>
                                 {Number(p.price) > 0 && (
                                   <span className="font-semibold text-[#B87802] ml-2 shrink-0">
