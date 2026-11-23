@@ -5,7 +5,8 @@ import {
   ShieldCheck,
   RotateCcw,
   AlertTriangle,
-  Tv
+  Tv,
+  Tag
 } from 'lucide-react';
 import { theme } from '../theme';
 
@@ -46,6 +47,12 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
       label: 'Hero Banner',
       icon: Tv,
       badge: 'Hero',
+    },
+    {
+      id: 'offers',
+      label: 'Offers',
+      icon: Tag,
+      badge: 'Deals',
     },
     {
       id: 'user-access',

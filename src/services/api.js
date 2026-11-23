@@ -402,4 +402,57 @@ export const api = {
     });
     return handleResponse(res, 'Failed to reset banners');
   },
+
+  // ── Offers & Discounts API ────────────────────────────────────────────────
+  // GET /api/offers?all=true
+  async getOffers(params = { all: true }) {
+    const query = new URLSearchParams(params).toString();
+    const url = query ? `${API_BASE}/offers?${query}` : `${API_BASE}/offers`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+    return handleResponse(res, 'Failed to fetch offers');
+  },
+
+  // GET /api/offers/:idOrCode
+  async getOfferById(idOrCode) {
+    const res = await fetch(`${API_BASE}/offers/${idOrCode}`);
+    return handleResponse(res, 'Failed to fetch offer details');
+  },
+
+  // POST /api/offers
+  async createOffer(offerData) {
+    const res = await fetch(`${API_BASE}/offers`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(offerData),
+    });
+    return handleResponse(res, 'Failed to create offer');
+  },
+
+  // PUT /api/offers/:id
+  async updateOffer(id, offerData) {
+    const res = await fetch(`${API_BASE}/offers/${id}`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(offerData),
+    });
+    return handleResponse(res, 'Failed to update offer');
+  },
+
+  // DELETE /api/offers/:id
+  async deleteOffer(id) {
+    const res = await fetch(`${API_BASE}/offers/${id}`, {
+      method: 'DELETE',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to delete offer');
+  },
+
+  // POST /api/offers/reset
+  async resetOffers() {
+    const res = await fetch(`${API_BASE}/offers/reset`, {
+      method: 'POST',
+      headers: getHeaders(),
+    });
+    return handleResponse(res, 'Failed to reset offers');
+  },
 };

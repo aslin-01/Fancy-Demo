@@ -7,6 +7,7 @@ import { ReturnsPage } from './pages/ReturnsPage';
 import { LowStockPage } from './pages/LowStockPage';
 import { UserAccessView } from './components/UserAccessView';
 import { HeroBannerView } from './components/HeroBannerView';
+import { OffersView } from './components/OffersView';
 import { AddProductPage } from './pages/AddProductPage';
 import { api, STORE_URL } from './services/api';
 import { Check, ExternalLink, X, AlertCircle } from 'lucide-react';
@@ -241,6 +242,10 @@ export function App() {
 
           {activeTab === 'hero-banner' && (
             <HeroBannerView onNotify={showToast} />
+          )}
+
+          {activeTab === 'offers' && (
+            <OffersView onNotify={showToast} />
           )}
 
           {activeTab === 'user-access' && <UserAccessView />}

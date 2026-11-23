@@ -25,6 +25,7 @@ import {
   CheckSquare,
   Square,
   Tv,
+  Tag,
 } from 'lucide-react';
 import { api, STORE_URL } from '../services/api';
 import { theme } from '../theme';
@@ -37,6 +38,7 @@ export const SIDEBAR_MODULES = [
   { id: 'orders',      label: 'Orders',      icon: PackageCheck,    desc: 'Customer orders tracking & fulfillment' },
   { id: 'returns',     label: 'Exchange',    icon: RotateCcw,       desc: 'Customer replacement & exchange requests' },
   { id: 'hero-banner', label: 'Hero Banner', icon: Tv,              desc: 'Homepage hero slider & advertisements' },
+  { id: 'offers',      label: 'Offers',      icon: Tag,             desc: 'Storefront promotional deals & coupons' },
   { id: 'user-access', label: 'User Access', icon: ShieldCheck,     desc: 'User management, roles & permissions' },
 ];
 
