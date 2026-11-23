@@ -14,6 +14,7 @@ import CheckoutPage from "@/pages/CheckoutPage";
 import WishlistPage from "@/pages/WishlistPage";
 import OrderSuccessPage from "@/pages/OrderSuccessPage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import OfferPage from "@/pages/OfferPage";
 
 // Direct section components for individual routes
 import Category from "@/components/home/Category";
@@ -40,6 +41,7 @@ export function App() {
 
             {/* Main store pages */}
             <Route path="shop" element={<ShopPage />} />
+            <Route path="offers" element={<OfferPage />} />
             <Route path="product/:id" element={<ProductDetailPage />} />
             <Route path="cart" element={<CartPage />} />
             <Route path="checkout" element={<CheckoutPage />} />

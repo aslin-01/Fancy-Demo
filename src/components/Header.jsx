@@ -17,66 +17,7 @@ import { theme } from "@/theme";
 const mainNavLinks = [
   { label: "Home", to: "/" },
   // "Shop All" with sub-menu is inserted between Home and Offers
-  { label: "Offers", to: "/shop?occasion=Festive" },
-];
-
-const DEFAULT_CATEGORIES = [
-  {
-    name: "Cotton Sarees",
-    slug: "Cotton",
-    subcategories: [
-      { name: "Chanderi Silk", desc: "Lightweight sheer drape with gold zari accents" },
-      { name: "Mulmul Cotton", desc: "Featherlight breathable all-day handloom" },
-      { name: "Chettinad Cotton", desc: "Vibrant temple borders & bold heritage stripes" },
-      { name: "Kota Doria", desc: "Fine checkered translucent hand-woven craft" },
-      { name: "Linen Cotton", desc: "Earthy natural textures for effortless elegance" },
-      { name: "Jamdani Cotton", desc: "Intricate supplementary weft floral motifs" },
-    ],
-  },
-  {
-    name: "Silk Sarees",
-    slug: "Silk",
-    subcategories: [
-      { name: "Kanchipuram Silk", desc: "Pure South Indian mulberry silk with rich gold zari" },
-      { name: "Banarasi Silk", desc: "Opulent Varanasi antique brocades & floral jaal" },
-      { name: "Chanderi Silk", desc: "Delicate glossy finish with gossamer touch" },
-      { name: "Tussar Silk", desc: "Rich textured natural wild forest silk" },
-      { name: "Raw Silk & Matka", desc: "Slubbed rustic texture with regal drape" },
-      { name: "Organza Silk", desc: "Crisp, sheer modern luxury drapes" },
-    ],
-  },
-  {
-    name: "Designer Sarees",
-    slug: "Designer",
-    subcategories: [
-      { name: "Organza & Tissue", desc: "Shimmering metallic high-sheen drape" },
-      { name: "Modern Brocades", desc: "Contemporary motifs with antique zari" },
-      { name: "Embroidered Sheer", desc: "Delicate cutwork & thread embroidery" },
-      { name: "Sequin Drapes", desc: "Evening glamour & cocktail shimmer" },
-      { name: "Floral Pastels", desc: "Chic digital & block print pastels" },
-    ],
-  },
-  {
-    name: "Wedding Sarees",
-    slug: "Wedding",
-    subcategories: [
-      { name: "Bridal Kanchipuram", desc: "Royal heirloom wedding drapes in crimson" },
-      { name: "Muhurtham Silks", desc: "Auspicious pure gold zari brocades" },
-      { name: "Antique Zari Brocade", desc: "Opulent heritage weaves for receptions" },
-      { name: "Royal Red & Maroon", desc: "Timeless traditional bridal palette" },
-      { name: "Pastel Bridal", desc: "Modern champagne, peach & rose gold heirlooms" },
-    ],
-  },
-  {
-    name: "Party Wear",
-    slug: "Party Wear",
-    subcategories: [
-      { name: "Chiffon & Georgette", desc: "Weightless fluid silhouettes that glide" },
-      { name: "Cocktail Shimmer", desc: "Dazzling sequin border embellishments" },
-      { name: "Ready-to-Wear", desc: "Pre-pleated effortless contemporary style" },
-      { name: "Modern Pastels", desc: "Sophisticated monochrome evening tones" },
-    ],
-  },
+  { label: "Offers", to: "/offers" },
 ];
 
 export function Header() {
@@ -84,7 +25,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopMenuOpen, setShopMenuOpen] = useState(false);
   const [mobileShopOpen, setMobileShopOpen] = useState(true);
-  const [activeCategorySlug, setActiveCategorySlug] = useState("Cotton");
+  const [hoveredCategorySlug, setHoveredCategorySlug] = useState(null);
   const [query, setQuery] = useState("");
   const [authorizedEmail, setAuthorizedEmail] = useState(() => {
     return localStorage.getItem("cf_authorized_email") || "";
@@ -93,73 +34,107 @@ export function Header() {
   const location = useLocation();
   const navContainerRef = useRef(null);
   const timeoutRef = useRef(null);
+  const hoverTimeoutRef = useRef(null);
 
-  // Compute dynamic categories merged with store categories and products
+  // Derive categories and their actual products directly from store categories and products
   const menuCategories = useMemo(() => {
-    const activeStoreCats = (categories || []).filter((c) => c.isActive !== false);
+    const catMap = new Map();
 
-    const subcatLookup = {};
-    DEFAULT_CATEGORIES.forEach((dc) => {
-      subcatLookup[dc.slug.toLowerCase()] = dc.subcategories;
-      subcatLookup[dc.name.toLowerCase()] = dc.subcategories;
-    });
+    // 1. Seed categories from store/backend or standard catalog categories
+    const sourceCategories =
+      Array.isArray(categories) && categories.length > 0
+        ? categories
+        : [
+            { name: "Cotton Sarees", slug: "Cotton" },
+            { name: "Designer Sarees", slug: "Designer" },
+            { name: "Party Wear", slug: "Party Wear" },
+            { name: "Silk Sarees", slug: "Silk" },
+            { name: "Wedding Sarees", slug: "Wedding" },
+          ];
 
-    const productSubcatsByCat = {};
-    (products || []).forEach((p) => {
-      if (!p.category || !p.subcategory) return;
-      const key = p.category.toLowerCase().trim();
-      if (!productSubcatsByCat[key]) productSubcatsByCat[key] = new Set();
-      productSubcatsByCat[key].add(p.subcategory.trim());
-    });
-
-    if (activeStoreCats.length > 0) {
-      return activeStoreCats.map((sc) => {
-        const slugKey = (sc.slug || sc.name).toLowerCase();
-        const nameKey = sc.name.toLowerCase();
-        const defaultSubs = subcatLookup[slugKey] || subcatLookup[nameKey] || [];
-        const adminProductSubs = Array.from(productSubcatsByCat[slugKey] || productSubcatsByCat[nameKey] || []);
-
-        const combined = [...defaultSubs];
-        adminProductSubs.forEach((adminSub) => {
-          if (!combined.some((item) => item.name.toLowerCase() === adminSub.toLowerCase())) {
-            combined.unshift({ name: adminSub, desc: `Exclusive ${sc.name} weave` });
-          }
+    sourceCategories.forEach((c) => {
+      const catName = String(c.name || "").trim();
+      if (!catName) return;
+      const key = catName.toLowerCase();
+      if (!catMap.has(key)) {
+        catMap.set(key, {
+          name: catName,
+          slug: c.slug || catName,
+          products: [],
         });
-
-        return {
-          name: sc.name,
-          slug: sc.slug || sc.name,
-          subcategories: combined.length > 0 ? combined : [
-            { name: `All ${sc.name}`, desc: `Explore all ${sc.name} weaves` }
-          ],
-        };
-      });
-    }
-
-    return DEFAULT_CATEGORIES.map((dc) => {
-      const key = dc.slug.toLowerCase();
-      const adminProductSubs = Array.from(productSubcatsByCat[key] || []);
-      const combined = [...dc.subcategories];
-      adminProductSubs.forEach((adminSub) => {
-        if (!combined.some((item) => item.name.toLowerCase() === adminSub.toLowerCase())) {
-          combined.unshift({ name: adminSub, desc: `Handcrafted ${dc.name} weave` });
-        }
-      });
-      return {
-        ...dc,
-        subcategories: combined,
-      };
+      }
     });
+
+    // 2. Associate active in-stock products with their categories
+    (products || []).forEach((p) => {
+      if (p.isActive === false || p.inStock === false) return;
+      const catName = String(p.category || "").trim();
+      if (!catName) return;
+      const key = catName.toLowerCase();
+
+      if (!catMap.has(key)) {
+        catMap.set(key, {
+          name: catName,
+          slug: catName,
+          products: [p],
+        });
+      } else {
+        catMap.get(key).products.push(p);
+      }
+    });
+
+    // Return categories arranged order-wise (alphabetical A-Z)
+    return Array.from(catMap.values()).sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
   }, [categories, products]);
 
-  // Currently active/hovered category
-  const currentCategory = useMemo(() => {
-    if (!menuCategories || menuCategories.length === 0) return null;
-    const found = menuCategories.find(
-      (c) => c.slug.toLowerCase() === (activeCategorySlug || "").toLowerCase()
+  // Product card(s) shown strictly on hover (no default tab selection)
+  const hoveredCategory = useMemo(() => {
+    if (!hoveredCategorySlug || !menuCategories || menuCategories.length === 0) {
+      return null;
+    }
+    return (
+      menuCategories.find(
+        (c) =>
+          c.slug.toLowerCase() === hoveredCategorySlug.toLowerCase() ||
+          c.name.toLowerCase() === hoveredCategorySlug.toLowerCase()
+      ) || null
     );
-    return found || menuCategories[0];
-  }, [menuCategories, activeCategorySlug]);
+  }, [menuCategories, hoveredCategorySlug]);
+
+  const handleCategoryMouseEnter = (slug) => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+    setHoveredCategorySlug(slug);
+  };
+
+  const handleCategoryMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredCategorySlug(null);
+    }, 200);
+  };
+
+  const handleCardsMouseEnter = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+  };
+
+  const handleCardsMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredCategorySlug(null);
+    }, 200);
+  };
 
   useEffect(() => {
     const handleAuthChange = () => {
@@ -183,14 +158,18 @@ export function Header() {
     }
     timeoutRef.current = setTimeout(() => {
       setShopMenuOpen(false);
+      setHoveredCategorySlug(null);
     }, 180);
   };
 
-  // Clean up timer on unmount
+  // Clean up timers on unmount
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      }
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
       }
     };
   }, []);
@@ -200,7 +179,11 @@ export function Header() {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
     setShopMenuOpen(false);
+    setHoveredCategorySlug(null);
     setMobileOpen(false);
   }, [location.pathname, location.search]);
 
@@ -212,12 +195,14 @@ export function Header() {
         !navContainerRef.current.contains(event.target)
       ) {
         setShopMenuOpen(false);
+        setHoveredCategorySlug(null);
       }
     };
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setShopMenuOpen(false);
+        setHoveredCategorySlug(null);
       }
     };
 
@@ -238,11 +223,10 @@ export function Header() {
     }
     setMobileOpen(false);
     setShopMenuOpen(false);
+    setHoveredCategorySlug(null);
   };
 
-  const isShopActive =
-    location.pathname === "/shop" ||
-    categorySubmenu.some((c) => c.to === `${location.pathname}${location.search}`);
+  const isShopActive = location.pathname.startsWith("/shop");
 
   return (
     <header ref={navContainerRef} className="sticky top-0 z-50">
@@ -378,10 +362,9 @@ export function Header() {
                 to="/"
                 end
                 className={({ isActive }) =>
-                  `block py-3 font-display text-[16px] tracking-[0.14em] uppercase transition-colors hover:text-[#B87802] ${
-                    isActive
-                      ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
-                      : "text-foreground/85 font-medium"
+                  `block py-3 font-display text-[16px] tracking-[0.14em] uppercase transition-colors hover:text-[#B87802] ${isActive
+                    ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
+                    : "text-foreground/85 font-medium"
                   }`
                 }
               >
@@ -398,19 +381,17 @@ export function Header() {
               <Link
                 to="/shop"
                 onClick={() => setShopMenuOpen(false)}
-                className={`inline-flex items-center gap-1.5 py-3 font-display text-[16px] tracking-[0.14em] uppercase transition-colors hover:text-[#B87802] ${
-                  shopMenuOpen || isShopActive
-                    ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
-                    : "text-foreground/85 font-medium"
-                }`}
+                className={`inline-flex items-center gap-1.5 py-3 font-display text-[16px] tracking-[0.14em] uppercase transition-colors hover:text-[#B87802] ${shopMenuOpen || isShopActive
+                  ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
+                  : "text-foreground/85 font-medium"
+                  }`}
                 aria-expanded={shopMenuOpen}
                 aria-haspopup="true"
               >
                 <span>Shop All</span>
                 <ChevronDown
-                  className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                    shopMenuOpen ? "rotate-180 text-[#B87802]" : "text-muted-foreground"
-                  }`}
+                  className={`h-3.5 w-3.5 transition-transform duration-200 ${shopMenuOpen ? "rotate-180 text-[#B87802]" : "text-muted-foreground"
+                    }`}
                 />
               </Link>
             </li>
@@ -421,10 +402,9 @@ export function Header() {
                 <NavLink
                   to={link.to}
                   className={({ isActive }) =>
-                    `block py-3 font-display text-[16px] tracking-[0.14em] uppercase transition-colors hover:text-[#B87802] ${
-                      isActive
-                        ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
-                        : "text-foreground/85 font-medium"
+                    `block py-3 font-display text-[16px] tracking-[0.14em] uppercase transition-colors hover:text-[#B87802] ${isActive
+                      ? "text-[#B87802] font-semibold border-b-2 border-[#F5B815]"
+                      : "text-foreground/85 font-medium"
                     }`
                   }
                 >
@@ -436,7 +416,7 @@ export function Header() {
         </nav>
 
         {/* Desktop Category Sub-Menu / Hover Mega Menu (Attached directly below the nav bar) */}
-        {shopMenuOpen && currentCategory && (
+        {shopMenuOpen && (
           <div
             id="shop-all-submenu"
             onMouseEnter={handleMouseEnter}
@@ -447,91 +427,116 @@ export function Header() {
             <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#F5B815] to-transparent" />
 
             <div className="mx-auto max-w-5xl px-6 py-6 sm:px-8">
-              <div className="flex gap-8 items-start min-h-[300px]">
-                
-                {/* Left Panel: Categories List */}
-                <div className="w-64 shrink-0 border-r border-[#E8D8B5]/80 pr-6">
-                  <p className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#B87802] mb-3 px-3">
-                    Categories
+              {menuCategories.length === 0 ? (
+                <div className="py-8 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    Explore our complete handcrafted collection.
                   </p>
-                  <div className="space-y-1">
-                    {menuCategories.map((cat) => {
-                      const isHovered = currentCategory.slug.toLowerCase() === cat.slug.toLowerCase();
-                      return (
-                        <Link
-                          key={cat.slug}
-                          to={`/shop?category=${encodeURIComponent(cat.slug)}`}
-                          onMouseEnter={() => setActiveCategorySlug(cat.slug)}
-                          onClick={() => setShopMenuOpen(false)}
-                          className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
-                            isHovered
-                              ? "bg-[#F5B815]/15 text-[#B87802] font-semibold shadow-xs"
-                              : "text-foreground/80 hover:bg-[#F5B815]/10 hover:text-[#B87802]"
-                          }`}
-                        >
-                          <span className="group-hover:translate-x-0.5 transition-transform">
-                            {cat.name}
-                          </span>
-                          <ChevronRight
-                            className={`h-4 w-4 transition-all ${
-                              isHovered
-                                ? "text-[#B87802] translate-x-1"
-                                : "text-muted-foreground/35 group-hover:text-[#B87802] group-hover:translate-x-0.5"
-                            }`}
-                          />
-                        </Link>
-                      );
-                    })}
-                  </div>
+                  <Link
+                    to="/shop"
+                    onClick={() => setShopMenuOpen(false)}
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#B87802] hover:text-[#0C0A07]"
+                  >
+                    <span>Browse All Sarees</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
                 </div>
+              ) : (
+                <div className="flex gap-8 items-start min-h-[160px]">
 
-                {/* Right Panel: Sub-Categories of Hovered Category */}
-                <div className="flex-1 pl-2">
-                  <div className="flex items-center justify-between border-b border-[#E8D8B5]/80 pb-3 mb-4">
-                    <div>
-                      <span className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#B87802]">
-                        Sub-Categories
-                      </span>
-                      <h3 className="font-display text-lg font-semibold text-foreground mt-0.5">
-                        {currentCategory.name}
-                      </h3>
+                  {/* Left Column: Categories arranged order-wise */}
+                  <div className="w-56 shrink-0">
+                    <p className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#B87802] mb-3 px-3">
+                      Categories
+                    </p>
+                    <div className="space-y-1">
+                      {menuCategories.map((cat) => {
+                        const isHovered =
+                          hoveredCategorySlug &&
+                          (hoveredCategorySlug.toLowerCase() === cat.slug.toLowerCase() ||
+                            hoveredCategorySlug.toLowerCase() === cat.name.toLowerCase());
+                        return (
+                          <div
+                            key={cat.slug}
+                            onMouseEnter={() => handleCategoryMouseEnter(cat.slug)}
+                            onMouseLeave={handleCategoryMouseLeave}
+                          >
+                            <Link
+                              to={`/shop?category=${encodeURIComponent(cat.name)}`}
+                              onClick={() => {
+                                setShopMenuOpen(false);
+                                setHoveredCategorySlug(null);
+                              }}
+                              className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                                isHovered
+                                  ? "bg-[#F5B815]/20 text-[#B87802] font-semibold"
+                                  : "text-foreground/80 hover:bg-[#F5B815]/10 hover:text-[#B87802]"
+                              }`}
+                            >
+                              <span className="group-hover:translate-x-0.5 transition-transform">
+                                {cat.name}
+                              </span>
+                              <ChevronRight
+                                className={`h-4 w-4 transition-all ${
+                                  isHovered
+                                    ? "text-[#B87802] translate-x-1"
+                                    : "text-muted-foreground/35 group-hover:text-[#B87802]"
+                                }`}
+                              />
+                            </Link>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <Link
-                      to={`/shop?category=${encodeURIComponent(currentCategory.slug)}`}
-                      onClick={() => setShopMenuOpen(false)}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#B87802] hover:text-[#0C0A07] transition-colors"
+                  </div>
+
+                  {/* ONLY ON HOVER: Show the related product card(s) */}
+                  {hoveredCategory && hoveredCategory.products.length > 0 && (
+                    <div
+                      onMouseEnter={handleCardsMouseEnter}
+                      onMouseLeave={handleCardsMouseLeave}
+                      className="flex-1 pl-4 animate-in fade-in duration-150"
                     >
-                      <span>View All {currentCategory.name}</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
+                        {hoveredCategory.products.map((p) => {
+                          const primaryTitle = p.fabric || p.name;
+                          const secondaryTitle =
+                            p.fabric && p.name && p.fabric.toLowerCase() !== p.name.toLowerCase()
+                              ? p.name
+                              : p.occasion || "";
+                          return (
+                            <Link
+                              key={p.id || p._id}
+                              to={`/product/${p.id || p._id}`}
+                              onClick={() => {
+                                setShopMenuOpen(false);
+                                setHoveredCategorySlug(null);
+                              }}
+                              className="group rounded-xl border border-[#E8D8B5]/80 bg-white/95 p-3.5 hover:bg-white hover:border-[#B87802] hover:shadow-xs transition-all duration-200"
+                            >
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm font-semibold text-foreground/90 group-hover:text-[#B87802] transition-colors leading-tight">
+                                  {primaryTitle}
+                                </p>
+                                <ArrowRight className="h-3.5 w-3.5 text-[#B87802] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0 ml-1.5" />
+                              </div>
+                              <div className="mt-1.5 flex items-center justify-between text-xs text-muted-foreground">
+                                <span className="line-clamp-1">{secondaryTitle}</span>
+                                {Number(p.price) > 0 && (
+                                  <span className="font-semibold text-[#B87802] ml-2 shrink-0">
+                                    ₹{Number(p.price).toLocaleString("en-IN")}
+                                  </span>
+                                )}
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
 
-                  {/* Sub-Category Grid */}
-                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-                    {currentCategory.subcategories.map((sub) => (
-                      <Link
-                        key={sub.name}
-                        to={`/shop?category=${encodeURIComponent(currentCategory.slug)}&subcategory=${encodeURIComponent(sub.name)}`}
-                        onClick={() => setShopMenuOpen(false)}
-                        className="group rounded-xl border border-[#E8D8B5]/60 bg-white/70 p-3.5 hover:bg-white hover:border-[#B87802] hover:shadow-xs transition-all duration-200"
-                      >
-                        <div className="flex items-center justify-between">
-                          <p className="text-sm font-semibold text-foreground/90 group-hover:text-[#B87802] transition-colors">
-                            {sub.name}
-                          </p>
-                          <ArrowRight className="h-3 w-3 text-[#B87802] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-                        </div>
-                        {sub.desc && (
-                          <p className="text-[11px] text-muted-foreground mt-1 line-clamp-1 leading-normal">
-                            {sub.desc}
-                          </p>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
                 </div>
-
-              </div>
+              )}
             </div>
           </div>
         )}
@@ -591,22 +596,24 @@ export function Header() {
                     {menuCategories.map((cat) => (
                       <li key={cat.slug} className="space-y-1">
                         <Link
-                          to={`/shop?category=${encodeURIComponent(cat.slug)}`}
+                          to={`/shop?category=${encodeURIComponent(cat.name)}`}
                           onClick={() => setMobileOpen(false)}
                           className="flex items-center justify-between text-xs font-semibold uppercase text-foreground/90 hover:text-[#B87802]"
                         >
                           <span>{cat.name}</span>
-                          <ChevronRight className="h-3 w-3 text-muted-foreground" />
+                          <span className="text-[10px] text-muted-foreground">
+                            {cat.products.length} {cat.products.length === 1 ? "Saree" : "Sarees"}
+                          </span>
                         </Link>
                         <div className="flex flex-wrap gap-1.5 pl-1">
-                          {cat.subcategories.slice(0, 4).map((sub) => (
+                          {cat.products.map((p) => (
                             <Link
-                              key={sub.name}
-                              to={`/shop?category=${encodeURIComponent(cat.slug)}&subcategory=${encodeURIComponent(sub.name)}`}
+                              key={p.id || p._id}
+                              to={`/product/${p.id || p._id}`}
                               onClick={() => setMobileOpen(false)}
                               className="text-[11px] text-muted-foreground hover:text-[#B87802] bg-[#FAF8F2] px-2 py-0.5 rounded border border-[#E8D8B5]/50"
                             >
-                              {sub.name}
+                              {p.fabric || p.name}
                             </Link>
                           ))}
                         </div>

@@ -118,9 +118,9 @@ class ProductService {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Ignore legacy hardcoded fallback categories that were previously cached without backend _id
+          // Ignore legacy hardcoded fallback categories that were previously cached without backend _id or id
           const legacyNames = new Set(['Silk Sarees', 'Cotton Sarees', 'Designer Sarees', 'Wedding Sarees', 'Party Wear']);
-          const isLegacyDefault = parsed.every((c) => !c._id && legacyNames.has(c.name));
+          const isLegacyDefault = parsed.every((c) => !c._id && !c.id && legacyNames.has(c.name));
           if (!isLegacyDefault) {
             return parsed.map((c) => {
               const foundPreset = PRESET_IMAGES.find((img) => img.id === c.presetImageId || img.src === c.image);
@@ -185,7 +185,7 @@ class ProductService {
     try {
       const [prodRes, catRes] = await Promise.allSettled([
         fetch(`${API_URL}/products`, { cache: 'no-store' }),
-        fetch(`${API_URL}/categories`, { cache: 'no-store' }),
+        fetch(`${API_URL}/attributes/categories`, { cache: 'no-store' }),
       ]);
 
       let updated = false;
