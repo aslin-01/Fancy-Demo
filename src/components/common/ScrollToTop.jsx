@@ -22,7 +22,7 @@ export function ScrollToTop() {
       onClick={scrollUp}
       aria-label="Scroll back to top"
       title="Back to top"
-      className={`fixed bottom-8 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[#F5B815]/40 bg-[#0C0A07] text-white shadow-lg shadow-[#B87802]/30 transition-all duration-300 hover:bg-[#B87802] hover:border-[#F5B815] hover:scale-110 hover:shadow-[#B87802]/50 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#F5B815] ${
+      className={`fixed bottom-8 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[#E91E8C]/40 bg-[#0C0A07] text-white shadow-lg shadow-[#C2185B]/30 transition-all duration-300 hover:bg-[#C2185B] hover:border-[#E91E8C] hover:scale-110 hover:shadow-[#C2185B]/50 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#E91E8C] ${
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-4 pointer-events-none"

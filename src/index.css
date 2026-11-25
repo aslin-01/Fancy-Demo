@@ -4,13 +4,14 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * CF Handlooms — Official Brand Design System
- * Palette extracted directly from logo (public/favicon.png):
- * - Primary Emblem Gold: #F5B815 (Sample highlights: #FEE63E, #FBC119)
- * - Deep Amber Gold: #B87802 (Sample shadows: #D38703, #AA5300)
- * - Deep Onyx Black: #0C0A07 (Sample darks: #000000, #060300)
- * - Warm Ivory Neutral: #FAF8F2
- * - Champagne Neutral: #F3EBDD
+ * Madha Fancy — Official Brand Design System
+ * Palette extracted directly from logo (public/favicon.jpg):
+ * - Brand Pink (Primary):  #C2185B  — deep magenta pink from logo bg
+ * - Pink Bright (Accent):  #E91E8C  — vivid highlight pink
+ * - Pink Deep (Shadow):    #880E4F  — dark rose shade
+ * - Foreground on Pink:    #FFFFFF  — white
+ * - Soft Rose Background:  #FFF5F8  — warm ivory with pink tint
+ * - Warm Neutral:          #FAF0F4  — champagne-rose neutral
  */
 
 @theme inline {
@@ -58,48 +59,48 @@
 :root {
   --radius: 0.375rem;
 
-  /* Logo-Derived Warm Ivory Background & Onyx Foreground */
-  --background: #FAF8F2;
-  --foreground: #12100D;
+  /* Soft Rose-Ivory Background & Dark Foreground */
+  --background: #FFF5F8;
+  --foreground: #1A0510;
   --card: #FFFFFF;
-  --card-foreground: #12100D;
+  --card-foreground: #1A0510;
   --popover: #FFFFFF;
-  --popover-foreground: #12100D;
+  --popover-foreground: #1A0510;
 
-  /* Primary Action: Deep Amber Gold */
-  --primary: #B87802;
+  /* Primary Action: Madha Fancy Brand Pink */
+  --primary: #C2185B;
   --primary-foreground: #FFFFFF;
 
-  /* Secondary: Warm Champagne Neutral */
-  --secondary: #F3EBDD;
-  --secondary-foreground: #12100D;
-  --muted: #F2EBE0;
-  --muted-foreground: #6B6457;
+  /* Secondary: Soft Rose Neutral */
+  --secondary: #FCE4EC;
+  --secondary-foreground: #1A0510;
+  --muted: #FDE8EF;
+  --muted-foreground: #7B4A5E;
 
-  /* Accent: Royal Gold Tint */
-  --accent: #F5EEDB;
-  --accent-foreground: #0C0A07;
+  /* Accent: Light Rose Tint */
+  --accent: #FFF0F5;
+  --accent-foreground: #880E4F;
   --destructive: #B3261E;
   --destructive-foreground: #FFFFFF;
 
   /* Borders & Focus Ring */
-  --border: #E8D8B5;
-  --input: #E8D8B5;
-  --ring: #F5B815;
+  --border: #F8C4D8;
+  --input: #F8C4D8;
+  --ring: #E91E8C;
 
-  /* Brand Logo Tokens (Extracted directly from logo) */
-  --gold: #F5B815;
-  --gold-light: #FEE63E;
-  --gold-deep: #B87802;
-  --gold-foreground: #0C0A07;
-  --onyx: #12100D;
-  --onyx-deep: #0C0A07;
-  --ivory: #FAF8F2;
-  --beige: #F3EBDD;
+  /* Brand Logo Tokens — Madha Fancy Pink Palette */
+  --gold: #C2185B;          /* renamed but kept as --gold for compatibility */
+  --gold-light: #E91E8C;    /* bright pink highlight */
+  --gold-deep: #880E4F;     /* deep rose */
+  --gold-foreground: #FFFFFF;
+  --onyx: #1A0510;
+  --onyx-deep: #0D0008;
+  --ivory: #FFF5F8;
+  --beige: #FCE4EC;
 
-  /* Aliases mapped to logo palette */
-  --maroon: #B87802;
-  --maroon-deep: #0C0A07;
+  /* Aliases */
+  --maroon: #C2185B;
+  --maroon-deep: #880E4F;
 }
 
 @layer base {
@@ -128,10 +129,10 @@
   font-family: var(--font-cursive);
 }
 
-/* Gold divider flourish - exact logo gold gradient */
+/* Pink divider flourish - Madha Fancy brand gradient */
 @utility divider-gold {
   height: 1px;
-  background: linear-gradient(to right, transparent, #F5B815, transparent);
+  background: linear-gradient(to right, transparent, #C2185B, transparent);
 }
 
 /* Slow, graceful fade-up used across sections */

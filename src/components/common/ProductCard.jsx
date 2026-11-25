@@ -46,7 +46,7 @@ export function ProductCard({ product }) {
     <div className={theme.cards.interactive}>
       <Link
         to={`/product/${pId}`}
-        className="relative block aspect-[4/5] overflow-hidden bg-[#FAF8F2]/40"
+        className="relative block aspect-[4/5] overflow-hidden bg-[#FFF5F8]/40"
       >
         <img
           src={displayImage}
@@ -77,7 +77,7 @@ export function ProductCard({ product }) {
         className={`absolute top-12 right-3 h-8 w-8 opacity-0 group-hover:opacity-100 ${theme.buttons.iconRound}`}
       >
         <Heart
-          className={`h-4 w-4 ${wished ? "fill-[#B87802] text-[#B87802]" : "text-foreground"}`}
+          className={`h-4 w-4 ${wished ? "fill-[#C2185B] text-[#C2185B]" : "text-foreground"}`}
         />
       </button>
 
@@ -85,12 +85,12 @@ export function ProductCard({ product }) {
         <p className={theme.typography.metaFabric}>{product.fabric}</p>
         <Link
           to={`/product/${pId}`}
-          className="font-display text-lg leading-snug font-medium text-foreground transition-colors hover:text-[#B87802]"
+          className="font-display text-lg leading-snug font-medium text-foreground transition-colors hover:text-[#C2185B]"
         >
           {product.name}
         </Link>
         <div className="flex items-center gap-1 text-sm">
-          <Star className="h-3.5 w-3.5 fill-[#F5B815] text-[#F5B815]" />
+          <Star className="h-3.5 w-3.5 fill-[#E91E8C] text-[#E91E8C]" />
           <span className="font-medium">{product.rating}</span>
           <span className="text-muted-foreground">({product.reviews})</span>
         </div>
@@ -102,7 +102,7 @@ export function ProductCard({ product }) {
                   key={i}
                   title={c.name}
                   className="h-3.5 w-3.5 rounded-full border-2 border-white shadow-xs shrink-0"
-                  style={{ backgroundColor: c.code || '#B87802' }}
+                  style={{ backgroundColor: c.code || '#C2185B' }}
                 />
               ))}
             </div>
@@ -112,7 +112,7 @@ export function ProductCard({ product }) {
           </div>
         )}
         <div className="mt-auto flex items-baseline gap-2 pt-1">
-          <span className="text-lg font-semibold text-[#B87802]">
+          <span className="text-lg font-semibold text-[#C2185B]">
             {formatINR(product.price)}
           </span>
           {product.mrp && Number(product.mrp) > Number(product.price) && (

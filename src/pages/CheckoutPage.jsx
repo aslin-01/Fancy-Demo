@@ -108,7 +108,7 @@ export function CheckoutPage() {
           to="/shop"
           className={`mt-8 ${theme.buttons.primary}`}
         >
-          Shop Sarees
+          Shop Jewellery
         </Link>
       </div>
     );
@@ -208,8 +208,8 @@ export function CheckoutPage() {
                   key={m.value}
                   className={`flex cursor-pointer items-start gap-3 rounded-sm border p-4 transition-colors ${
                     form.payment === m.value
-                      ? "border-[#B87802] bg-[#F5EEDB]/60 shadow-xs"
-                      : "border-border hover:border-[#E8D8B5]"
+                      ? "border-[#C2185B] bg-[#F5EEDB]/60 shadow-xs"
+                      : "border-border hover:border-[#F8C4D8]"
                   }`}
                 >
                   <input
@@ -263,7 +263,7 @@ export function CheckoutPage() {
             </div>
             <div className="flex justify-between border-t border-border pt-2 text-base font-semibold">
               <dt>Total</dt>
-              <dd className="text-[#B87802]">{formatINR(total)}</dd>
+              <dd className="text-[#C2185B]">{formatINR(total)}</dd>
             </div>
           </dl>
           <button

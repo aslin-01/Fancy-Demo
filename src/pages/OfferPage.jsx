@@ -24,73 +24,73 @@ const FALLBACK_OFFERS = [
   {
     _id: "fb-1",
     order: 1,
-    title: "Festive Grand Celebration",
-    subtitle: "Flat 25% off on our exquisite Banarasi & Kanchipuram pure silk sarees collection.",
+    title: "Bridal Grand Wedding Special",
+    subtitle: "Flat 20% off on our exquisite Antique Matte Temple Kemp Bridal Sets collection.",
     offerType: "with_coupon",
     hasCoupon: true,
-    code: "FESTIVE25",
+    code: "BRIDAL20",
     discountType: "percentage",
-    discountValue: 25,
-    minOrderValue: 4999,
-    badge: "FESTIVE SALE",
-    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80",
+    discountValue: 20,
+    minOrderValue: 3999,
+    badge: "BRIDAL SPECIAL",
+    image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=1200&q=80",
     validTill: "Valid until 31 Dec 2026",
-    terms: "Valid on silk saree orders above ₹4,999. Use code FESTIVE25 at checkout.",
-    category: "Silk",
+    terms: "Valid on bridal jewellery combo sets above ₹3,999. Use code BRIDAL20 at checkout.",
+    category: "Bridal Sets",
     isActive: true,
   },
   {
     _id: "fb-2",
     order: 2,
-    title: "Royal Bridal Heirloom Special",
-    subtitle: "Enjoy Flat ₹2,000 instant savings on pure gold zari bridal drapes for your grand day.",
+    title: "1-Gram Gold Covering Fest",
+    subtitle: "Enjoy Flat ₹500 instant savings on pure Kasu Malai and Gutapusalu long harams.",
     offerType: "with_coupon",
     hasCoupon: true,
-    code: "BRIDAL2000",
+    code: "HARAM500",
     discountType: "flat",
-    discountValue: 2000,
-    minOrderValue: 14999,
-    badge: "BRIDAL EXCLUSIVE",
-    image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80",
+    discountValue: 500,
+    minOrderValue: 2499,
+    badge: "FESTIVE EXCLUSIVE",
+    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=80",
     validTill: "Valid until 15 Jan 2027",
-    terms: "Applicable on Wedding & Bridal collection above ₹14,999.",
-    category: "Wedding",
+    terms: "Applicable on Harams & Long Chains collection above ₹2,499.",
+    category: "Harams & Long Chains",
     isActive: true,
   },
   {
     _id: "fb-3",
     order: 3,
     title: "First Order Welcome Courtesy",
-    subtitle: "Welcome to the CF Handlooms family. Take 10% off your entire first artisanal purchase.",
+    subtitle: "Welcome to the Madha Fancy family. Take 10% off your entire first jewellery order.",
     offerType: "with_coupon",
     hasCoupon: true,
     code: "WELCOME10",
     discountType: "percentage",
     discountValue: 10,
-    minOrderValue: 1999,
-    badge: "NEW ARRIVAL",
-    image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=80",
+    minOrderValue: 999,
+    badge: "NEW CUSTOMER",
+    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=80",
     validTill: "Ongoing for New Customers",
-    terms: "Valid on first purchase per customer. Applicable across all handloom weaves.",
+    terms: "Valid on first purchase per customer. Applicable across all 1-gram gold jewellery.",
     category: "All",
     isActive: true,
   },
   {
     _id: "fb-4",
     order: 4,
-    title: "Handloom Cotton Comfort Weaves",
-    subtitle: "Pure Chettinad and Mulmul handloom cottons with Flat 15% discount for everyday luxury.",
+    title: "Daily Wear Bangles Combo",
+    subtitle: "Guaranteed 1-gram micro gold plated daily wear bangles with Flat 15% discount.",
     offerType: "with_coupon",
     hasCoupon: true,
-    code: "COTTON15",
+    code: "BANGLES15",
     discountType: "percentage",
     discountValue: 15,
-    minOrderValue: 2499,
-    badge: "WEEKEND SPECIAL",
-    image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=80",
+    minOrderValue: 1499,
+    badge: "BEST VALUE",
+    image: "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=1200&q=80",
     validTill: "Valid for Limited Time",
-    terms: "Valid on all breathable cotton collection purchases above ₹2,499.",
-    category: "Cotton",
+    terms: "Valid on all Bangle & Kada collection purchases above ₹1,499.",
+    category: "Bangles & Kadas",
     isActive: true,
   },
 ];
@@ -241,23 +241,23 @@ export function OfferPage() {
   }, [storeProducts, directOffers, offers, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-[#FAF8F2] text-[#12100D] select-none pb-20">
+    <div className="min-h-screen bg-[#FFF5F8] text-[#1A0510] select-none pb-20">
       {/* Editorial Luxury Hero Header */}
-      <section className="relative overflow-hidden bg-[#0C0A07] text-white py-16 sm:py-24 border-b border-gold/30">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A07] via-[#0C0A07]/80 to-transparent z-10" />
-        <div className="absolute -right-20 -top-20 w-96 h-96 bg-[#F5B815]/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative overflow-hidden bg-[#1A0510] text-white py-16 sm:py-24 border-b border-gold/30">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A0510] via-[#1A0510]/80 to-transparent z-10" />
+        <div className="absolute -right-20 -top-20 w-96 h-96 bg-[#E91E8C]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-20 max-w-7xl mx-auto px-6 sm:px-12 text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-8">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-[#0C0A07]/80 px-4 py-1 text-xs tracking-widest text-gold backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-[#1A0510]/80 px-4 py-1 text-xs tracking-widest text-gold backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-gold animate-pulse" />
-              <span>HANDLOOM FESTIVE PRIVILEGES</span>
+              <span>GOLD COVERING FESTIVE PRIVILEGES</span>
             </div>
             <h1 className={`${theme.typography.h1Hero} text-3xl sm:text-5xl font-bold leading-tight`}>
-              Exclusive Offers & Festive Weaves
+              Exclusive Offers & Festive Jewellery
             </h1>
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
-              Celebrate timeless artisanal heritage with direct promotional discounts and coupon codes on pure Kanchipuram silks, Banarasi brocades, and handcrafted cotton sarees.
+              Celebrate timeless South Indian elegance with direct promotional discounts and coupon codes on 1-gram gold covering, bridal temple sets, and antique kemp chokers.
             </p>
           </div>
 
@@ -277,15 +277,15 @@ export function OfferPage() {
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-6 sm:px-12 pt-10 space-y-12">
         {/* Category Tabs Filter */}
-        <div className="flex items-center justify-center sm:justify-start gap-2.5 overflow-x-auto pb-2 border-b border-[#E8D8B5]">
+        <div className="flex items-center justify-center sm:justify-start gap-2.5 overflow-x-auto pb-2 border-b border-[#F8C4D8]">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-200 cursor-pointer shrink-0 ${
                 selectedCategory === cat
-                  ? "bg-[#B87802] text-white shadow-md shadow-[#B87802]/20"
-                  : "bg-white text-[#6B6457] border border-[#E8D8B5] hover:border-[#B87802] hover:text-[#B87802]"
+                  ? "bg-[#C2185B] text-white shadow-md shadow-[#C2185B]/20"
+                  : "bg-white text-[#7B4A5E] border border-[#F8C4D8] hover:border-[#C2185B] hover:text-[#C2185B]"
               }`}
             >
               {cat === "All" ? "All Offers" : `${cat} Offers`}
@@ -298,14 +298,14 @@ export function OfferPage() {
           <div className="space-y-6">
             <div className="flex items-center justify-between pb-1">
               <div>
-                <span className="text-[11px] font-bold tracking-widest text-[#B87802] uppercase block">
+                <span className="text-[11px] font-bold tracking-widest text-[#C2185B] uppercase block">
                   PROMOTIONAL CODES
                 </span>
-                <h2 className="font-serif text-2xl font-bold text-[#12100D]">
+                <h2 className="font-serif text-2xl font-bold text-[#1A0510]">
                   Exclusive Discount Coupons
                 </h2>
               </div>
-              <span className="text-xs text-[#736858] font-medium hidden sm:block">
+              <span className="text-xs text-[#7B4A5E] font-medium hidden sm:block">
                 Copy code and enter at checkout
               </span>
             </div>
@@ -321,7 +321,7 @@ export function OfferPage() {
                 return (
                   <div
                     key={offer._id || offer.code}
-                    className="bg-white rounded-xl border border-[#E8D8B5] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group"
+                    className="bg-white rounded-xl border border-[#F8C4D8] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col group"
                   >
                     {/* Top Thumbnail with Badge & Discount Banner */}
                     <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-neutral-900">
@@ -330,12 +330,12 @@ export function OfferPage() {
                         alt={offer.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A07]/90 via-[#0C0A07]/40 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A0510]/90 via-[#1A0510]/40 to-transparent" />
 
                       {/* Badge */}
                       <div className="absolute top-4 left-4 z-10">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-[#0C0A07]/80 text-[#F5B815] border border-[#F5B815]/50 backdrop-blur-md">
-                          <Sparkles className="w-3 h-3 text-[#F5B815]" />
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-[#1A0510]/80 text-[#E91E8C] border border-[#E91E8C]/50 backdrop-blur-md">
+                          <Sparkles className="w-3 h-3 text-[#E91E8C]" />
                           <span>{offer.badge || "COUPON DEAL"}</span>
                         </span>
                       </div>
@@ -343,7 +343,7 @@ export function OfferPage() {
                       {/* Discount Stamped Ribbon */}
                       <div className="absolute bottom-4 left-4 right-4 z-10 flex items-end justify-between">
                         <div>
-                          <span className="text-2xl sm:text-3xl font-extrabold text-[#FEE63E] tracking-tight block drop-shadow-md">
+                          <span className="text-2xl sm:text-3xl font-extrabold text-[#FF4081] tracking-tight block drop-shadow-md">
                             {discountText}
                           </span>
                           <p className="text-[11px] text-gray-300 font-medium">
@@ -354,8 +354,8 @@ export function OfferPage() {
                         </div>
 
                         {offer.validTill && (
-                          <span className="text-[10px] text-gray-300 flex items-center gap-1 bg-[#0C0A07]/70 px-2.5 py-1 rounded-md border border-white/20 backdrop-blur-sm">
-                            <Clock className="w-3 h-3 text-[#F5B815]" />
+                          <span className="text-[10px] text-gray-300 flex items-center gap-1 bg-[#1A0510]/70 px-2.5 py-1 rounded-md border border-white/20 backdrop-blur-sm">
+                            <Clock className="w-3 h-3 text-[#E91E8C]" />
                             <span>{offer.validTill}</span>
                           </span>
                         )}
@@ -365,23 +365,23 @@ export function OfferPage() {
                     {/* Body Content */}
                     <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
                       <div className="space-y-2">
-                        <h3 className="font-serif text-xl font-bold text-[#12100D] leading-snug">
+                        <h3 className="font-serif text-xl font-bold text-[#1A0510] leading-snug">
                           {offer.title}
                         </h3>
                         {offer.subtitle && (
-                          <p className="text-xs sm:text-sm text-[#736858] leading-relaxed">
+                          <p className="text-xs sm:text-sm text-[#7B4A5E] leading-relaxed">
                             {offer.subtitle}
                           </p>
                         )}
                       </div>
 
                       {/* Coupon Code Strip */}
-                      <div className="p-3.5 rounded-lg border-2 border-dashed border-[#B87802]/50 bg-[#FAF4E6] flex items-center justify-between gap-3">
+                      <div className="p-3.5 rounded-lg border-2 border-dashed border-[#C2185B]/50 bg-[#FFF0F5] flex items-center justify-between gap-3">
                         <div>
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C7E6A] block">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B4A5E] block">
                             Coupon Code
                           </span>
-                          <span className="font-mono text-base font-bold text-[#996300] tracking-widest">
+                          <span className="font-mono text-base font-bold text-[#880E4F] tracking-widest">
                             {offer.code}
                           </span>
                         </div>
@@ -392,7 +392,7 @@ export function OfferPage() {
                           className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                             isCopied
                               ? "bg-emerald-600 text-white"
-                              : "bg-[#B87802] hover:bg-[#996300] text-white shadow-sm"
+                              : "bg-[#C2185B] hover:bg-[#880E4F] text-white shadow-sm"
                           }`}
                         >
                           {isCopied ? (
@@ -411,7 +411,7 @@ export function OfferPage() {
 
                       {/* Terms */}
                       {offer.terms && (
-                        <p className="text-[11px] text-[#8C7E6A] leading-relaxed pt-2 border-t border-[#E8D8B5]">
+                        <p className="text-[11px] text-[#7B4A5E] leading-relaxed pt-2 border-t border-[#F8C4D8]">
                           * {offer.terms}
                         </p>
                       )}
@@ -424,29 +424,29 @@ export function OfferPage() {
         )}
 
         {/* ── SECTION 2: PRODUCTS ON OFFER (EXACT SAME SHOP PAGE PRODUCTCARD GRID) ── */}
-        <div className="space-y-6 pt-4 border-t border-[#E8D8B5]">
+        <div className="space-y-6 pt-4 border-t border-[#F8C4D8]">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
             <div>
-              <span className="text-[11px] font-bold tracking-widest text-[#B87802] uppercase block">
+              <span className="text-[11px] font-bold tracking-widest text-[#C2185B] uppercase block">
                 SPECIAL OFFER COLLECTION
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#12100D] mt-1">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A0510] mt-1">
                 {selectedCategory === "All"
-                  ? "Sarees on Exclusive Offer"
-                  : `${selectedCategory} Sarees on Offer`}
+                  ? "Jewellery on Exclusive Offer"
+                  : `${selectedCategory} on Offer`}
               </h2>
-              <p className="text-xs sm:text-sm text-[#736858] mt-1">
-                Handcrafted pure drapes with direct discounts and seasonal savings ready to shop.
+              <p className="text-xs sm:text-sm text-[#7B4A5E] mt-1">
+                Handcrafted 1-gram gold covering jewellery with direct discounts and seasonal savings ready to shop.
               </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#FAF4E6] text-[#B87802] border border-[#E8D8B5]">
-                {offerProducts.length} {offerProducts.length === 1 ? "Saree" : "Sarees"} Available
+              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[#FFF0F5] text-[#C2185B] border border-[#F8C4D8]">
+                {offerProducts.length} {offerProducts.length === 1 ? "Piece" : "Pieces"} Available
               </span>
               <Link
                 to="/shop"
-                className="text-xs font-semibold text-[#B87802] hover:text-[#996300] flex items-center gap-1 hover:underline ml-2"
+                className="text-xs font-semibold text-[#C2185B] hover:text-[#880E4F] flex items-center gap-1 hover:underline ml-2"
               >
                 <span>View Full Shop</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -455,18 +455,18 @@ export function OfferPage() {
           </div>
 
           {offerProducts.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-[#E8D8B5] py-20 text-center bg-white space-y-3">
-              <ShoppingBag className="w-12 h-12 text-[#B87802]/40 mx-auto" />
-              <p className="font-serif text-2xl font-bold text-[#12100D]">
-                No sarees found on offer for "{selectedCategory}"
+            <div className="rounded-lg border border-dashed border-[#F8C4D8] py-20 text-center bg-white space-y-3">
+              <ShoppingBag className="w-12 h-12 text-[#C2185B]/40 mx-auto" />
+              <p className="font-serif text-2xl font-bold text-[#1A0510]">
+                No jewellery pieces found on offer for "{selectedCategory}"
               </p>
-              <p className="text-xs text-[#736858]">
-                Please check another category or browse our full saree catalog.
+              <p className="text-xs text-[#7B4A5E]">
+                Please check another category or browse our full jewellery catalog.
               </p>
               <button
                 type="button"
                 onClick={() => setSelectedCategory("All")}
-                className="mt-3 px-6 py-2.5 rounded-md bg-[#B87802] text-white text-xs font-semibold uppercase tracking-wider cursor-pointer"
+                className="mt-3 px-6 py-2.5 rounded-md bg-[#C2185B] text-white text-xs font-semibold uppercase tracking-wider cursor-pointer"
               >
                 View All Offers
               </button>
@@ -481,43 +481,43 @@ export function OfferPage() {
         </div>
 
         {/* ── SECTION 3: HOW TO REDEEM ── */}
-        <div className="bg-white rounded-xl border border-[#E8D8B5] p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="bg-white rounded-xl border border-[#F8C4D8] p-6 sm:p-8 shadow-sm space-y-6">
           <div className="text-center sm:text-left space-y-1">
-            <span className="text-[11px] font-bold text-[#B87802] tracking-widest uppercase">
+            <span className="text-[11px] font-bold text-[#C2185B] tracking-widest uppercase">
               Privilege Guidelines
             </span>
-            <h2 className="font-serif text-2xl font-bold text-[#12100D]">
-              How to Apply Your Handloom Offer
+            <h2 className="font-serif text-2xl font-bold text-[#1A0510]">
+              How to Apply Your Festive Offer
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] space-y-2">
-              <div className="w-8 h-8 rounded-full bg-[#B87802] text-white font-bold flex items-center justify-center text-xs">
+            <div className="p-4 rounded-lg bg-[#FFF5F8] border border-[#F8C4D8] space-y-2">
+              <div className="w-8 h-8 rounded-full bg-[#C2185B] text-white font-bold flex items-center justify-center text-xs">
                 1
               </div>
-              <h4 className="text-sm font-bold text-[#12100D]">Select Your Saree</h4>
-              <p className="text-xs text-[#736858] leading-relaxed">
-                Browse our pure mulberry silks, bridal zari, or handloom cotton weaves and add items to your shopping cart.
+              <h4 className="text-sm font-bold text-[#1A0510]">Select Your Jewellery</h4>
+              <p className="text-xs text-[#7B4A5E] leading-relaxed">
+                Browse our bridal sets, harams, antique chokers, or bangles and add items to your shopping cart.
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] space-y-2">
-              <div className="w-8 h-8 rounded-full bg-[#B87802] text-white font-bold flex items-center justify-center text-xs">
+            <div className="p-4 rounded-lg bg-[#FFF5F8] border border-[#F8C4D8] space-y-2">
+              <div className="w-8 h-8 rounded-full bg-[#C2185B] text-white font-bold flex items-center justify-center text-xs">
                 2
               </div>
-              <h4 className="text-sm font-bold text-[#12100D]">Claim Your Offer</h4>
-              <p className="text-xs text-[#736858] leading-relaxed">
+              <h4 className="text-sm font-bold text-[#1A0510]">Claim Your Offer</h4>
+              <p className="text-xs text-[#7B4A5E] leading-relaxed">
                 Direct offers are already discounted. For coupon deals, click "Copy Code" on the offer banner above.
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] space-y-2">
-              <div className="w-8 h-8 rounded-full bg-[#B87802] text-white font-bold flex items-center justify-center text-xs">
+            <div className="p-4 rounded-lg bg-[#FFF5F8] border border-[#F8C4D8] space-y-2">
+              <div className="w-8 h-8 rounded-full bg-[#C2185B] text-white font-bold flex items-center justify-center text-xs">
                 3
               </div>
-              <h4 className="text-sm font-bold text-[#12100D]">Instant Savings</h4>
-              <p className="text-xs text-[#736858] leading-relaxed">
+              <h4 className="text-sm font-bold text-[#1A0510]">Instant Savings</h4>
+              <p className="text-xs text-[#7B4A5E] leading-relaxed">
                 Enter your coupon during checkout for additional instant discount applied directly to your order total.
               </p>
             </div>

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { useStore } from "@/lib/store";
@@ -7,6 +7,8 @@ import { theme } from "@/theme";
 
 export function Category() {
   const { products } = useStore();
+  const sliderRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Dynamically derive categories strictly from actual products added by the admin (no hardcoded/dummy data)
   const activeCategories = useMemo(() => {
@@ -39,56 +41,92 @@ export function Category() {
     return Array.from(map.values());
   }, [products]);
 
+  // Automatic smooth slider (pauses on hover/touch)
+  useEffect(() => {
+    if (activeCategories.length <= 1 || isPaused) return;
+
+    const interval = setInterval(() => {
+      const container = sliderRef.current;
+      if (!container) return;
+
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (maxScrollLeft <= 0) return;
+
+      const firstCard = container.querySelector("[data-category-card]");
+      const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 260;
+      const gap = 24;
+      const step = cardWidth + gap;
+
+      if (container.scrollLeft >= maxScrollLeft - 10) {
+        container.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        container.scrollBy({ left: step, behavior: "smooth" });
+      }
+    }, 2800);
+
+    return () => clearInterval(interval);
+  }, [activeCategories.length, isPaused]);
+
   if (activeCategories.length === 0) return null;
 
-  const gridClass =
-    activeCategories.length === 1
-      ? "grid grid-cols-1 max-w-sm mx-auto gap-4"
-      : activeCategories.length === 2
-        ? "grid grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto gap-6"
-        : activeCategories.length === 3
-          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto gap-6"
-          : activeCategories.length === 4
-            ? "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
-            : "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5";
+  const cardWidthClass =
+    activeCategories.length <= 4
+      ? "w-[65vw] xs:w-[50vw] sm:w-[35vw] md:w-[28vw] lg:flex-1 lg:max-w-xs"
+      : "w-[65vw] xs:w-[50vw] sm:w-[35vw] md:w-[28vw] lg:w-[calc((100%-4*1.5rem)/5)]";
 
   return (
-    <section id="categories" className={theme.layout.sectionContainer}>
-      <SectionHeading eyebrow="Curated for You" title="Shop by Category" />
-      <div className={gridClass}>
-        {activeCategories.map((cat) => (
-          <Link
-            key={cat.slug}
-            to={`/shop?category=${encodeURIComponent(cat.name)}`}
-            className="group relative overflow-hidden rounded-lg aspect-[4/5] bg-card border border-border/40 shadow-xs"
+    <section id="categories" className="relative py-20 bg-beige/60 border-t border-b border-[#F8C4D8]/50 overflow-hidden">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading eyebrow="Curated for You" title="Shop by Category" />
+        
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
+          {/* Single Row Horizontal Auto Slider */}
+          <div
+            ref={sliderRef}
+            className="flex flex-nowrap gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {cat.image ? (
-              <img
-                src={cat.image}
-                alt={cat.name}
-                loading="lazy"
-                width={1024}
-                height={1280}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-108"
-              />
-            ) : (
-              <div className="h-full w-full bg-gradient-to-br from-[#FAF8F2] to-[#E8D8B5]/40 flex items-center justify-center p-6 text-center">
-                <span className="font-display text-lg font-medium text-foreground">
-                  {cat.name}
-                </span>
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A07]/85 via-transparent to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-4 text-center">
-              <p className="font-display text-lg font-medium text-white">
-                {cat.name}
-              </p>
-              <p className="mt-0.5 flex items-center justify-center gap-1 text-[11px] tracking-[0.2em] uppercase text-gold opacity-0 transition-opacity group-hover:opacity-100">
-                Explore <ChevronRight className="h-3 w-3" />
-              </p>
-            </div>
-          </Link>
-        ))}
+            {activeCategories.map((cat) => (
+              <Link
+                key={cat.slug}
+                data-category-card
+                to={`/shop?category=${encodeURIComponent(cat.name)}`}
+                className={`group relative overflow-hidden rounded-lg aspect-[4/5] bg-card border border-border/40 shadow-xs shrink-0 snap-start select-none ${cardWidthClass}`}
+              >
+                {cat.image ? (
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    loading="lazy"
+                    width={1024}
+                    height={1280}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-108"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-gradient-to-br from-[#FFF5F8] to-[#F8C4D8]/40 flex items-center justify-center p-6 text-center">
+                    <span className="font-display text-lg font-medium text-foreground">
+                      {cat.name}
+                    </span>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A07]/85 via-transparent to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4 text-center">
+                  <p className="font-display text-lg font-medium text-white">
+                    {cat.name}
+                  </p>
+                  <p className="mt-0.5 flex items-center justify-center gap-1 text-[11px] tracking-[0.2em] uppercase text-gold opacity-0 transition-opacity group-hover:opacity-100">
+                    Explore <ChevronRight className="h-3 w-3" />
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

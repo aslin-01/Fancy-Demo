@@ -225,9 +225,9 @@ export function ShopPage() {
                     onClick={() =>
                       updateSearchParam("category", isSelected ? null : c)
                     }
-                    className={`text-sm transition-colors hover:text-[#B87802] cursor-pointer ${
+                    className={`text-sm transition-colors hover:text-[#C2185B] cursor-pointer ${
                       isSelected
-                        ? "font-semibold text-[#B87802]"
+                        ? "font-semibold text-[#C2185B]"
                         : "text-muted-foreground"
                     }`}
                   >
@@ -287,7 +287,7 @@ export function ShopPage() {
                 <button
                   type="button"
                   onClick={() => setPriceRange(null)}
-                  className="text-xs text-[#B87802] underline cursor-pointer hover:text-[#0C0A07]"
+                  className="text-xs text-[#C2185B] underline cursor-pointer hover:text-[#0C0A07]"
                 >
                   Clear price filter
                 </button>
@@ -343,11 +343,11 @@ export function ShopPage() {
       <div className="mb-8">
         <p className={theme.typography.cursiveEyebrow}>Our Collection</p>
         <h1 className={`mt-1 ${theme.typography.h1Page}`}>
-          {categoryParam || "Shop All Sarees"}
+          {categoryParam || "Shop All Jewellery"}
         </h1>
         {subcategoryParam && (
           <div className="mt-2 flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F5B815]/20 px-3 py-1 text-xs font-medium text-[#B87802]">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#E91E8C]/20 px-3 py-1 text-xs font-medium text-[#C2185B]">
               Subcategory: <strong>{subcategoryParam}</strong>
               <button
                 type="button"
@@ -382,7 +382,7 @@ export function ShopPage() {
             </button>
             <p className="hidden text-sm text-muted-foreground sm:block">
               Showing {Math.min(visible, filtered.length)} of {filtered.length}{" "}
-              sarees
+              items
             </p>
             <div className="relative">
               <select
@@ -408,7 +408,7 @@ export function ShopPage() {
 
           {filtered.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border py-20 text-center">
-              <p className="font-display text-2xl">No sarees found</p>
+              <p className="font-display text-2xl">No jewellery items found</p>
               <p className="mt-2 text-sm text-muted-foreground">
                 Try adjusting your filters or search.
               </p>

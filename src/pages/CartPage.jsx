@@ -45,13 +45,13 @@ export function CartPage() {
           Your cart is empty
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Discover our handwoven sarees and find something you love.
+          Discover our 1-Gram gold covering jewellery and find something you love.
         </p>
         <Link
           to="/shop"
           className={`mt-8 ${theme.buttons.primary}`}
         >
-          Shop Sarees
+          Shop Jewellery
         </Link>
       </div>
     );
@@ -81,14 +81,14 @@ export function CartPage() {
               <div className="flex min-w-0 flex-1 flex-col">
                 <Link
                   to={`/product/${product.id}`}
-                  className="font-display text-lg font-medium hover:text-[#B87802] transition-colors"
+                  className="font-display text-lg font-medium hover:text-[#C2185B] transition-colors"
                 >
                   {product.name}
                 </Link>
                 <p className={`mt-0.5 ${theme.typography.metaMuted}`}>
                   {product.fabric}
                 </p>
-                <p className="mt-1 font-semibold text-[#B87802]">
+                <p className="mt-1 font-semibold text-[#C2185B]">
                   {formatINR(product.price)}
                 </p>
                 <div className="mt-auto flex items-center justify-between pt-2">
@@ -133,11 +133,11 @@ export function CartPage() {
               value={coupon}
               onChange={(e) => setCoupon(e.target.value)}
               placeholder="Coupon code (try FESTIVE10)"
-              className="w-full bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-[#F5B815]"
+              className="w-full bg-transparent px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-[#E91E8C]"
             />
             <button
               type="submit"
-              className="shrink-0 bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] active:scale-[0.98] cursor-pointer shadow-sm"
+              className="shrink-0 bg-gradient-to-r from-[#C2185B] to-[#996300] text-white border border-[#E91E8C]/30 px-5 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] active:scale-[0.98] cursor-pointer shadow-sm"
             >
               Apply
             </button>
@@ -163,7 +163,7 @@ export function CartPage() {
             </div>
             <div className="flex justify-between border-t border-border pt-3 text-base font-semibold">
               <dt>Total</dt>
-              <dd className="text-[#B87802]">{formatINR(total)}</dd>
+              <dd className="text-[#C2185B]">{formatINR(total)}</dd>
             </div>
           </dl>
 
@@ -175,7 +175,7 @@ export function CartPage() {
           </Link>
           <Link
             to="/shop"
-            className="mt-3 block text-center text-sm text-muted-foreground underline hover:text-[#B87802] transition-colors"
+            className="mt-3 block text-center text-sm text-muted-foreground underline hover:text-[#C2185B] transition-colors"
           >
             Continue shopping
           </Link>

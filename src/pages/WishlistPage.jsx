@@ -17,15 +17,15 @@ export function WishlistPage() {
       {items.length === 0 ? (
         <div className="py-20 text-center">
           <Heart className="mx-auto h-12 w-12 text-muted-foreground" />
-          <p className="mt-4 font-display text-2xl">No saved sarees yet</p>
+          <p className="mt-4 font-display text-2xl">No saved jewellery yet</p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Tap the heart on any saree to save it here.
+            Tap the heart on any jewellery piece to save it here.
           </p>
           <Link
             to="/shop"
             className={`mt-8 ${theme.buttons.primary}`}
           >
-            Browse Sarees
+            Browse Jewellery
           </Link>
         </div>
       ) : (

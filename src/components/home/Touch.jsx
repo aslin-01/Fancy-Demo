@@ -8,7 +8,7 @@ export function Touch() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email) {
-      toast.success("Thank you for subscribing to CF Handlooms!");
+      toast.success("Thank you for subscribing to Madha Fancy!");
       setEmail("");
     }
   };
@@ -18,10 +18,10 @@ export function Touch() {
       <div className={theme.layout.narrowContainer}>
         <p className={theme.typography.cursiveBanner}>Stay in Touch</p>
         <h2 className={`mt-2 ${theme.typography.h2Section}`}>
-          Join the CF Handlooms Family
+          Join the Madha Fancy Family
         </h2>
         <p className="mt-3 text-muted-foreground">
-          Be first to know about new weaves, festive offers, and styling stories.
+          Be the first to explore new 1-gram gold arrivals, temple jewellery collections, and festive discounts.
         </p>
         <form
           className="mx-auto mt-8 flex max-w-md overflow-hidden rounded-sm border border-input bg-card"
@@ -37,7 +37,7 @@ export function Touch() {
           />
           <button
             type="submit"
-            className="shrink-0 bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 px-6 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#B87802]/30 active:scale-[0.98] cursor-pointer shadow-md"
+            className="shrink-0 bg-gradient-to-r from-[#C2185B] to-[#996300] text-white border border-[#E91E8C]/30 px-6 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-200 hover:from-[#C98704] hover:to-[#A86E02] hover:shadow-lg hover:shadow-[#C2185B]/30 active:scale-[0.98] cursor-pointer shadow-md"
           >
             Subscribe
           </button>

@@ -1,65 +1,59 @@
 import React from "react";
-import { Award, Leaf, ShieldCheck, Star, Truck } from "lucide-react";
+import { Award, Sparkles, ShieldCheck, Star, Truck } from "lucide-react";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { theme } from "@/theme";
-import sareeBridal from "@/assets/saree-bridal.jpg";
-import sareeFestive from "@/assets/saree-festive.jpg";
-import sareeOrganza from "@/assets/saree-organza.jpg";
-import sareeChiffon from "@/assets/saree-chiffon.jpg";
-import sareeDesigner from "@/assets/saree-designer.jpg";
-import sareeSilk from "@/assets/saree-silk.jpg";
 
 const features = [
   {
     icon: Award,
     title: "Authentic Craftsmanship",
-    text: "Every saree is sourced directly from master weavers and certified handloom clusters.",
+    text: "Every jewellery set is crafted with 1-gram micro gold covering, antique matte polish, and genuine temple kemp stones.",
   },
   {
-    icon: Leaf,
-    title: "Premium Quality",
-    text: "Pure silks, fine cottons and honest fabrics — quality-checked thread by thread.",
+    icon: Sparkles,
+    title: "Guaranteed 1-Gram Polish",
+    text: "Long-lasting micro gold plating with rich South Indian gold luster and skin-friendly finish.",
   },
   {
     icon: ShieldCheck,
     title: "Secure Payments",
-    text: "Shop confidently with encrypted payments via UPI, cards, and net banking.",
+    text: "Shop confidently with encrypted payments via UPI, Google Pay, cards, and net banking.",
   },
   {
     icon: Truck,
-    title: "Reliable Delivery",
-    text: "Free insured shipping across India with careful, gift-ready packaging.",
+    title: "Safe Express Delivery",
+    text: "All-India courier dispatch from Erode Fort with careful, protective velvet pouch packaging.",
   },
 ];
 
 const testimonials = [
   {
-    name: "Meera Krishnan",
+    name: "Kavitha Suresh",
+    place: "Coimbatore",
+    text: "The bridal kemp combo set looked identical to 22k pure gold jewellery at my wedding muhurtham. Everyone gave compliments!",
+    rating: 5,
+  },
+  {
+    name: "Divya Ramesh",
+    place: "Salem",
+    text: "Ordered daily wear bangles and jimikki earrings from Madha Fancy Erode. The micro gold shine has lasted brilliantly!",
+    rating: 5,
+  },
+  {
+    name: "Priya Sundaram",
     place: "Chennai",
-    text: "The Kanchipuram silk I ordered exceeded every expectation — the zari work is exquisite and the drape is pure luxury.",
+    text: "Super fast dispatch and incredible temple peacock craftsmanship on the choker and Kasu Malai. Outstanding quality!",
     rating: 5,
-  },
-  {
-    name: "Ananya Sharma",
-    place: "Delhi",
-    text: "Ordered a bridal saree for my sister's wedding. The packaging, the quality, the service — everything felt truly premium.",
-    rating: 5,
-  },
-  {
-    name: "Lakshmi Iyer",
-    place: "Bengaluru",
-    text: "Their handloom cottons are my everyday favourites now. Breathable, elegant, and beautifully finished.",
-    rating: 4,
   },
 ];
 
 const galleryImages = [
-  sareeOrganza,
-  sareeChiffon,
-  sareeDesigner,
-  sareeFestive,
-  sareeSilk,
-  sareeBridal,
+  "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=800&q=80",
 ];
 
 export function Inspiration() {
@@ -74,8 +68,8 @@ export function Inspiration() {
               key={f.title}
               className={theme.cards.feature}
             >
-              <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#F5EEDB] border border-[#E8D8B5]">
-                <f.icon className="h-6 w-6 text-[#B87802]" />
+              <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#F5EEDB] border border-[#F8C4D8]">
+                <f.icon className="h-6 w-6 text-[#C2185B]" />
               </div>
               <h3 className={`mt-4 ${theme.typography.h3Card}`}>
                 {f.title}
@@ -126,13 +120,13 @@ export function Inspiration() {
 
       {/* Style Inspiration Gallery */}
       <section className={theme.layout.sectionContainer}>
-        <SectionHeading eyebrow="Style Inspiration" title="Draped in Grace" />
+        <SectionHeading eyebrow="Style Inspiration" title="Adorned in Royal Grace" />
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {galleryImages.map((img, i) => (
             <div key={i} className="group overflow-hidden rounded-lg">
               <img
                 src={img}
-                alt={`Saree styling inspiration ${i + 1}`}
+                alt={`Madha Fancy jewellery styling inspiration ${i + 1}`}
                 loading="lazy"
                 width={1024}
                 height={1280}

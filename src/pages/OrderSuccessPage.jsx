@@ -11,8 +11,8 @@ export function OrderSuccessPage() {
 
   return (
     <div className={theme.layout.narrowContainer}>
-      <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#F5EEDB] text-[#B87802] border border-[#E8D8B5]">
-        <CheckCircle2 className="h-9 w-9 text-[#B87802]" />
+      <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-[#F5EEDB] text-[#C2185B] border border-[#F8C4D8]">
+        <CheckCircle2 className="h-9 w-9 text-[#C2185B]" />
       </div>
       <p className={`mt-6 ${theme.typography.cursiveBanner}`}>Thank You</p>
       <h1 className={`mt-1 ${theme.typography.h1Page}`}>

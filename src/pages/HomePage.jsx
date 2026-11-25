@@ -3,6 +3,7 @@ import Hero from "@/components/home/Hero";
 import Category from "@/components/home/Category";
 import Sellers from "@/components/home/Sellers";
 import Arrivals from "@/components/home/Arrivals";
+import Testimonial from "@/components/home/Testimonial";
 import Touch from "@/components/home/Touch";
 
 export function HomePage() {
@@ -12,6 +13,7 @@ export function HomePage() {
       <Category />
       <Sellers />
       <Arrivals />
+      <Testimonial />
       <Touch />
     </div>
   );

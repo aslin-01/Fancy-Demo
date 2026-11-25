@@ -1,25 +1,23 @@
-import sareeSilk from "@/assets/saree-silk.jpg";
-import sareeCotton from "@/assets/saree-cotton.jpg";
-import sareeBridal from "@/assets/saree-bridal.jpg";
-import sareeOrganza from "@/assets/saree-organza.jpg";
-import sareeChiffon from "@/assets/saree-chiffon.jpg";
-import sareeDesigner from "@/assets/saree-designer.jpg";
-import sareeFestive from "@/assets/saree-festive.jpg";
-import hero from "@/assets/hero.jpg";
+import { products as SEED_PRODUCTS, categories as SEED_CATEGORIES } from "@/data/products";
 
 export const PRESET_IMAGES = [
-  { label: 'Pure Silk — Maroon & Gold', src: sareeSilk, id: 'silk' },
-  { label: 'Kanchipuram Silk — Bridal Red', src: sareeBridal, id: 'bridal' },
-  { label: 'Chettinad Cotton — Mustard', src: sareeCotton, id: 'cotton' },
-  { label: 'Organza Silk — Mint Green', src: sareeOrganza, id: 'organza' },
-  { label: 'Chiffon Georgette — Rose Pink', src: sareeChiffon, id: 'chiffon' },
-  { label: 'Designer Brocade — Royal Navy', src: sareeDesigner, id: 'designer' },
-  { label: 'Festive Banarasi — Sunset Gold', src: sareeFestive, id: 'festive' },
-  { label: 'Heritage Editorial Hero', src: hero, id: 'hero' },
+  { label: 'Bridal Set — Antique Kemp Combo', src: 'https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80', id: 'bridal' },
+  { label: 'Harams & Chains — Kasu Malai', src: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80', id: 'harams' },
+  { label: 'Chokers & Necklaces — Peacock Kemp', src: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80', id: 'chokers' },
+  { label: 'Bangles & Kadas — Micro Gold Plated', src: 'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=800&q=80', id: 'bangles' },
+  { label: 'Earrings & Jhumkas — Temple Bell', src: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80', id: 'jhumkas' },
+  { label: 'Hip Belts & Hair — Antique Oddiyanam', src: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=800&q=80', id: 'oddiyanam' },
+  { label: 'Maang Tikka — Nethichutti', src: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80', id: 'nethichutti' },
+  { label: 'Anklets & Kolusu — 1-Gram Plated', src: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80', id: 'kolusu' },
+  { label: 'Armlets & Vanki — Lakshmi Carving', src: 'https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=800&q=80', id: 'vanki' },
+  { label: 'Mangalsutra & Thali — Kodi Chain', src: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80', id: 'thali' },
+  { label: 'Pendant Sets — Temple Locket', src: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80', id: 'pendant' },
+  { label: 'Nose Rings — Traditional Mukkuvalai', src: 'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=800&q=80', id: 'mukkuvalai' },
+  { label: 'Luxury Brand Showcase Hero', src: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1600&q=80', id: 'hero' },
 ];
 
-const STORAGE_PRODUCTS_KEY = 'cf_products_list_v2';
-const STORAGE_CATEGORIES_KEY = 'cf_categories_list_v2';
+const STORAGE_PRODUCTS_KEY = 'mf_products_list_v2';
+const STORAGE_CATEGORIES_KEY = 'mf_categories_list_v2';
 const API_URL = 'http://localhost:5000/api';
 
 class ProductService {
@@ -30,68 +28,28 @@ class ProductService {
     this.syncWithBackend();
   }
 
-  // Load products (starts empty - no hardcoded/demo products)
+  // Load products (defaults to Madha Fancy jewelry seed catalog)
   loadProducts() {
-    if (typeof window === 'undefined') return [];
+    if (typeof window === 'undefined') return SEED_PRODUCTS;
     try {
       const stored = window.localStorage.getItem(STORAGE_PRODUCTS_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          const demoIds = new Set([
-            'kanchipuram-silk-maroon',
-            'banarasi-silk-heritage',
-            'cotton-handloom-ivory',
-            'bridal-red-zari',
-            'organza-blush-pink',
-            'chiffon-emerald',
-            'designer-navy-sequin',
-            'festive-mustard-temple',
-            'soft-silk-rose',
-            'linen-sage-everyday',
-            'georgette-emerald-evening',
-            'bridal-gold-kanchipuram',
-          ]);
-          const demoNames = new Set([
-            'kanchipuram pure silk saree — maroon & gold',
-            'banarasi silk saree — heritage brocade',
-            'handloom cotton saree — ivory & beige',
-            'bridal wedding saree — royal red zari',
-            'shimmer organza saree — blush pink',
-            'chiffon saree — emerald with gold buttis',
-            'traditional festive saree — mustard temple border',
-            'soft silk saree — rose gold sheen',
-            'linen saree — natural sand',
-            'bridal kanchipuram saree — antique gold',
-          ]);
-          const filtered = parsed.filter(
-            (p) =>
-              !demoIds.has(p.id) &&
-              !demoIds.has(p._id) &&
-              !demoNames.has(String(p.name || '').toLowerCase().trim())
-          );
-          return filtered.map((p) => {
-            const resolvedImg = p.image || (Array.isArray(p.gallery) && p.gallery[0]) || (Array.isArray(p.images) && p.images[0]) || (Array.isArray(p.colors) && p.colors[0]?.images && p.colors[0].images[0]) || sareeSilk;
-            return {
-              ...p,
-              id: p._id || p.id,
-              image: resolvedImg,
-              gallery: Array.isArray(p.gallery) ? p.gallery : (Array.isArray(p.images) ? p.images : []),
-              images: Array.isArray(p.images) ? p.images : (Array.isArray(p.gallery) ? p.gallery : []),
-              colors: Array.isArray(p.colors) ? p.colors : [],
-              isActive: p.isActive !== false,
-              inStock: p.inStock !== false,
-            };
-          });
+          const hasJewelry = parsed.some((p) => p.id && String(p.id).startsWith('mf-prod'));
+          if (hasJewelry) {
+            return parsed;
+          }
         }
       }
     } catch (e) {
       console.warn('Failed to parse stored products:', e);
     }
-    return [];
+    this.saveProducts(SEED_PRODUCTS);
+    return SEED_PRODUCTS;
   }
 
-  // Load categories (starts empty or derives from stored products - no hardcoded categories)
+  // Load categories (defaults to Madha Fancy jewelry categories)
   deriveCategoriesFromProducts(productsList) {
     const map = new Map();
     (productsList || []).forEach((p) => {
@@ -102,8 +60,8 @@ class ProductService {
       if (!map.has(key)) {
         map.set(key, {
           name: catName,
-          slug: catName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-          image: p.image || sareeSilk,
+          slug: catName,
+          image: p.image || PRESET_IMAGES[0].src,
           isActive: true,
         });
       }
@@ -112,31 +70,25 @@ class ProductService {
   }
 
   loadCategories() {
-    if (typeof window === 'undefined') return [];
+    if (typeof window === 'undefined') return SEED_CATEGORIES;
     try {
       const stored = window.localStorage.getItem(STORAGE_CATEGORIES_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Ignore legacy hardcoded fallback categories that were previously cached without backend _id or id
-          const legacyNames = new Set(['Silk Sarees', 'Cotton Sarees', 'Designer Sarees', 'Wedding Sarees', 'Party Wear']);
-          const isLegacyDefault = parsed.every((c) => !c._id && !c.id && legacyNames.has(c.name));
-          if (!isLegacyDefault) {
-            return parsed.map((c) => {
-              const foundPreset = PRESET_IMAGES.find((img) => img.id === c.presetImageId || img.src === c.image);
-              return {
-                ...c,
-                image: foundPreset ? foundPreset.src : (c.image || sareeSilk),
-                isActive: c.isActive !== false,
-              };
-            });
+          const hasJewelryCat = parsed.some((c) =>
+            ['Bridal Sets', 'Harams & Long Chains', 'Necklaces & Chokers', 'Bangles & Kadas', 'Earrings & Jhumkas'].includes(c.name)
+          );
+          if (hasJewelryCat) {
+            return parsed;
           }
         }
       }
     } catch (e) {
       console.warn('Failed to parse stored categories:', e);
     }
-    return this.deriveCategoriesFromProducts(this.products);
+    this.saveCategories(SEED_CATEGORIES);
+    return SEED_CATEGORIES;
   }
 
   saveProducts(list) {
@@ -193,22 +145,34 @@ class ProductService {
       if (prodRes.status === 'fulfilled' && prodRes.value.ok) {
         const json = await prodRes.value.json();
         const serverProducts = json.data || json;
-        if (Array.isArray(serverProducts)) {
-          this.products = serverProducts.map((p) => {
-            const resolvedImg = p.image || (Array.isArray(p.gallery) && p.gallery[0]) || (Array.isArray(p.images) && p.images[0]) || (Array.isArray(p.colors) && p.colors[0]?.images && p.colors[0].images[0]) || sareeSilk;
-            return {
-              ...p,
-              id: p._id || p.id,
-              image: resolvedImg,
-              gallery: Array.isArray(p.gallery) ? p.gallery : (Array.isArray(p.images) ? p.images : []),
-              images: Array.isArray(p.images) ? p.images : (Array.isArray(p.gallery) ? p.gallery : []),
-              colors: Array.isArray(p.colors) ? p.colors : [],
-              isActive: p.isActive !== false,
-              inStock: p.inStock !== false,
-            };
-          });
-          this.saveProducts(this.products);
-          updated = true;
+        if (Array.isArray(serverProducts) && serverProducts.length > 0) {
+          const hasOnlyLegacy = serverProducts.every(
+            (p) =>
+              String(p.name).toLowerCase().includes('shirt') ||
+              String(p.category).toLowerCase().includes('saree')
+          );
+          if (!hasOnlyLegacy) {
+            this.products = serverProducts.map((p) => {
+              const resolvedImg =
+                p.image ||
+                (Array.isArray(p.gallery) && p.gallery[0]) ||
+                (Array.isArray(p.images) && p.images[0]) ||
+                (Array.isArray(p.colors) && p.colors[0]?.images && p.colors[0].images[0]) ||
+                PRESET_IMAGES[0].src;
+              return {
+                ...p,
+                id: p._id || p.id,
+                image: resolvedImg,
+                gallery: Array.isArray(p.gallery) ? p.gallery : Array.isArray(p.images) ? p.images : [],
+                images: Array.isArray(p.images) ? p.images : Array.isArray(p.gallery) ? p.gallery : [],
+                colors: Array.isArray(p.colors) ? p.colors : [],
+                isActive: p.isActive !== false,
+                inStock: p.inStock !== false,
+              };
+            });
+            this.saveProducts(this.products);
+            updated = true;
+          }
         }
       }
 
@@ -217,20 +181,27 @@ class ProductService {
         const catJson = await catRes.value.json();
         const serverCats = catJson.data || catJson;
         if (Array.isArray(serverCats) && serverCats.length > 0) {
-          this.categories = serverCats.map((c) => {
-            const foundPreset = PRESET_IMAGES.find((img) => img.id === c.presetImageId || img.src === c.image);
-            const matchingProd = this.products.find(
-              (p) => p.category && c.name && p.category.toLowerCase() === c.name.toLowerCase()
-            );
-            return {
-              ...c,
-              image: c.image || (foundPreset ? foundPreset.src : matchingProd?.image || sareeSilk),
-              isActive: c.isActive !== false,
-            };
-          });
-          this.saveCategories(this.categories);
-          loadedServerCategories = true;
-          updated = true;
+          const hasLegacyOnly = serverCats.every(
+            (c) =>
+              String(c.name).toLowerCase().includes('saree') ||
+              c.name === 'Party Wear'
+          );
+          if (!hasLegacyOnly) {
+            this.categories = serverCats.map((c) => {
+              const foundPreset = PRESET_IMAGES.find((img) => img.id === c.presetImageId || img.src === c.image);
+              const matchingProd = this.products.find(
+                (p) => p.category && c.name && p.category.toLowerCase() === c.name.toLowerCase()
+              );
+              return {
+                ...c,
+                image: c.image || (foundPreset ? foundPreset.src : matchingProd?.image || PRESET_IMAGES[0].src),
+                isActive: c.isActive !== false,
+              };
+            });
+            this.saveCategories(this.categories);
+            loadedServerCategories = true;
+            updated = true;
+          }
         }
       }
 
@@ -273,34 +244,34 @@ class ProductService {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
     const uniqueId = `${slug}-${Date.now().toString().slice(-4)}`;
-    const uniqueSku = data.sku || `CF-${(data.category || 'SAR').slice(0, 3).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
+    const uniqueSku = data.sku || `MF-${(data.category || 'JWL').slice(0, 3).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
 
     const newProduct = {
       id: uniqueId,
       _id: uniqueId,
       sku: uniqueSku,
       name: data.name.trim(),
-      category: data.category || 'Silk',
+      category: data.category || 'Bridal Sets',
       subcategory: data.subcategory || '',
-      fabric: data.fabric || 'Pure Handloom Silk',
-      color: data.color || 'Multicolor',
-      occasion: data.occasion || 'Festive',
+      fabric: data.fabric || '1-Gram Micro Gold Plated',
+      color: data.color || 'Ruby Red & Gold',
+      occasion: data.occasion || 'Bridal & Wedding',
       price: Number(data.price) || 0,
       mrp: Number(data.mrp) || Math.round(Number(data.price) * 1.25),
       rating: Number(data.rating) || 5.0,
       reviews: Number(data.reviews) || 1,
-      image: data.image || sareeSilk,
-      images: Array.isArray(data.images) && data.images.length > 0 ? data.images : [data.image || sareeSilk],
+      image: data.image || PRESET_IMAGES[0].src,
+      images: Array.isArray(data.images) && data.images.length > 0 ? data.images : [data.image || PRESET_IMAGES[0].src],
       presetImageId: data.presetImageId || '',
-      description: data.description || 'Exclusive pure handwoven saree with rich craftsmanship and timeless elegance.',
-      length: data.length || '6.3 metres (with blouse piece)',
-      blousePiece: data.blousePiece || 'Included — 0.8 m running blouse',
-      washCare: data.washCare || 'Dry clean only',
+      description: data.description || 'Exclusive 1-Gram gold covering jewellery with rich craftsmanship and timeless elegance.',
+      length: data.length || 'Adjustable back rope dori',
+      blousePiece: data.blousePiece || 'Adjustable golden thread / screw lock',
+      washCare: data.washCare || 'Store in airtight zip pouch away from perfume and moisture.',
       inStock: data.inStock !== false,
       isActive: data.isActive !== false,
       isBestSeller: Boolean(data.isBestSeller),
       isNew: Boolean(data.isNew),
-      brand: data.brand || 'CF Handlooms',
+      brand: data.brand || 'Madha Fancy',
       stock: data.stock !== undefined ? Number(data.stock) : 15,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -398,7 +369,7 @@ class ProductService {
     const newCategory = {
       name: data.name.trim(),
       slug: slug,
-      image: data.image || sareeSilk,
+      image: data.image || PRESET_IMAGES[0].src,
       presetImageId: data.presetImageId || '',
       description: data.description || `Exclusive handcrafted ${data.name} collection.`,
       isActive: data.isActive !== false,

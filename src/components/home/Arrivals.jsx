@@ -18,7 +18,7 @@ export function Arrivals() {
   if (newArrivals.length === 0) return null;
 
   return (
-    <section id="arrivals" className="bg-secondary/50">
+    <section id="arrivals" className="bg-beige/60 border-b border-[#F8C4D8]/50">
       <div className={theme.layout.sectionContainer}>
         <SectionHeading eyebrow="Just In" title="New Arrivals" />
         <div className={theme.layout.grid4Cols}>

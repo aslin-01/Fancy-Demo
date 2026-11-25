@@ -21,12 +21,8 @@ import { formatINR } from "@/data/products";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/common/ProductCard";
 import { theme } from "@/theme";
-import sareeSilk from "@/assets/saree-silk.jpg";
-import sareeCotton from "@/assets/saree-cotton.jpg";
-import sareeBridal from "@/assets/saree-bridal.jpg";
-import sareeOrganza from "@/assets/saree-organza.jpg";
-import sareeChiffon from "@/assets/saree-chiffon.jpg";
-import sareeFestive from "@/assets/saree-festive.jpg";
+
+const fallbackJewelleryImg = "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80";
 
 const sampleReviews = [];
 
@@ -254,7 +250,7 @@ export function ProductDetailPage() {
   }, [isModalOpen, activeImages]);
 
   const currentDisplayImage =
-    selectedImage || activeImages[0] || product?.image || sareeSilk;
+    selectedImage || activeImages[0] || product?.image || fallbackJewelleryImg;
 
   const currentId = String(product?.id || product?._id || '');
   const currentCategory = String(product?.category || '').trim().toLowerCase();
@@ -275,108 +271,13 @@ export function ProductDetailPage() {
     );
 
     const combined = [...sameCat, ...diffCat];
-    if (combined.length >= 4) {
-      return combined.slice(0, 4);
-    }
-
-    // Curated catalog fallback items so Related Products is always populated
-    const fallbackCurated = [
-      {
-        id: "cf-silk-heritage-maroon",
-        name: "Kanchipuram Pure Silk — Heritage Maroon",
-        category: "Silk",
-        fabric: "Pure Mulberry Silk",
-        price: 18499,
-        mrp: 24999,
-        rating: 4.9,
-        reviews: 42,
-        image: sareeSilk,
-        inStock: true,
-      },
-      {
-        id: "cf-wedding-bridal-red",
-        name: "Bridal Wedding Saree — Royal Red Zari",
-        category: "Wedding",
-        fabric: "Pure Silk with Gold Zari",
-        price: 28999,
-        mrp: 35999,
-        rating: 5.0,
-        reviews: 68,
-        image: sareeBridal,
-        inStock: true,
-        isBestSeller: true,
-      },
-      {
-        id: "cf-organza-mint-green",
-        name: "Organza Silk Saree — Mint Green",
-        category: "Designer",
-        fabric: "Shimmer Organza",
-        price: 8999,
-        mrp: 11999,
-        rating: 4.7,
-        reviews: 31,
-        image: sareeOrganza,
-        inStock: true,
-        isNew: true,
-      },
-      {
-        id: "cf-cotton-chettinad-gold",
-        name: "Handloom Cotton Saree — Mustard & Temple Border",
-        category: "Cotton",
-        fabric: "Chettinad Cotton",
-        price: 3499,
-        mrp: 4499,
-        rating: 4.8,
-        reviews: 85,
-        image: sareeCotton,
-        inStock: true,
-      },
-      {
-        id: "cf-chiffon-rose-pink",
-        name: "Chiffon Georgette — Rose Pink Elegance",
-        category: "Designer",
-        fabric: "Chiffon Georgette",
-        price: 6499,
-        mrp: 8499,
-        rating: 4.6,
-        reviews: 24,
-        image: sareeChiffon,
-        inStock: true,
-      },
-      {
-        id: "cf-festive-banarasi-gold",
-        name: "Festive Banarasi Saree — Sunset Gold Brocade",
-        category: "Silk",
-        fabric: "Banarasi Brocade",
-        price: 13999,
-        mrp: 17999,
-        rating: 4.9,
-        reviews: 57,
-        image: sareeFestive,
-        inStock: true,
-        isBestSeller: true,
-      },
-    ];
-
-    const curatedMatching = fallbackCurated.filter(
-      (c) => c.category.toLowerCase() === currentCategory && c.id !== currentId
-    );
-    const curatedOthers = fallbackCurated.filter(
-      (c) => c.category.toLowerCase() !== currentCategory && c.id !== currentId
-    );
-
-    const needed = 4 - combined.length;
-    const additional = [...curatedMatching, ...curatedOthers]
-      .filter((c) => !combined.some((p) => String(p.id || p._id) === c.id))
-      .slice(0, needed);
-
-    return [...combined, ...additional];
+    return combined.slice(0, 4);
   }, [products, currentId, currentCategory, product]);
 
   if (!product) {
     return (
       <div className={theme.layout.emptyState}>
-        <h1 className={theme.typography.h1Page}>Saree not found</h1>
+        <h1 className={theme.typography.h1Page}>Jewellery piece not found</h1>
         <p className="mt-3 text-muted-foreground">
           This piece may have sold out or been moved.
         </p>
@@ -384,7 +285,7 @@ export function ProductDetailPage() {
           to="/shop"
           className={`mt-6 ${theme.buttons.primary}`}
         >
-          Continue Shopping
+          Explore All Jewellery
         </Link>
       </div>
     );
@@ -434,11 +335,11 @@ export function ProductDetailPage() {
   return (
     <div className={theme.layout.pageContainer}>
       <nav className={`mb-8 ${theme.typography.metaMuted}`}>
-        <Link to="/" className="hover:text-[#B87802] transition-colors">
+        <Link to="/" className="hover:text-[#C2185B] transition-colors">
           Home
         </Link>
         <span className="mx-2">/</span>
-        <Link to="/shop" className="hover:text-[#B87802] transition-colors">
+        <Link to="/shop" className="hover:text-[#C2185B] transition-colors">
           Shop
         </Link>
         <span className="mx-2">/</span>
@@ -462,8 +363,8 @@ export function ProductDetailPage() {
                     onMouseEnter={() => setSelectedImage(imgUrl)}
                     className={`relative aspect-[4/5] w-full shrink-0 overflow-hidden rounded-lg border-2 bg-card transition-all cursor-pointer ${
                       isSelected
-                        ? "border-[#B87802] ring-2 ring-[#B87802]/40 shadow-sm opacity-100 scale-102"
-                        : "border-border hover:border-[#B87802]/60 opacity-70 hover:opacity-100"
+                        ? "border-[#C2185B] ring-2 ring-[#C2185B]/40 shadow-sm opacity-100 scale-102"
+                        : "border-border hover:border-[#C2185B]/60 opacity-70 hover:opacity-100"
                     }`}
                     title={`Image ${idx + 1}`}
                   >
@@ -507,11 +408,11 @@ export function ProductDetailPage() {
                 aria-label="Toggle wishlist"
                 className={`h-9 w-9 grid place-items-center rounded-full border shadow-sm transition-all duration-200 active:scale-95 cursor-pointer ${
                   wished
-                    ? "border-[#B87802] bg-white text-[#B87802]"
-                    : "border-border/80 bg-white/95 hover:border-[#B87802] text-foreground/70 hover:text-[#B87802]"
+                    ? "border-[#C2185B] bg-white text-[#C2185B]"
+                    : "border-border/80 bg-white/95 hover:border-[#C2185B] text-foreground/70 hover:text-[#C2185B]"
                 }`}
               >
-                <Heart className={`h-4 w-4 ${wished ? "fill-[#B87802] text-[#B87802]" : ""}`} />
+                <Heart className={`h-4 w-4 ${wished ? "fill-[#C2185B] text-[#C2185B]" : ""}`} />
               </button>
               <button
                 type="button"
@@ -521,7 +422,7 @@ export function ProductDetailPage() {
                   handleShare();
                 }}
                 title={copied ? "Link copied!" : "Share product"}
-                className="relative h-9 w-9 grid place-items-center rounded-full border border-border/80 bg-white/95 hover:border-[#B87802] text-foreground/70 hover:text-[#B87802] shadow-sm transition-all duration-200 active:scale-95 cursor-pointer"
+                className="relative h-9 w-9 grid place-items-center rounded-full border border-border/80 bg-white/95 hover:border-[#C2185B] text-foreground/70 hover:text-[#C2185B] shadow-sm transition-all duration-200 active:scale-95 cursor-pointer"
               >
                 {copied ? (
                   <Check className="h-4 w-4 text-emerald-600" />
@@ -529,7 +430,7 @@ export function ProductDetailPage() {
                   <Share2 className="h-4 w-4" />
                 )}
                 {copied && (
-                  <span className="absolute top-11 right-0 text-[10px] font-medium bg-[#0C0A07] text-[#FAF8F2] px-2 py-0.5 rounded shadow-md whitespace-nowrap">
+                  <span className="absolute top-11 right-0 text-[10px] font-medium bg-[#0C0A07] text-[#FFF5F8] px-2 py-0.5 rounded shadow-md whitespace-nowrap">
                     Link copied!
                   </span>
                 )}
@@ -550,8 +451,8 @@ export function ProductDetailPage() {
           {/* 1. Identity */}
           <div className="pb-5">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#B87802]">
-                {product.category || "Handloom"} Collection
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C2185B]">
+                {product.category || "Jewellery"} Collection
               </span>
               {product.inStock ? (
                 <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-full shrink-0">
@@ -570,7 +471,7 @@ export function ProductDetailPage() {
                 {product.name}
               </h1>
               <div className="flex items-center gap-1 shrink-0 mt-1">
-                <Star className="h-3.5 w-3.5 fill-[#F5B815] text-[#F5B815]" />
+                <Star className="h-3.5 w-3.5 fill-[#E91E8C] text-[#E91E8C]" />
                 <span className="text-xs font-semibold text-foreground">{product.rating || 4.9}</span>
                 <span className="text-xs text-muted-foreground">({product.reviews || 42})</span>
               </div>
@@ -593,7 +494,7 @@ export function ProductDetailPage() {
                       <span
                         key={i}
                         className="h-3.5 w-3.5 rounded-full border border-black/20 shadow-xs inline-block"
-                        style={{ backgroundColor: c.code || (c.name?.startsWith('#') ? c.name : null) || c.name || "#B87802" }}
+                        style={{ backgroundColor: c.code || (c.name?.startsWith('#') ? c.name : null) || c.name || "#C2185B" }}
                       />
                     ))
                   ) : product.color && product.color.startsWith('#') ? (
@@ -652,7 +553,7 @@ export function ProductDetailPage() {
                     (selectedColor?.id && col?.id && selectedColor.id === col.id) ||
                     (selectedColor?.name && col?.name && selectedColor.name === col.name) ||
                     (!selectedColor && idx === 0);
-                  const colorHex = col.code || (col.name?.startsWith('#') ? col.name : null) || col.name || "#B87802";
+                  const colorHex = col.code || (col.name?.startsWith('#') ? col.name : null) || col.name || "#C2185B";
                   return (
                     <button
                       key={idx}
@@ -670,8 +571,8 @@ export function ProductDetailPage() {
                       aria-label={`Color option ${idx + 1}`}
                       className={`h-8 w-8 rounded-full border-2 transition-all cursor-pointer flex items-center justify-center p-0.5 ${
                         isSelected
-                          ? "border-[#B87802] ring-2 ring-[#B87802]/40 scale-110 shadow-sm"
-                          : "border-border hover:border-[#B87802]/60 hover:scale-105"
+                          ? "border-[#C2185B] ring-2 ring-[#C2185B]/40 scale-110 shadow-sm"
+                          : "border-border hover:border-[#C2185B]/60 hover:scale-105"
                       }`}
                     >
                       <span
@@ -698,7 +599,7 @@ export function ProductDetailPage() {
                     {formatINR(product.mrp)}
                   </span>
                   {discount > 0 && (
-                    <span className="rounded bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 px-2 py-0.5 text-[11px] font-bold tracking-wide">
+                    <span className="rounded bg-[#0C0A07] text-[#E91E8C] border border-[#E91E8C]/30 px-2 py-0.5 text-[11px] font-bold tracking-wide">
                       {discount}% OFF
                     </span>
                   )}
@@ -721,7 +622,7 @@ export function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="h-6 w-6 rounded-full flex items-center justify-center text-foreground/75 hover:bg-[#F3EBDD] hover:text-[#B87802] transition-colors cursor-pointer"
+                  className="h-6 w-6 rounded-full flex items-center justify-center text-foreground/75 hover:bg-[#FCE4EC] hover:text-[#C2185B] transition-colors cursor-pointer"
                   aria-label="Decrease quantity"
                 >
                   <Minus className="h-3 w-3" />
@@ -730,7 +631,7 @@ export function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={() => setQty(qty + 1)}
-                  className="h-6 w-6 rounded-full flex items-center justify-center text-foreground/75 hover:bg-[#F3EBDD] hover:text-[#B87802] transition-colors cursor-pointer"
+                  className="h-6 w-6 rounded-full flex items-center justify-center text-foreground/75 hover:bg-[#FCE4EC] hover:text-[#C2185B] transition-colors cursor-pointer"
                   aria-label="Increase quantity"
                 >
                   <Plus className="h-3 w-3" />
@@ -744,7 +645,7 @@ export function ProductDetailPage() {
                 type="button"
                 onClick={handleAdd}
                 disabled={!product.inStock}
-                className="h-10.5 inline-flex items-center justify-center gap-2 rounded-full border border-[#B87802] bg-card text-[#996300] text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:bg-[#F3EBDD]/70 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+                className="h-10.5 inline-flex items-center justify-center gap-2 rounded-full border border-[#C2185B] bg-card text-[#996300] text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:bg-[#FCE4EC]/70 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
               >
                 {added ? (
                   <><Check className="h-3.5 w-3.5" /><span>Added!</span></>
@@ -758,7 +659,7 @@ export function ProductDetailPage() {
                 type="button"
                 onClick={() => { addToCart(productId, qty); navigate("/checkout"); }}
                 disabled={!product.inStock}
-                className="h-10.5 inline-flex items-center justify-center rounded-full bg-[#B87802] text-white text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:bg-[#996300] hover:shadow-md active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+                className="h-10.5 inline-flex items-center justify-center rounded-full bg-[#C2185B] text-white text-xs font-semibold tracking-[0.1em] uppercase transition-all duration-200 hover:bg-[#996300] hover:shadow-md active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-xs"
               >
                 Buy It Now
               </button>
@@ -768,28 +669,28 @@ export function ProductDetailPage() {
           {/* 8. Trust Badges */}
           <div className="pt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-xs">
             <div className="flex items-center gap-2">
-              <Truck className="h-3.5 w-3.5 text-[#B87802] shrink-0" />
+              <Truck className="h-3.5 w-3.5 text-[#C2185B] shrink-0" />
               <div>
                 <span className="font-semibold text-foreground block text-[11px]">Free Shipping</span>
                 <span className="text-[10px] text-muted-foreground">Orders above ₹5,000</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <BadgeCheck className="h-3.5 w-3.5 text-[#B87802] shrink-0" />
+              <BadgeCheck className="h-3.5 w-3.5 text-[#C2185B] shrink-0" />
               <div>
                 <span className="font-semibold text-foreground block text-[11px]">100% Authentic</span>
                 <span className="text-[10px] text-muted-foreground">Handcrafted quality</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#B87802] shrink-0" />
+              <ShieldCheck className="h-3.5 w-3.5 text-[#C2185B] shrink-0" />
               <div>
                 <span className="font-semibold text-foreground block text-[11px]">Secure Checkout</span>
                 <span className="text-[10px] text-muted-foreground">UPI, Cards, NetBanking</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <RotateCcw className="h-3.5 w-3.5 text-[#B87802] shrink-0" />
+              <RotateCcw className="h-3.5 w-3.5 text-[#C2185B] shrink-0" />
               <div>
                 <span className="font-semibold text-foreground block text-[11px]">Exchange Available</span>
                 <span className="text-[10px] text-muted-foreground">No return available</span>
@@ -859,7 +760,7 @@ export function ProductDetailPage() {
                 {product.name}
               </span>
               {activeImages.length > 1 && (
-                <span className="text-xs bg-white/15 px-2.5 py-0.5 rounded-full text-[#F5B815] font-mono">
+                <span className="text-xs bg-white/15 px-2.5 py-0.5 rounded-full text-[#E91E8C] font-mono">
                   {modalImageIndex + 1} / {activeImages.length}
                 </span>
               )}
@@ -887,7 +788,7 @@ export function ProductDetailPage() {
                     prev === 0 ? activeImages.length - 1 : prev - 1
                   )
                 }
-                className="absolute left-2 sm:left-4 z-10 p-2.5 sm:p-3 rounded-full bg-black/60 hover:bg-[#B87802] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
+                className="absolute left-2 sm:left-4 z-10 p-2.5 sm:p-3 rounded-full bg-black/60 hover:bg-[#C2185B] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -910,7 +811,7 @@ export function ProductDetailPage() {
                     prev === activeImages.length - 1 ? 0 : prev + 1
                   )
                 }
-                className="absolute right-2 sm:right-4 z-10 p-2.5 sm:p-3 rounded-full bg-black/60 hover:bg-[#B87802] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
+                className="absolute right-2 sm:right-4 z-10 p-2.5 sm:p-3 rounded-full bg-black/60 hover:bg-[#C2185B] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
                 aria-label="Next image"
               >
                 <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -933,7 +834,7 @@ export function ProductDetailPage() {
                     onClick={() => setModalImageIndex(idx)}
                     className={`relative h-14 w-12 sm:h-16 sm:w-14 shrink-0 overflow-hidden rounded-md border-2 bg-black/40 transition-all cursor-pointer ${
                       isSelected
-                        ? "border-[#F5B815] ring-2 ring-[#F5B815]/50 scale-105 opacity-100"
+                        ? "border-[#E91E8C] ring-2 ring-[#E91E8C]/50 scale-105 opacity-100"
                         : "border-white/30 hover:border-white/70 opacity-60 hover:opacity-100"
                     }`}
                   >
