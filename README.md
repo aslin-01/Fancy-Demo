@@ -1,6 +1,6 @@
-# CF Handlooms — Luxury Admin Frontend
+# Madha Fancy — Luxury Admin Frontend
 
-A royal, state-of-the-art Admin Management Portal built for CF Handlooms.
+A royal, state-of-the-art Admin Management Portal built for Madha Fancy.
 
 ## Features
 - **Royal Aesthetic**: Tailored deep amber gold and warm ivory palette matching the official website.
@@ -26,5 +26,5 @@ A royal, state-of-the-art Admin Management Portal built for CF Handlooms.
    Admin Portal runs at **http://localhost:5174**
 
 3. Default Admin Credentials:
-   - **Email**: `admin@cfhandlooms.com`
+   - **Email**: `admin@madhafancy.com`
    - **Password**: `admin123`

@@ -35,22 +35,22 @@ export const LoginPage = ({ onNotify }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F2] flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[#FFF5F8] flex items-center justify-center p-4 relative overflow-hidden">
       {/* Decorative luxury lighting */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#F5B815]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#B87802]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#E91E8C]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#C2185B]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-md w-full bg-card border border-border rounded-lg p-8 relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-6">
           <img
             src="/favicon.png"
-            alt="CF Handlooms logo"
+            alt="Madha Fancy logo"
             className="w-16 h-16 mx-auto object-contain mb-3"
           />
           <div className="flex flex-col items-center">
             <span className={theme.typography.cursiveBrand}>
-              CF Handlooms
+              Madha Fancy
             </span>
             <div className={theme.dividers.goldCentered} />
             <p className="text-xs text-muted-foreground uppercase tracking-[0.2em] font-semibold mt-3">
@@ -70,7 +70,7 @@ export const LoginPage = ({ onNotify }) => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@cfhandlooms.com"
+                placeholder="admin@madhafancy.com"
                 className={`pl-9 ${theme.forms.input}`}
               />
             </div>
@@ -115,7 +115,7 @@ export const LoginPage = ({ onNotify }) => {
             <span>1-Click Super Admin Login</span>
           </button>
           <p className="text-[10px] text-muted-foreground text-center mt-3">
-            Default credentials: <span className="font-body text-foreground font-semibold">admin@cfhandlooms.com / admin123</span>
+            Default credentials: <span className="font-body text-foreground font-semibold">admin@madhafancy.com / admin123</span>
           </p>
         </div>
       </div>

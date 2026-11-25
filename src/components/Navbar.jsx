@@ -40,7 +40,7 @@ export const Navbar = ({ title, subtitle, onRefresh, isRefreshing }) => {
             className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary/70 transition-colors border border-border cursor-pointer"
             title="Refresh Data"
           >
-            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#B87802]' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#C2185B]' : ''}`} />
           </button>
         )}
 
@@ -49,7 +49,7 @@ export const Navbar = ({ title, subtitle, onRefresh, isRefreshing }) => {
           href={STORE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-[#B87802] px-4 py-1.5 text-xs font-medium tracking-[0.08em] uppercase text-[#B87802] bg-transparent transition-all duration-200 hover:bg-[#B87802] hover:text-white active:scale-[0.98] cursor-pointer"
+          className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-[#C2185B] px-4 py-1.5 text-xs font-medium tracking-[0.08em] uppercase text-[#C2185B] bg-transparent transition-all duration-200 hover:bg-[#C2185B] hover:text-white active:scale-[0.98] cursor-pointer"
         >
           <span>Live Store</span>
           <ExternalLink className="w-3 h-3" />

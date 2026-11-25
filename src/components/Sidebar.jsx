@@ -36,12 +36,13 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
       icon: PackageCheck,
       badge: orderCount !== null && orderCount !== undefined ? orderCount : null,
     },
-    {
-      id: 'returns',
-      label: 'Exchange',
-      icon: RotateCcw,
-      badge: returnsCount !== null && returnsCount !== undefined ? returnsCount : null,
-    },
+    // Hidden per user request:
+    // {
+    //   id: 'returns',
+    //   label: 'Exchange',
+    //   icon: RotateCcw,
+    //   badge: returnsCount !== null && returnsCount !== undefined ? returnsCount : null,
+    // },
     {
       id: 'hero-banner',
       label: 'Hero Banner',
@@ -67,20 +68,20 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
     : navItems;
 
   return (
-    <aside className="w-72 shrink-0 bg-[#F7F3EA] text-[#12100D] flex flex-col justify-between border-r border-[#E8D8B5] select-none h-screen sticky top-0 z-30">
+    <aside className="w-72 shrink-0 bg-[#FFF0F5] text-[#1A0510] flex flex-col justify-between border-r border-[#F8C4D8] select-none h-screen sticky top-0 z-30">
       {/* Brand Header */}
       <div>
-        <div className="p-3 border-b border-[#E8D8B5] bg-[#EFE7D8]">
+        <div className="p-3 border-b border-[#F8C4D8] bg-[#FCE4EC]">
           <div className="flex items-center gap-3">
             <img
               src="/brand-logo.jpg"
-              alt="CF Handlooms Official Logo"
-              className="h-10 w-10 object-contain bg-[#0C0A07] border border-[#B87802]/40 shrink-0"
+              alt="Madha Fancy Official Logo"
+              className="h-10 w-10 object-contain bg-[#1A0510] border border-[#C2185B]/40 shrink-0"
             />
             <div className="min-w-0 flex-1 overflow-visible">
               <div className="flex items-center gap-2 overflow-visible">
-                <span className={`${theme.fonts.display} font-semibold text-2xl leading-normal text-[#996300] tracking-wide whitespace-nowrap overflow-visible`}>
-                  CF Handlooms
+                <span className={`${theme.fonts.display} font-semibold text-2xl leading-normal text-[#880E4F] tracking-wide whitespace-nowrap overflow-visible`}>
+                  Madha Fancy
                 </span>
               </div>
             </div>
@@ -89,7 +90,7 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
 
         {/* Navigation Items */}
         <nav className="px-3 py-2 space-y-1.5">
-          <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8C7E6A]">
+          <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#7B4A5E]">
             Main Menu
           </div>
           {visibleNavItems.map((item) => {
@@ -101,14 +102,14 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg text-xs tracking-wide uppercase font-semibold transition-colors duration-150 cursor-pointer border border-l-4 ${
                   isActive
-                    ? 'bg-white text-[#B87802] border-[#E8D8B5] border-l-[#B87802]'
-                    : 'text-[#4A4235] border-transparent border-l-transparent hover:bg-[#EAE0CE] hover:text-[#B87802]'
+                    ? 'bg-white text-[#C2185B] border-[#F8C4D8] border-l-[#C2185B]'
+                    : 'text-[#4A1C30] border-transparent border-l-transparent hover:bg-[#FCE4EC] hover:text-[#C2185B]'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Icon
                     className={`w-4 h-4 shrink-0 transition-colors ${
-                      isActive ? 'text-[#B87802]' : 'text-[#8C7E6A]'
+                      isActive ? 'text-[#C2185B]' : 'text-[#7B4A5E]'
                     }`}
                   />
                   <span>{item.label}</span>
@@ -117,8 +118,8 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-bold transition-colors ${
                       isActive
-                        ? 'bg-[#FAF8F2] text-[#B87802] border border-[#E8D8B5]'
-                        : 'bg-[#E5DAC6] text-[#B87802] border border-[#D9CDB7]'
+                        ? 'bg-[#FFF5F8] text-[#C2185B] border border-[#F8C4D8]'
+                        : 'bg-[#FCE4EC] text-[#C2185B] border border-[#F8C4D8]'
                     }`}
                   >
                     {item.badge}
@@ -131,16 +132,16 @@ export function Sidebar({ activeTab, setActiveTab, productCount, orderCount, ret
       </div>
 
       {/* Bottom Footer Section: User Profile */}
-      <div className="p-4 border-t border-[#E8D8B5] bg-[#EFE7D8]">
+      <div className="p-4 border-t border-[#F8C4D8] bg-[#FCE4EC]">
 
         {/* User Access Identity Badge */}
         <div className="flex items-center gap-3 pt-1 px-1">
-          <div className="w-8 h-8 rounded-full bg-white border border-[#B87802] flex items-center justify-center text-xs font-bold text-[#B87802]">
+          <div className="w-8 h-8 rounded-full bg-white border border-[#C2185B] flex items-center justify-center text-xs font-bold text-[#C2185B]">
             SA
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-[#12100D] truncate">Super Admin</p>
-            <p className="text-[10px] uppercase tracking-wider text-[#736858] truncate">CF Handlooms</p>
+            <p className="text-xs font-semibold text-[#1A0510] truncate">Super Admin</p>
+            <p className="text-[10px] uppercase tracking-wider text-[#7B4A5E] truncate">Madha Fancy</p>
           </div>
         </div>
       </div>

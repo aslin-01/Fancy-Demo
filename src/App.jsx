@@ -10,6 +10,7 @@ import { HeroBannerView } from './components/HeroBannerView';
 import { OffersView } from './components/OffersView';
 import { AddProductPage } from './pages/AddProductPage';
 import { api, STORE_URL } from './services/api';
+import { HARDCODED_JEWELLERY_PRODUCTS } from './data/hardcodedProducts';
 import { Check, ExternalLink, X, AlertCircle } from 'lucide-react';
 import { theme } from './theme';
 
@@ -52,12 +53,14 @@ export function App() {
       setBackendOnline(health.online);
 
       // 2. Fetch products
-      const productsRes = await api.getProducts().catch(() => ({ data: [] }));
-      const fetchedProducts = Array.isArray(productsRes.data)
+      const productsRes = await api.getProducts().catch(() => ({ data: HARDCODED_JEWELLERY_PRODUCTS }));
+      const rawProducts = Array.isArray(productsRes.data)
         ? productsRes.data
         : Array.isArray(productsRes)
         ? productsRes
         : [];
+      const nonSareeProducts = rawProducts.filter(p => !String(p.category || '').toLowerCase().includes('saree'));
+      const fetchedProducts = nonSareeProducts.length > 0 ? nonSareeProducts : HARDCODED_JEWELLERY_PRODUCTS;
       setProducts(fetchedProducts);
 
       // 3. Fetch orders
@@ -131,12 +134,12 @@ export function App() {
   };
 
   return (
-    <div className={`min-h-screen bg-[#FAF8F2] flex text-[#12100D] ${theme.fonts.body} selection:bg-[#B87802] selection:text-white`}>
+    <div className={`min-h-screen bg-[#FFF5F8] flex text-[#1A0510] ${theme.fonts.body} selection:bg-[#C2185B] selection:text-white`}>
       
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0C0A07] text-white border border-[#F5B815]/40 animate-in slide-in-from-bottom-5 max-w-md">
-          <div className="w-8 h-8 rounded-full bg-[#F5B815] text-[#0C0A07] flex items-center justify-center shrink-0 font-bold">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#1A0510] text-white border border-[#E91E8C]/40 animate-in slide-in-from-bottom-5 max-w-md">
+          <div className="w-8 h-8 rounded-full bg-[#E91E8C] text-[#1A0510] flex items-center justify-center shrink-0 font-bold">
             <Check className="w-4 h-4 stroke-[3]" />
           </div>
           <div className="flex-1 min-w-0">
@@ -146,7 +149,7 @@ export function App() {
                 href={toast.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] text-[#F5B815] hover:underline flex items-center gap-1 font-semibold mt-0.5"
+                className="text-[11px] text-[#E91E8C] hover:underline flex items-center gap-1 font-semibold mt-0.5"
               >
                 <span>Open Storefront</span>
                 <ExternalLink className="w-3 h-3" />

@@ -74,10 +74,10 @@ export function CustomDropdown({
             inputRef.current.focus();
           }
         }}
-        className={`w-full h-11 px-3.5 rounded-lg border bg-[#F7F3EA] text-[#12100D] text-sm font-medium transition-all cursor-pointer flex items-center justify-between gap-2 select-none ${
+        className={`w-full h-11 px-3.5 rounded-lg border bg-[#FFF0F5] text-[#1A0510] text-sm font-medium transition-all cursor-pointer flex items-center justify-between gap-2 select-none ${
           isOpen
-            ? 'border-[#B87802] bg-[#F2ECE0]'
-            : 'border-[#E8D8B5] hover:border-[#B87802] hover:bg-[#F2ECE0]'
+            ? 'border-[#C2185B] bg-[#FCE4EC]'
+            : 'border-[#F8C4D8] hover:border-[#C2185B] hover:bg-[#FCE4EC]'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         <input
@@ -121,12 +121,12 @@ export function CustomDropdown({
             }
           }}
           style={{ backgroundColor: 'transparent' }}
-          className="w-full bg-transparent custom-dropdown-input outline-none border-none p-0 text-sm text-[#12100D] font-medium placeholder-[#8C7E6A] cursor-pointer"
+          className="w-full bg-transparent custom-dropdown-input outline-none border-none p-0 text-sm text-[#1A0510] font-medium placeholder-[#7B4A5E] cursor-pointer"
         />
 
         <div className="flex items-center shrink-0">
           <ChevronDown
-            className={`w-4 h-4 text-[#B87802] stroke-[2.2] transition-transform duration-200 ${
+            className={`w-4 h-4 text-[#C2185B] stroke-[2.2] transition-transform duration-200 ${
               isOpen ? 'rotate-180' : ''
             }`}
           />
@@ -135,10 +135,10 @@ export function CustomDropdown({
 
       {/* Floating Options Menu matching the sidebar */}
       {isOpen && (
-        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-lg border border-[#B87802] bg-[#F7F3EA] overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
-          <div className="max-h-56 overflow-y-auto py-1 divide-y divide-[#E8D8B5]/40">
+        <div className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-lg border border-[#C2185B] bg-[#FFF0F5] overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
+          <div className="max-h-56 overflow-y-auto py-1 divide-y divide-[#F8C4D8]/40">
             {filteredOptions.length === 0 ? (
-              <div className="px-3.5 py-3 text-xs text-[#8C7E6A] italic">
+              <div className="px-3.5 py-3 text-xs text-[#7B4A5E] italic">
                 {allowCustom && inputValue.trim() ? (
                   <span>
                     No exact match. Press Enter to use "<strong>{inputValue.trim()}</strong>"
@@ -156,13 +156,13 @@ export function CustomDropdown({
                     onClick={() => handleSelect(opt.value)}
                     className={`px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider flex items-center justify-between cursor-pointer transition-colors duration-150 ${
                       isSelected
-                        ? 'bg-white text-[#B87802] border-l-4 border-l-[#B87802]'
-                        : 'text-[#4A4235] hover:bg-[#EAE0CE] hover:text-[#B87802] border-l-4 border-l-transparent'
+                        ? 'bg-white text-[#C2185B] border-l-4 border-l-[#C2185B]'
+                        : 'text-[#4A1C30] hover:bg-[#FCE4EC] hover:text-[#C2185B] border-l-4 border-l-transparent'
                     }`}
                   >
                     <span>{opt.label}</span>
                     {isSelected && (
-                      <Check className="w-3.5 h-3.5 text-[#B87802] stroke-[3] shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#C2185B] stroke-[3] shrink-0" />
                     )}
                   </div>
                 );

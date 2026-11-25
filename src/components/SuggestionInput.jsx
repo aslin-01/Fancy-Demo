@@ -88,18 +88,18 @@ export function SuggestionInput({
         onKeyDown={handleKeyDown}
         className={
           className ||
-          'w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm text-[#12100D] outline-none focus:outline-none focus:border-[#B87802] transition-colors'
+          'w-full h-11 px-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm text-[#1A0510] outline-none focus:outline-none focus:border-[#C2185B] transition-colors'
         }
       />
 
       {/* Suggestion Popover Menu matching site/brand design */}
       {isOpen && filtered.length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-2 z-50 rounded-lg border border-[#E8D8B5] bg-white shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="absolute left-0 right-0 top-full mt-2 z-50 rounded-lg border border-[#F8C4D8] bg-white shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
           {/* Triangular pointer beak at the top matching user's design */}
-          <div className="absolute -top-1.5 left-6 w-3 h-3 bg-white border-t border-l border-[#E8D8B5] rotate-45 z-10" />
+          <div className="absolute -top-1.5 left-6 w-3 h-3 bg-white border-t border-l border-[#F8C4D8] rotate-45 z-10" />
 
           {/* Suggestions List */}
-          <div className="max-h-56 overflow-y-auto py-1 divide-y divide-[#E8D8B5]/30">
+          <div className="max-h-56 overflow-y-auto py-1 divide-y divide-[#F8C4D8]/30">
             {filtered.map((item, idx) => {
               const isSelected = (value || '').trim().toLowerCase() === item.toLowerCase();
               const isHighlighted = idx === highlightedIndex;
@@ -115,15 +115,15 @@ export function SuggestionInput({
                   onMouseEnter={() => setHighlightedIndex(idx)}
                   className={`px-3.5 py-2.5 text-xs sm:text-sm font-medium flex items-center justify-between cursor-pointer transition-colors duration-150 ${
                     isSelected
-                      ? 'bg-[#FAF8F2] text-[#B87802] font-semibold border-l-3 border-[#B87802]'
+                      ? 'bg-[#FFF5F8] text-[#C2185B] font-semibold border-l-3 border-[#C2185B]'
                       : isHighlighted
-                        ? 'bg-[#FAF8F2] text-[#B87802]'
-                        : 'text-[#12100D] hover:bg-[#FAF8F2] hover:text-[#B87802]'
+                        ? 'bg-[#FFF5F8] text-[#C2185B]'
+                        : 'text-[#1A0510] hover:bg-[#FFF5F8] hover:text-[#C2185B]'
                   }`}
                 >
                   <span>{item}</span>
                   {isSelected && (
-                    <Check className="w-3.5 h-3.5 text-[#B87802] stroke-[3] shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-[#C2185B] stroke-[3] shrink-0" />
                   )}
                 </div>
               );

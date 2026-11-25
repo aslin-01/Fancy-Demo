@@ -3,13 +3,13 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * CF Handlooms — Official Brand Design System
- * Palette extracted directly from logo (public/favicon.png):
- * - Primary Emblem Gold: #F5B815 (Sample highlights: #FEE63E, #FBC119)
- * - Deep Amber Gold: #B87802 (Sample shadows: #D38703, #AA5300)
- * - Deep Onyx Black: #0C0A07 (Sample darks: #000000, #060300)
- * - Warm Ivory Neutral: #FAF8F2
- * - Champagne Neutral: #F3EBDD
+ * Madha Fancy — Official Brand Design System (Matched to Storefront)
+ * - Brand Pink (Primary):  #C2185B  — deep magenta pink
+ * - Pink Bright (Accent):  #E91E8C  — vivid highlight pink
+ * - Pink Deep (Shadow):    #880E4F  — dark rose shade
+ * - Foreground on Pink:    #FFFFFF  — white
+ * - Soft Rose Background:  #FFF5F8  — warm ivory with pink tint
+ * - Rose Neutral:          #FCE4EC  — champagne-rose neutral
  */
 
 @theme inline {
@@ -59,48 +59,48 @@
 :root {
   --radius: 0.375rem;
 
-  /* Logo-Derived Warm Ivory Background & Onyx Foreground */
-  --background: #FAF8F2;
-  --foreground: #12100D;
+  /* Soft Rose-Ivory Background & Dark Rose Foreground */
+  --background: #FFF5F8;
+  --foreground: #1A0510;
   --card: #FFFFFF;
-  --card-foreground: #12100D;
+  --card-foreground: #1A0510;
   --popover: #FFFFFF;
-  --popover-foreground: #12100D;
+  --popover-foreground: #1A0510;
 
-  /* Primary Action: Deep Amber Gold */
-  --primary: #B87802;
+  /* Primary Action: Madha Fancy Brand Pink */
+  --primary: #C2185B;
   --primary-foreground: #FFFFFF;
 
-  /* Secondary: Warm Champagne Neutral */
-  --secondary: #F3EBDD;
-  --secondary-foreground: #12100D;
-  --muted: #F2EBE0;
-  --muted-foreground: #6B6457;
+  /* Secondary: Soft Rose Neutral */
+  --secondary: #FCE4EC;
+  --secondary-foreground: #1A0510;
+  --muted: #FDE8EF;
+  --muted-foreground: #7B4A5E;
 
-  /* Accent: Royal Gold Tint */
-  --accent: #F5EEDB;
-  --accent-foreground: #0C0A07;
+  /* Accent: Light Rose Tint */
+  --accent: #FFF0F5;
+  --accent-foreground: #880E4F;
   --destructive: #B3261E;
   --destructive-foreground: #FFFFFF;
 
   /* Borders & Focus Ring */
-  --border: #E8D8B5;
-  --input: #E8D8B5;
-  --ring: #F5B815;
+  --border: #F8C4D8;
+  --input: #F8C4D8;
+  --ring: #E91E8C;
 
-  /* Brand Logo Tokens (Extracted directly from logo) */
-  --gold: #F5B815;
-  --gold-light: #FEE63E;
-  --gold-deep: #B87802;
-  --gold-foreground: #0C0A07;
-  --onyx: #12100D;
-  --onyx-deep: #0C0A07;
-  --ivory: #FAF8F2;
-  --beige: #F3EBDD;
+  /* Brand Logo Tokens — Madha Fancy Pink Palette */
+  --gold: #C2185B;
+  --gold-light: #E91E8C;
+  --gold-deep: #880E4F;
+  --gold-foreground: #FFFFFF;
+  --onyx: #1A0510;
+  --onyx-deep: #0D0008;
+  --ivory: #FFF5F8;
+  --beige: #FCE4EC;
 
-  /* Aliases mapped to logo palette */
-  --maroon: #B87802;
-  --maroon-deep: #0C0A07;
+  /* Aliases mapped to brand palette */
+  --maroon: #C2185B;
+  --maroon-deep: #880E4F;
 }
 
 @layer base {
@@ -135,10 +135,10 @@
     box-shadow: none !important;
   }
 
-  /* When input or textarea contains text, switch background to warm ivory background (#FAF8F2) */
+  /* When input or textarea contains text, switch background to soft rose ivory (#FFF5F8) */
   input:not(:placeholder-shown):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not(.bg-transparent):not(.custom-dropdown-input),
   textarea:not(:placeholder-shown) {
-    background-color: #FAF8F2 !important;
+    background-color: #FFF5F8 !important;
   }
 
   /* Custom dropdown inputs should always stay 100% transparent */
@@ -155,34 +155,34 @@
     -webkit-box-shadow: none !important;
   }
 
-  /* Autofill support matching warm ivory background */
+  /* Autofill support matching soft rose ivory background */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   textarea:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #FAF8F2 inset !important;
-    -webkit-text-fill-color: #12100D !important;
+    -webkit-box-shadow: 0 0 0px 1000px #FFF5F8 inset !important;
+    -webkit-text-fill-color: #1A0510 !important;
     transition: background-color 5000s ease-in-out 0s;
   }
 }
 
-/* Scrollbar matching luxury aesthetic */
+/* Scrollbar matching brand aesthetic */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F3EBDD;
+  background: #FCE4EC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E8D8B5;
+  background: #F8C4D8;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B87802;
+  background: #C2185B;
 }
 
 /* Brand accent flourish - Cormorant Garamond italic */
@@ -191,10 +191,10 @@
   font-style: italic;
 }
 
-/* Gold divider flourish - exact logo gold gradient */
+/* Brand divider flourish */
 @utility divider-gold {
   height: 1px;
-  background: linear-gradient(to right, transparent, #F5B815, transparent);
+  background: linear-gradient(to right, transparent, #E91E8C, transparent);
 }
 
 /* Slow, graceful fade-up used across sections */
@@ -214,12 +214,12 @@
   }
 }
 
-/* Custom Dropdown Styling Matching Sidebar (#F7F3EA, #E8D8B5, #B87802) */
+/* Custom Dropdown Styling Matching Storefront Rose Palette (#FFF0F5, #F8C4D8, #C2185B) */
 select {
-  background-color: #F7F3EA !important;
-  border-color: #E8D8B5 !important;
-  color: #12100D !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23B87802' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-color: #FFF0F5 !important;
+  border-color: #F8C4D8 !important;
+  color: #1A0510 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23C2185B' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
   background-position: right 0.75rem center !important;
   background-size: 1rem 1rem !important;
@@ -232,19 +232,19 @@ select {
 }
 
 select:hover {
-  border-color: #B87802 !important;
-  background-color: #F2ECE0 !important;
+  border-color: #C2185B !important;
+  background-color: #FCE4EC !important;
 }
 
 select:focus {
-  border-color: #B87802 !important;
+  border-color: #C2185B !important;
   outline: none !important;
   box-shadow: none !important;
 }
 
 select option {
-  background-color: #FAF8F2 !important;
-  color: #12100D !important;
+  background-color: #FFF5F8 !important;
+  color: #1A0510 !important;
   padding: 8px 12px;
 }
 

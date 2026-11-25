@@ -54,17 +54,17 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
   return (
     <div className="space-y-6">
       {/* Top Banner & Quick Actions */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0C0A07] text-[#FAF8F2] border border-[#B87802]/30 p-6 rounded-lg relative overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#1A0510] text-[#FFF5F8] border border-[#C2185B]/30 p-6 rounded-lg relative overflow-hidden">
         {/* Subtle background glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#B87802]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#C2185B]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10">
-          <p className={theme.typography.cursiveEyebrow}>Heritage Weaves & Royal Craft</p>
+          <p className={theme.typography.cursiveEyebrow}>1-Gram Gold Covering & Bridal Treasures</p>
           <h1 className="text-2xl sm:text-3xl font-display font-semibold text-white mt-0.5">
-            CF Handlooms Executive Portal
+            Madha Fancy Executive Portal
           </h1>
-          <p className="text-sm text-[#F3EBDD]/80 mt-1 max-w-xl">
-            Real-time handloom sales tracking, saree catalog management, and prompt order fulfillment.
+          <p className="text-sm text-[#FCE4EC]/80 mt-1 max-w-xl">
+            Real-time gold covering sales tracking, jewellery catalog management, and prompt order fulfillment.
           </p>
         </div>
         <div className="flex items-center gap-3 relative z-10">
@@ -73,7 +73,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
             className={theme.buttons.primary}
           >
             <Plus className="w-4 h-4 mr-2" />
-            <span>Add Saree</span>
+            <span>Add Jewellery</span>
           </button>
           <button
             onClick={() => onNavigate('orders')}
@@ -101,7 +101,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
           icon={Package}
         />
         <StatCard
-          title="Active Saree Catalog"
+          title="Active Jewellery Catalog"
           value={metrics.totalProducts.toString()}
           change="Catalog Live"
           isPositive={true}
@@ -135,13 +135,13 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
               <AreaChart data={revenueTrend}>
                 <defs>
                   <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#B87802" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#F5B815" stopOpacity={0.02} />
+                    <stop offset="5%" stopColor="#C2185B" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#E91E8C" stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="month" stroke="#6B6457" fontSize={12} tickLine={false} />
+                <XAxis dataKey="month" stroke="#7B4A5E" fontSize={12} tickLine={false} />
                 <YAxis
-                  stroke="#6B6457"
+                  stroke="#7B4A5E"
                   fontSize={12}
                   tickLine={false}
                   tickFormatter={(v) => `₹${v / 1000}k`}
@@ -149,9 +149,9 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#FFFFFF',
-                    border: '1px solid #E8D8B5',
+                    border: '1px solid #F8C4D8',
                     borderRadius: '6px',
-                    color: '#12100D',
+                    color: '#1A0510',
                     fontSize: '12px',
                     boxShadow: 'none',
                   }}
@@ -160,7 +160,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                 <Area
                   type="monotone"
                   dataKey="revenue"
-                  stroke="#B87802"
+                  stroke="#C2185B"
                   strokeWidth={2.5}
                   fillOpacity={1}
                   fill="url(#colorRev)"
@@ -196,9 +196,9 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#FFFFFF',
-                    border: '1px solid #E8D8B5',
+                    border: '1px solid #F8C4D8',
                     borderRadius: '6px',
-                    color: '#12100D',
+                    color: '#1A0510',
                     fontSize: '12px',
                   }}
                 />
@@ -221,18 +221,18 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
         </div>
       </div>
 
-      {/* Recent Orders & Top Sarees */}
+      {/* Recent Orders & Top Jewellery */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders Table */}
         <div className={`lg:col-span-2 ${theme.cards.padded}`}>
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className={theme.typography.h3Card}>Recent Customer Orders</h3>
-              <p className={theme.typography.bodyMuted}>Latest transactions from CF Handlooms web store</p>
+              <p className={theme.typography.bodyMuted}>Latest transactions from Madha Fancy web store</p>
             </div>
             <button
               onClick={() => onNavigate('orders')}
-              className="text-xs font-semibold text-[#B87802] hover:text-[#996300] transition-colors cursor-pointer"
+              className="text-xs font-semibold text-[#C2185B] hover:text-[#880E4F] transition-colors cursor-pointer"
             >
               View all →
             </button>
@@ -253,7 +253,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
               <tbody className="divide-y divide-border">
                 {recentOrdersList.map((order) => (
                   <tr key={order._id || order.orderNumber} className={theme.table.trHover}>
-                    <td className={`${theme.table.td} font-body font-semibold tracking-wider text-[#B87802]`}>
+                    <td className={`${theme.table.td} font-body font-semibold tracking-wider text-[#C2185B]`}>
                       {order.orderNumber}
                     </td>
                     <td className={theme.table.td}>
@@ -261,7 +261,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                       <p className="text-[10px] text-muted-foreground">{order.customerPhone || order.customerEmail}</p>
                     </td>
                     <td className={`${theme.table.td} text-muted-foreground`}>
-                      {order.items?.length || 1} saree{(order.items?.length || 1) > 1 ? 's' : ''}
+                      {order.items?.length || 1} item{(order.items?.length || 1) > 1 ? 's' : ''}
                     </td>
                     <td className={`${theme.table.td} font-semibold text-foreground`}>
                       ₹{order.totalAmount?.toLocaleString('en-IN')}
@@ -275,7 +275,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                         className={theme.buttons.secondarySm}
                         title="View details"
                       >
-                        <Eye className="w-3.5 h-3.5 text-[#B87802]" />
+                        <Eye className="w-3.5 h-3.5 text-[#C2185B]" />
                       </button>
                     </td>
                   </tr>
@@ -285,16 +285,16 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
           </div>
         </div>
 
-        {/* Top Sarees Showcase */}
+        {/* Top Jewellery Showcase */}
         <div className={theme.cards.padded}>
-          <h3 className={theme.typography.h3Card}>Top Selling Sarees</h3>
+          <h3 className={theme.typography.h3Card}>Top Selling Jewellery</h3>
           <p className={`${theme.typography.bodyMuted} mb-4`}>Highest rated pieces in collection</p>
 
           <div className="space-y-3">
             {(products || []).slice(0, 4).map((item) => (
               <div
                 key={item._id || item.sku}
-                className="flex items-center gap-3 p-2.5 rounded-md bg-secondary/30 border border-border hover:border-[#B87802] transition-colors"
+                className="flex items-center gap-3 p-2.5 rounded-md bg-secondary/30 border border-border hover:border-[#C2185B] transition-colors"
               >
                 <img
                   src={item.image}
@@ -303,7 +303,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                 />
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-foreground truncate">{item.name}</p>
-                  <p className="text-[11px] text-[#B87802] font-semibold">
+                  <p className="text-[11px] text-[#C2185B] font-semibold">
                     ₹{item.price?.toLocaleString('en-IN')}
                   </p>
                   <span className={theme.badges.discount}>
@@ -311,7 +311,7 @@ export const DashboardPage = ({ stats, orders, products, onNavigate, onSelectOrd
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-bold text-[#B87802]">★ {item.rating || 4.8}</span>
+                  <span className="text-xs font-bold text-[#C2185B]">★ {item.rating || 4.8}</span>
                   <p className="text-[10px] text-muted-foreground">{item.reviews || 95} reviews</p>
                 </div>
               </div>

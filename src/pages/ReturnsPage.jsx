@@ -98,7 +98,7 @@ function DetailModal({ request, onClose, onUpdateStatus }) {
       <div className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-0 overflow-hidden">
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-[#FAF8F2]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-[#FFF5F8]">
           <div>
             <h2 className={theme.modal.title}>Exchange Request Details</h2>
             <p className={`${theme.modal.description} mt-0.5`}>
@@ -107,7 +107,7 @@ function DetailModal({ request, onClose, onUpdateStatus }) {
           </div>
           <div className="flex items-center gap-3">
             {/* Exchange badge — always gold */}
-            <span className="inline-flex items-center gap-1.5 rounded-sm bg-[#F5B815] text-[#0C0A07] px-2.5 py-0.5 text-[11px] font-bold tracking-wide">
+            <span className="inline-flex items-center gap-1.5 rounded-sm bg-[#E91E8C] text-[#1A0510] px-2.5 py-0.5 text-[11px] font-bold tracking-wide">
               <ArrowLeftRight className="w-3 h-3" />
               Exchange
             </span>
@@ -152,7 +152,7 @@ function DetailModal({ request, onClose, onUpdateStatus }) {
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   {request.productName}
                 </p>
-                <p className="text-sm font-semibold text-[#B87802]">
+                <p className="text-sm font-semibold text-[#C2185B]">
                   {formatAmount(request.originalAmount)}
                 </p>
                 <p className="text-xs text-muted-foreground">
@@ -173,7 +173,7 @@ function DetailModal({ request, onClose, onUpdateStatus }) {
 
           {/* Requested Replacement Product */}
           {request.requestedProduct && (
-            <div className={`${theme.cards.base} p-4 border-l-4 border-l-[#F5B815] space-y-1`}>
+            <div className={`${theme.cards.base} p-4 border-l-4 border-l-[#E91E8C] space-y-1`}>
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                 Requested Replacement Product
               </p>
@@ -329,7 +329,7 @@ export function ReturnsPage({ onNotify }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-32">
-        <Loader2 className="w-6 h-6 animate-spin text-[#B87802]" />
+        <Loader2 className="w-6 h-6 animate-spin text-[#C2185B]" />
         <span className="ml-3 text-sm text-muted-foreground">Loading exchange requests…</span>
       </div>
     );
@@ -351,15 +351,15 @@ export function ReturnsPage({ onNotify }) {
       {/* ── Page Header ── */}
       <div>
         <div className="flex items-center gap-3 mb-1">
-          <div className="w-9 h-9 rounded-lg bg-[#0C0A07] flex items-center justify-center shrink-0">
-            <ArrowLeftRight className="w-4 h-4 text-[#F5B815]" strokeWidth={2} />
+          <div className="w-9 h-9 rounded-lg bg-[#1A0510] flex items-center justify-center shrink-0">
+            <ArrowLeftRight className="w-4 h-4 text-[#E91E8C]" strokeWidth={2} />
           </div>
           <h1 className={theme.typography.h1Page}>Exchange Requests</h1>
         </div>
         <div className={`${theme.dividers.goldLeft} mb-2`} />
         <p className={`${theme.typography.bodyMuted} mt-2`}>
-          Manage customer exchange requests for purchased products. CF Handlooms offers an
-          <span className="font-semibold text-[#B87802]"> exchange-only policy </span>
+          Manage customer exchange requests for purchased products. Madha Fancy offers an
+          <span className="font-semibold text-[#C2185B]"> exchange-only policy </span>
           — no returns or refunds.
         </p>
       </div>
@@ -367,7 +367,7 @@ export function ReturnsPage({ onNotify }) {
       {/* ── Stats Row ── */}
       <div className={theme.layout.grid4Cols}>
         {[
-          { label: 'Total Requests', value: total,    icon: PackageSearch, color: 'text-[#B87802]' },
+          { label: 'Total Requests', value: total,    icon: PackageSearch, color: 'text-[#C2185B]' },
           { label: 'Pending Review', value: pending,  icon: Clock,         color: 'text-amber-600' },
           { label: 'Approved',       value: approved, icon: CheckCircle,   color: 'text-sky-600'   },
           { label: 'Exchanged',      value: exchanged,icon: RefreshCw,     color: 'text-emerald-600'},
@@ -375,7 +375,7 @@ export function ReturnsPage({ onNotify }) {
           const Icon = stat.icon;
           return (
             <div key={stat.label} className={`${theme.cards.padded} flex items-center gap-4`}>
-              <div className="w-10 h-10 rounded-lg bg-[#FAF8F2] border border-border flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-[#FFF5F8] border border-border flex items-center justify-center shrink-0">
                 <Icon className={`w-5 h-5 ${stat.color}`} />
               </div>
               <div>
@@ -425,10 +425,10 @@ export function ReturnsPage({ onNotify }) {
       </div>
 
       {/* ── Exchange-Only Policy Note ── */}
-      <div className="flex items-start gap-3 rounded-lg border border-[#F5B815]/40 bg-[#F5B815]/8 px-4 py-3">
-        <ArrowLeftRight className="w-4 h-4 text-[#B87802] shrink-0 mt-0.5" />
-        <p className="text-xs text-[#6B6457] leading-relaxed">
-          <span className="font-semibold text-[#B87802]">Exchange Policy:</span> CF Handlooms accepts exchanges only. Products can be exchanged for a different size, colour, or variant within 7 days of delivery, subject to quality inspection. No refunds or returns are processed.
+      <div className="flex items-start gap-3 rounded-lg border border-[#E91E8C]/40 bg-[#E91E8C]/8 px-4 py-3">
+        <ArrowLeftRight className="w-4 h-4 text-[#C2185B] shrink-0 mt-0.5" />
+        <p className="text-xs text-[#7B4A5E] leading-relaxed">
+          <span className="font-semibold text-[#C2185B]">Exchange Policy:</span> Madha Fancy accepts exchanges only. Products can be exchanged for a different size, colour, or variant within 7 days of delivery, subject to quality inspection. No refunds or returns are processed.
         </p>
       </div>
 
@@ -467,7 +467,7 @@ export function ReturnsPage({ onNotify }) {
                 filtered.map((req) => (
                   <tr key={req._id} className={theme.table.trHover}>
                     {/* Request # */}
-                    <td className={`${theme.table.td} font-semibold tracking-wide text-[#B87802] whitespace-nowrap`}>
+                    <td className={`${theme.table.td} font-semibold tracking-wide text-[#C2185B] whitespace-nowrap`}>
                       {req.requestNumber}
                     </td>
                     {/* Order Ref */}
@@ -482,7 +482,7 @@ export function ReturnsPage({ onNotify }) {
                     {/* Product */}
                     <td className={`${theme.table.td} max-w-[160px]`}>
                       <p className="truncate text-foreground text-xs">{req.productName}</p>
-                      <p className="text-[11px] text-[#B87802] font-semibold">
+                      <p className="text-[11px] text-[#C2185B] font-semibold">
                         {formatAmount(req.originalAmount)}
                       </p>
                     </td>
@@ -508,7 +508,7 @@ export function ReturnsPage({ onNotify }) {
                     <td className={theme.table.td}>
                       <button
                         onClick={() => setSelectedRequest(req)}
-                        className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-xs font-medium text-foreground hover:border-[#B87802] hover:text-[#B87802] transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-xs font-medium text-foreground hover:border-[#C2185B] hover:text-[#C2185B] transition-colors cursor-pointer"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         View

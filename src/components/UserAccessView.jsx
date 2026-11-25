@@ -33,7 +33,7 @@ import { theme } from '../theme';
 // ─── All Sidebar Navigation Modules (Configurable via Checkboxes) ────────────
 export const SIDEBAR_MODULES = [
   { id: 'dashboard',   label: 'Dashboard',   icon: LayoutDashboard, desc: 'Analytics, revenue & overview metrics' },
-  { id: 'products',    label: 'Products',    icon: ShoppingBag,     desc: 'Saree catalog & inventory management' },
+  { id: 'products',    label: 'Products',    icon: ShoppingBag,     desc: 'Jewellery catalog & inventory management' },
   { id: 'low-stock',   label: 'Low Stock',   icon: AlertTriangle,   desc: 'Depletion alerts & stock replenishment' },
   { id: 'orders',      label: 'Orders',      icon: PackageCheck,    desc: 'Customer orders tracking & fulfillment' },
   { id: 'returns',     label: 'Exchange',    icon: RotateCcw,       desc: 'Customer replacement & exchange requests' },
@@ -325,13 +325,13 @@ export function UserAccessView() {
       <div className={`${theme.cards.padded} flex flex-col md:flex-row md:items-center justify-between gap-4`}>
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#0C0A07] flex items-center justify-center text-[#F5B815] shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-[#1A0510] flex items-center justify-center text-[#E91E8C] shrink-0">
               <KeyRound className="w-4 h-4" />
             </div>
             <h2 className={`${theme.typography.h1Page} !text-2xl`}>
               User Access &amp; Role Permissions
             </h2>
-            <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
+            <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm bg-[#1A0510] text-[#E91E8C] border border-[#E91E8C]/30">
               {activeCount} Active Users
             </span>
           </div>
@@ -411,7 +411,7 @@ export function UserAccessView() {
               {filteredUsers.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-20 text-center text-muted-foreground text-sm">
-                    <Users className="w-10 h-10 mx-auto mb-3 opacity-30 text-[#B87802]" />
+                    <Users className="w-10 h-10 mx-auto mb-3 opacity-30 text-[#C2185B]" />
                     <p className="font-semibold text-foreground text-base mb-1">No Users Configured Yet</p>
                     <p className="text-xs text-muted-foreground max-w-md mx-auto mb-4">
                       Click the button below to add your first user, generate a role, and select which sidebar pages they can access.
@@ -436,13 +436,13 @@ export function UserAccessView() {
                       {/* User Info */}
                       <td className={theme.table.td}>
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-[#0C0A07] text-[#F5B815] font-bold flex items-center justify-center text-xs shrink-0 border border-[#F5B815]/30">
+                          <div className="w-9 h-9 rounded-full bg-[#1A0510] text-[#E91E8C] font-bold flex items-center justify-center text-xs shrink-0 border border-[#E91E8C]/30">
                             {u.name?.substring(0, 2).toUpperCase() || 'U'}
                           </div>
                           <div>
                             <p className="font-display font-medium text-sm text-foreground">{u.name}</p>
-                            <p className="text-xs text-[#B87802] font-semibold flex items-center gap-1 mt-0.5">
-                              <Mail className="w-3 h-3 text-[#B87802]" />
+                            <p className="text-xs text-[#C2185B] font-semibold flex items-center gap-1 mt-0.5">
+                              <Mail className="w-3 h-3 text-[#C2185B]" />
                               <span>{u.email}</span>
                             </p>
                           </div>
@@ -456,7 +456,7 @@ export function UserAccessView() {
 
                       {/* Role Badge */}
                       <td className={theme.table.td}>
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-sm text-[11px] font-semibold bg-[#FAF8F2] border border-border text-foreground whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-sm text-[11px] font-semibold bg-[#FFF5F8] border border-border text-foreground whitespace-nowrap">
                           {u.role || 'Staff'}
                         </span>
                       </td>
@@ -479,7 +479,7 @@ export function UserAccessView() {
                               return (
                                 <span
                                   key={pageId}
-                                  className="inline-flex items-center px-1.5 py-0.5 rounded-sm bg-[#FAF8F2] text-[#B87802] border border-[#E8D8B5] text-[10px] font-medium whitespace-nowrap"
+                                  className="inline-flex items-center px-1.5 py-0.5 rounded-sm bg-[#FFF5F8] text-[#C2185B] border border-[#F8C4D8] text-[10px] font-medium whitespace-nowrap"
                                 >
                                   {module?.label || pageId}
                                 </span>
@@ -528,7 +528,7 @@ export function UserAccessView() {
                           {/* Edit User */}
                           <button
                             onClick={() => openAddModal(u)}
-                            className="p-1.5 rounded-md border border-border hover:border-[#B87802] text-[#B87802] transition-colors cursor-pointer"
+                            className="p-1.5 rounded-md border border-border hover:border-[#C2185B] text-[#C2185B] transition-colors cursor-pointer"
                             title="Edit User & Permissions"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
@@ -572,7 +572,7 @@ export function UserAccessView() {
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-border pb-3 mb-4 shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-md bg-[#FAF8F2] border border-border flex items-center justify-center text-[#B87802]">
+                <div className="w-9 h-9 rounded-md bg-[#FFF5F8] border border-border flex items-center justify-center text-[#C2185B]">
                   <KeyRound className="w-5 h-5" />
                 </div>
                 <div>
@@ -647,16 +647,16 @@ export function UserAccessView() {
               </div>
 
               {/* ── Role Generator & Dropdown ── */}
-              <div className="p-3.5 rounded-lg border border-border bg-[#FAF8F2] space-y-3">
+              <div className="p-3.5 rounded-lg border border-border bg-[#FFF5F8] space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold text-foreground font-display flex items-center gap-1.5">
-                    <ShieldCheck className="w-4 h-4 text-[#B87802]" />
+                    <ShieldCheck className="w-4 h-4 text-[#C2185B]" />
                     <span>Select or Generate User Role</span>
                   </label>
                   <button
                     type="button"
                     onClick={() => setIsGeneratingRole(!isGeneratingRole)}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#B87802] hover:underline cursor-pointer"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#C2185B] hover:underline cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5 stroke-[3]" />
                     <span>{isGeneratingRole ? 'Cancel' : '+ Generate New Role'}</span>
@@ -665,8 +665,8 @@ export function UserAccessView() {
 
                 {/* Inline Role Generator Input */}
                 {isGeneratingRole && (
-                  <div className="p-2.5 rounded-md border border-[#B87802]/40 bg-white space-y-2 animate-in fade-in">
-                    <p className="text-[11px] font-semibold text-[#B87802]">
+                  <div className="p-2.5 rounded-md border border-[#C2185B]/40 bg-white space-y-2 animate-in fade-in">
+                    <p className="text-[11px] font-semibold text-[#C2185B]">
                       Create a new role title (it will be added to the dropdown immediately):
                     </p>
                     <div className="flex gap-2">
@@ -675,14 +675,14 @@ export function UserAccessView() {
                         value={newRoleInput}
                         onChange={(e) => setNewRoleInput(e.target.value)}
                         placeholder="e.g. Inventory Manager, Sales Lead..."
-                        className="flex-1 px-3 py-1.5 rounded-md border border-border text-xs outline-none focus:border-[#B87802]"
+                        className="flex-1 px-3 py-1.5 rounded-md border border-border text-xs outline-none focus:border-[#C2185B]"
                         autoFocus
                       />
                       <button
                         type="button"
                         onClick={handleGenerateRole}
                         disabled={!newRoleInput.trim()}
-                        className="px-3 py-1.5 rounded-md bg-[#B87802] text-white text-xs font-semibold hover:bg-[#996300] transition-colors cursor-pointer disabled:opacity-50"
+                        className="px-3 py-1.5 rounded-md bg-[#C2185B] text-white text-xs font-semibold hover:bg-[#880E4F] transition-colors cursor-pointer disabled:opacity-50"
                       >
                         Generate Role
                       </button>
@@ -695,7 +695,7 @@ export function UserAccessView() {
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData((p) => ({ ...p, role: e.target.value }))}
-                    className="w-full rounded-lg border border-[#E8D8B5] bg-white py-2 px-3 text-xs text-[#12100D] font-body outline-none focus:border-[#B87802] cursor-pointer"
+                    className="w-full rounded-lg border border-[#F8C4D8] bg-white py-2 px-3 text-xs text-[#1A0510] font-body outline-none focus:border-[#C2185B] cursor-pointer"
                   >
                     {roles.map((r) => (
                       <option key={r} value={r}>
@@ -724,7 +724,7 @@ export function UserAccessView() {
                     <button
                       type="button"
                       onClick={handleSelectAllPages}
-                      className="text-[11px] text-[#B87802] font-semibold hover:underline cursor-pointer"
+                      className="text-[11px] text-[#C2185B] font-semibold hover:underline cursor-pointer"
                     >
                       Select All
                     </button>
@@ -751,21 +751,21 @@ export function UserAccessView() {
                         onClick={() => handleTogglePageCheckbox(module.id)}
                         className={`p-3 rounded-lg border transition-all cursor-pointer flex items-start gap-3 select-none ${
                           isChecked
-                            ? 'bg-[#FAF8F2] border-[#B87802] ring-1 ring-[#B87802]/30'
-                            : 'bg-card border-border hover:border-[#B87802]/50'
+                            ? 'bg-[#FFF5F8] border-[#C2185B] ring-1 ring-[#C2185B]/30'
+                            : 'bg-card border-border hover:border-[#C2185B]/50'
                         }`}
                       >
                         <input
                           type="checkbox"
                           checked={isChecked}
                           onChange={() => {}} // handled by parent onClick
-                          className="accent-[#B87802] w-4 h-4 rounded cursor-pointer mt-0.5 shrink-0"
+                          className="accent-[#C2185B] w-4 h-4 rounded cursor-pointer mt-0.5 shrink-0"
                         />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <Icon
                               className={`w-3.5 h-3.5 shrink-0 ${
-                                isChecked ? 'text-[#B87802]' : 'text-muted-foreground'
+                                isChecked ? 'text-[#C2185B]' : 'text-muted-foreground'
                               }`}
                             />
                             <p
@@ -787,7 +787,7 @@ export function UserAccessView() {
               </div>
 
               {/* Website Entrance Toggle */}
-              <div className="p-3 rounded-lg border border-border bg-[#FAF8F2] flex items-center justify-between cursor-pointer">
+              <div className="p-3 rounded-lg border border-border bg-[#FFF5F8] flex items-center justify-between cursor-pointer">
                 <div>
                   <p className="text-xs font-bold text-foreground">Grant Storefront Website Access</p>
                   <p className="text-[10px] text-muted-foreground">
@@ -798,7 +798,7 @@ export function UserAccessView() {
                   type="checkbox"
                   checked={formData.canAccessWebsite}
                   onChange={(e) => setFormData((p) => ({ ...p, canAccessWebsite: e.target.checked }))}
-                  className="accent-[#B87802] w-4 h-4 cursor-pointer"
+                  className="accent-[#C2185B] w-4 h-4 cursor-pointer"
                 />
               </div>
 

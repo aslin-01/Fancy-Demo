@@ -32,21 +32,20 @@ import { CustomDropdown } from '../components/CustomDropdown';
 import { SuggestionInput } from '../components/SuggestionInput';
 
 export const WASH_CARE_SUGGESTIONS = [
-  'Dry clean only',
-  'Dry clean recommended',
-  'Gentle hand wash',
-  'Dry clean or gentle hand wash',
-  'Hand wash with mild detergent',
-  'Cold water gentle wash',
+  'Store individually in airtight plastic zip-lock pouch',
+  'Keep away from direct perfume, hairspray, and deodorants',
+  'Wipe with dry microfiber cloth after every wear',
+  'Avoid contact with water, sweat, and chemical detergents',
+  'Store flat in velvet-lined jewellery box',
 ];
 
 export const BLOUSE_PIECE_SUGGESTIONS = [
-  'Attached (80 cm)',
-  'Included — running blouse',
-  'Included — unstitched blouse piece (80 cm)',
-  'Attached blouse piece',
-  'Without blouse piece',
-  'Running blouse piece',
+  'Adjustable golden thread dori (back rope)',
+  'Adjustable metal chain extender with hook',
+  'South Indian screw-back / Bombay screw',
+  'Side screw-lock opening',
+  'Push back with rubber stopper',
+  'Standard slip-on bangle size (2.4, 2.6, 2.8)',
 ];
 
 // Helper to convert desktop image file to an optimized, lightweight base64 Data URL
@@ -481,7 +480,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
   const [colors, setColors] = useState([]);
   const [selectedColorId, setSelectedColorId] = useState(null);
   const [colorInput, setColorInput] = useState('');
-  const [colorPickerHex, setColorPickerHex] = useState('#B87802');
+  const [colorPickerHex, setColorPickerHex] = useState('#C2185B');
 
   // Currently active selected color (for attaching images and live preview)
   const activeColor = useMemo(() => {
@@ -515,13 +514,13 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
       return {
         backgroundColor: `${hex}18`,
         borderColor: hex,
-        color: '#12100D',
+        color: '#1A0510',
       };
     }
     return {
-      backgroundColor: '#FAF8F2',
-      borderColor: '#B87802',
-      color: '#12100D',
+      backgroundColor: '#FFF5F8',
+      borderColor: '#C2185B',
+      color: '#1A0510',
     };
   };
 
@@ -731,7 +730,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
         initColors = initialProduct.colors.map((c, i) => ({
           id: c.id || 'col_' + i,
           name: c.name || c.code || `Color ${i + 1}`,
-          code: c.code || c.name || '#B87802',
+          code: c.code || c.name || '#C2185B',
           images: Array.isArray(c.images) ? c.images : [],
         }));
       } else if (initialProduct.color && String(initialProduct.color).trim()) {
@@ -739,7 +738,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
         initColors = rawColors.map((cName, i) => ({
           id: 'col_' + i,
           name: cName,
-          code: cName.startsWith('#') ? cName : '#B87802',
+          code: cName.startsWith('#') ? cName : '#C2185B',
           images: i === 0 ? existingGallery : [],
         }));
       }
@@ -824,7 +823,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
           initColors = initialProduct.colors.map((c, i) => ({
             id: c.id || 'col_' + i,
             name: c.name || c.code || `Color ${i + 1}`,
-            code: c.code || c.name || '#B87802',
+            code: c.code || c.name || '#C2185B',
             images: Array.isArray(c.images) ? c.images : [],
           }));
         } else if (initialProduct.color && String(initialProduct.color).trim()) {
@@ -832,7 +831,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
           initColors = rawColors.map((cName, i) => ({
             id: 'col_' + i,
             name: cName,
-            code: cName.startsWith('#') ? cName : '#B87802',
+            code: cName.startsWith('#') ? cName : '#C2185B',
             images: i === 0 ? existingGallery : [],
           }));
         }
@@ -953,27 +952,27 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
       {/* Top Breadcrumb & Navigation Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-1">
         <div>
-          <nav className="flex items-center gap-2 text-xs font-semibold text-[#8C7E6A] mb-2 uppercase tracking-wider">
+          <nav className="flex items-center gap-2 text-xs font-semibold text-[#7B4A5E] mb-2 uppercase tracking-wider">
             <button
               type="button"
               onClick={onBack}
-              className="hover:text-[#B87802] transition-colors flex items-center gap-1 cursor-pointer"
+              className="hover:text-[#C2185B] transition-colors flex items-center gap-1 cursor-pointer"
             >
               <span>Catalog</span>
             </button>
             <span>/</span>
-            <span className="text-[#B87802]">
+            <span className="text-[#C2185B]">
               {isEdit ? 'Edit Product' : 'Add New Product'}
             </span>
           </nav>
 
           <div>
-            <h1 className={`text-2xl sm:text-3xl font-semibold ${theme.fonts.display} text-[#12100D]`}>
-              {isEdit ? 'Edit Saree Listing' : 'Add New Saree to Store'}
+            <h1 className={`text-2xl sm:text-3xl font-semibold ${theme.fonts.display} text-[#1A0510]`}>
+              {isEdit ? 'Edit Jewellery Listing' : 'Add New Jewellery to Store'}
             </h1>
-            <p className="text-xs text-[#6B6457] font-body mt-0.5">
+            <p className="text-xs text-[#7B4A5E] font-body mt-0.5">
               {isEdit
-                ? 'Update your saree details, pricing, stock levels, and media imagery.'
+                ? 'Update your jewellery details, pricing, stock levels, and media imagery.'
                 : 'Configure details, high-res photography, colors, pricing, and live inventory for storefront customers.'}
             </p>
           </div>
@@ -984,7 +983,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
           <button
             type="button"
             onClick={onBack}
-            className="px-4 py-2 rounded-md border border-[#E8D8B5] bg-white text-[#12100D] hover:bg-[#FAF8F2] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+            className="px-4 py-2 rounded-md border border-[#F8C4D8] bg-white text-[#1A0510] hover:bg-[#FFF5F8] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
           >
             Cancel
           </button>
@@ -992,7 +991,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
             type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white border border-[#E91E8C]/40 font-medium text-xs tracking-wider uppercase hover:from-[#D81B60] hover:to-[#9C0F5F] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -1002,8 +1001,8 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
             ) : (
               <>
                 <PackagePlus className="w-4 h-4" />
-                <span>{isEdit ? 'Save Changes' : 'Publish Saree'}</span>
-                <Sparkles className="w-3.5 h-3.5 text-[#FEE63E]" />
+                <span>{isEdit ? 'Save Changes' : 'Publish Jewellery'}</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#FF80AB]" />
               </>
             )}
           </button>
@@ -1019,7 +1018,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
             </div>
             <div>
               <h3 className="font-bold text-sm sm:text-base font-display text-emerald-900">
-                {isEdit ? 'Saree Details Updated Successfully!' : 'Saree Published Successfully to Store!'}
+                {isEdit ? 'Jewellery Details Updated Successfully!' : 'Jewellery Published Successfully to Store!'}
               </h3>
               <p className="text-xs text-emerald-800 font-body mt-0.5">
                 "{successInfo.name}" is now live in the inventory database and visible on the storefront.
@@ -1032,7 +1031,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               href={STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 text-xs font-semibold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white border border-[#E91E8C]/30 text-xs font-semibold uppercase tracking-wider hover:from-[#D81B60] hover:to-[#9C0F5F] transition-all"
             >
               <span>View On Store</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -1053,7 +1052,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
             <button
               type="button"
               onClick={onBack}
-              className="px-3.5 py-2 rounded-md border border-[#E8D8B5] bg-white text-[#12100D] hover:bg-[#FAF8F2] text-xs font-semibold uppercase tracking-wider cursor-pointer"
+              className="px-3.5 py-2 rounded-md border border-[#F8C4D8] bg-white text-[#1A0510] hover:bg-[#FFF5F8] text-xs font-semibold uppercase tracking-wider cursor-pointer"
             >
               Back to Catalog
             </button>
@@ -1074,7 +1073,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
 
       {/* Main Single Card Form */}
       <form onSubmit={handleSubmit}>
-        <div className="bg-white rounded-lg border border-[#E8D8B5] p-6 space-y-6">
+        <div className="bg-white rounded-lg border border-[#F8C4D8] p-6 space-y-6">
 
           {/* SECTION 1: Basic Information */}
           <div className="space-y-5">
@@ -1084,7 +1083,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               <div className="w-full sm:w-[40%]">
                 <div className="flex items-center justify-between mb-1.5">
                   <label className={`${theme.forms.label} !mb-0`}>
-                    Product Code (SKU) <span className="text-[#B87802]">*</span>
+                    Product Code (SKU) <span className="text-[#C2185B]">*</span>
                   </label>
                   <button
                     type="button"
@@ -1094,7 +1093,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                         sku: generateSKU(p.category || p.fabric || 'Silk', products),
                       }))
                     }
-                    className="text-[11px] text-[#B87802] hover:text-[#996300] hover:underline font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                    className="text-[11px] text-[#C2185B] hover:text-[#880E4F] hover:underline font-bold flex items-center gap-1 cursor-pointer transition-colors"
                     title="Regenerate sequential Product Code"
                   >
                     <RefreshCw className="w-3 h-3" />
@@ -1108,7 +1107,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   readOnly
                   tabIndex={-1}
                   placeholder="e.g. SIL-001"
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-[#F7F3EA] text-sm text-[#12100D] font-body font-semibold tracking-wider uppercase outline-none cursor-not-allowed select-none"
+                  className="w-full h-11 px-3.5 rounded-lg border border-[#F8C4D8] bg-[#FFF0F5] text-sm text-[#1A0510] font-body font-semibold tracking-wider uppercase outline-none cursor-not-allowed select-none"
                   required
                 />
               </div>
@@ -1116,15 +1115,15 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               {/* Product Name / Title (60%) */}
               <div className="w-full sm:w-[60%]">
                 <label className={theme.forms.label}>
-                  Product Name / Title <span className="text-[#B87802]">*</span>
+                  Product Name / Title <span className="text-[#C2185B]">*</span>
                 </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="e.g. Kanchipuram Pure Silk Saree — Royal Peacock & Gold Zari"
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm text-[#12100D] placeholder-[#A89D8B] outline-none focus:outline-none focus:border-[#B87802] font-medium"
+                  placeholder="e.g. Antique Matte Kemp Temple Bridal Combo Set"
+                  className="w-full h-11 px-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm text-[#1A0510] placeholder-[#A89D8B] outline-none focus:outline-none focus:border-[#C2185B] font-medium"
                   required
                 />
               </div>
@@ -1136,12 +1135,12 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className={`${theme.forms.label} !mb-0`}>
-                    Category <span className="text-[#B87802]">*</span>
+                    Category <span className="text-[#C2185B]">*</span>
                   </label>
                   <button
                     type="button"
                     onClick={() => openAttributeModal('category')}
-                    className="text-[11px] font-bold text-[#B87802] hover:text-[#996300] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                    className="text-[11px] font-bold text-[#C2185B] hover:text-[#880E4F] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
                   >
                     <Plus className="w-3 h-3 stroke-[3]" />
                     <span>Add Category</span>
@@ -1172,7 +1171,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   <button
                     type="button"
                     onClick={() => openAttributeModal('fabric')}
-                    className="text-[11px] font-bold text-[#B87802] hover:text-[#996300] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                    className="text-[11px] font-bold text-[#C2185B] hover:text-[#880E4F] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
                   >
                     <Plus className="w-3 h-3 stroke-[3]" />
                     <span>Add Fabric</span>
@@ -1202,7 +1201,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   <button
                     type="button"
                     onClick={() => openAttributeModal('occasion')}
-                    className="text-[11px] font-bold text-[#B87802] hover:text-[#996300] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                    className="text-[11px] font-bold text-[#C2185B] hover:text-[#880E4F] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
                   >
                     <Plus className="w-3 h-3 stroke-[3]" />
                     <span>Add Occasion</span>
@@ -1234,17 +1233,17 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               <div>
                 <div className="flex items-center justify-between">
                   <label className={theme.forms.label}>
-                    Selling Price (₹) <span className="text-[#B87802]">*</span>
+                    Selling Price (₹) <span className="text-[#C2185B]">*</span>
                   </label>
                   {discountPercent > 0 && (
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-xs text-[10px] font-bold bg-[#FAF8F2] text-[#B87802] border border-[#E8D8B5]">
+                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-xs text-[10px] font-bold bg-[#FFF5F8] text-[#C2185B] border border-[#F8C4D8]">
                       <Sparkles className="w-2.5 h-2.5" />
                       {discountPercent}% OFF
                     </span>
                   )}
                 </div>
                 <div className="relative flex items-center">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#B87802] pointer-events-none">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#C2185B] pointer-events-none">
                     ₹
                   </span>
                   <input
@@ -1253,7 +1252,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     value={formData.price}
                     onChange={handleChange}
                     placeholder="e.g. 14999"
-                    className="w-full h-11 pl-8 pr-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm font-bold text-[#B87802] outline-none focus:outline-none focus:border-[#B87802]"
+                    className="w-full h-11 pl-8 pr-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm font-bold text-[#C2185B] outline-none focus:outline-none focus:border-[#C2185B]"
                     required
                     min="1"
                   />
@@ -1263,10 +1262,10 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               {/* MRP */}
               <div>
                 <label className={theme.forms.label}>
-                  MRP / Original Price (₹) <span className="text-[#B87802]">*</span>
+                  MRP / Original Price (₹) <span className="text-[#C2185B]">*</span>
                 </label>
                 <div className="relative flex items-center">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#6B6457] pointer-events-none">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#7B4A5E] pointer-events-none">
                     ₹
                   </span>
                   <input
@@ -1275,7 +1274,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     value={formData.mrp}
                     onChange={handleChange}
                     placeholder="e.g. 19999"
-                    className="w-full h-11 pl-8 pr-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm font-semibold text-[#6B6457] line-through outline-none focus:border-[#B87802]"
+                    className="w-full h-11 pl-8 pr-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm font-semibold text-[#7B4A5E] line-through outline-none focus:border-[#C2185B]"
                     required
                     min="1"
                   />
@@ -1286,7 +1285,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               <div>
                 <div className="flex items-center justify-between">
                   <label className={theme.forms.label}>
-                    Inventory Stock Quantity <span className="text-[#B87802]">*</span>
+                    Inventory Stock Quantity <span className="text-[#C2185B]">*</span>
                   </label>
                   <label className="inline-flex items-center gap-1.5 cursor-pointer select-none mb-1.5">
                     <input
@@ -1296,7 +1295,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                       onChange={handleChange}
                       className="sr-only peer"
                     />
-                    <div className="relative w-8 h-4.5 bg-gray-300 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-[#B87802]"></div>
+                    <div className="relative w-8 h-4.5 bg-gray-300 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-[#C2185B]"></div>
                     <span className="text-[11px] font-bold">
                       {formData.inStock ? (
                         <span className="text-emerald-700">In Stock</span>
@@ -1313,7 +1312,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   onChange={handleChange}
                   placeholder="e.g. 25"
                   min="0"
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm font-semibold text-[#12100D] outline-none focus:border-[#B87802]"
+                  className="w-full h-11 px-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm font-semibold text-[#1A0510] outline-none focus:border-[#C2185B]"
                 />
               </div>
             </div>
@@ -1324,9 +1323,9 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               <div>
                 <div className="flex items-center justify-between">
                   <label className={theme.forms.label}>
-                    Low Stock Alert <span className="text-[#B87802]">*</span>
+                    Low Stock Alert <span className="text-[#C2185B]">*</span>
                   </label>
-                  <span className="text-[11px] text-[#8C7E6A] font-medium">Threshold</span>
+                  <span className="text-[11px] text-[#7B4A5E] font-medium">Threshold</span>
                 </div>
                 <input
                   type="number"
@@ -1335,9 +1334,9 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   onChange={handleChange}
                   placeholder="e.g. 10"
                   min="0"
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm font-semibold text-[#12100D] outline-none focus:border-[#B87802]"
+                  className="w-full h-11 px-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm font-semibold text-[#1A0510] outline-none focus:border-[#C2185B]"
                 />
-                <p className="text-[10px] text-[#8C7E6A] mt-1">
+                <p className="text-[10px] text-[#7B4A5E] mt-1">
                   Product shows in Low Stock Alerts only when stock is ≤ this value
                 </p>
               </div>
@@ -1382,7 +1381,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 onChange={handleChange}
                 rows={3}
                 placeholder="Describe the weave, pallu, border zari, artisan story, and styling tips..."
-                className="w-full px-3.5 py-2.5 rounded-lg border border-[#E8D8B5] bg-card text-xs sm:text-sm text-[#12100D] outline-none focus:border-[#B87802] font-body"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-[#F8C4D8] bg-card text-xs sm:text-sm text-[#1A0510] outline-none focus:border-[#C2185B] font-body"
               />
             </div>
           </div>
@@ -1392,18 +1391,18 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
             <label className={theme.forms.label}>
               Product Badges & Highlights
             </label>
-            <div className="flex items-center gap-6 text-xs font-semibold text-[#12100D]">
+            <div className="flex items-center gap-6 text-xs font-semibold text-[#1A0510]">
               <label className={`flex items-center gap-2 cursor-pointer select-none ${theme.forms.labelInline}`}>
                 <input
                   type="checkbox"
                   name="isNewArrival"
                   checked={formData.isNewArrival}
                   onChange={handleChange}
-                  className="w-4 h-4 rounded text-[#B87802] border-[#E8D8B5] focus:ring-[#F5B815]"
+                  className="w-4 h-4 rounded text-[#C2185B] border-[#F8C4D8] focus:ring-[#E91E8C]"
                 />
                 <span className="flex items-center gap-1">
                   <span>New Arrival</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded-xs bg-[#F5B815] text-[#0C0A07] font-bold">
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-xs bg-[#E91E8C] text-[#1A0510] font-bold">
                     NEW
                   </span>
                 </span>
@@ -1415,11 +1414,11 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   name="isBestSeller"
                   checked={formData.isBestSeller}
                   onChange={handleChange}
-                  className="w-4 h-4 rounded text-[#B87802] border-[#E8D8B5] focus:ring-[#F5B815]"
+                  className="w-4 h-4 rounded text-[#C2185B] border-[#F8C4D8] focus:ring-[#E91E8C]"
                 />
                 <span className="flex items-center gap-1">
                   <span>Best Seller</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded-xs bg-[#B87802] text-white font-bold">
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-xs bg-[#C2185B] text-white font-bold">
                     BEST
                   </span>
                 </span>
@@ -1433,10 +1432,10 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               {/* TOP: Added Color Chips (displayed right above the input box) */}
               <div className="space-y-2 mb-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-[#12100D] flex items-center gap-1.5">
+                  <span className="text-xs font-semibold text-[#1A0510] flex items-center gap-1.5">
                     <span>Added Colors ({colors.length})</span>
                     {colors.length > 0 && (
-                      <span className="text-[11px] font-normal text-[#8C7E6A]">
+                      <span className="text-[11px] font-normal text-[#7B4A5E]">
                         — Click to select & assign photos below
                       </span>
                     )}
@@ -1445,12 +1444,12 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     <span
                       className="text-[11px] font-bold px-2 py-0.5 rounded-sm flex items-center gap-1 border"
                       style={{
-                        backgroundColor: activeColor.code && activeColor.code.startsWith('#') ? `${activeColor.code}15` : '#FAF8F2',
-                        borderColor: activeColor.code && activeColor.code.startsWith('#') ? `${activeColor.code}60` : '#E8D8B5',
-                        color: '#12100D',
+                        backgroundColor: activeColor.code && activeColor.code.startsWith('#') ? `${activeColor.code}15` : '#FFF5F8',
+                        borderColor: activeColor.code && activeColor.code.startsWith('#') ? `${activeColor.code}60` : '#F8C4D8',
+                        color: '#1A0510',
                       }}
                     >
-                      <span className="text-[#8C7E6A]">Active:</span>
+                      <span className="text-[#7B4A5E]">Active:</span>
                       <span
                         className="w-2.5 h-2.5 rounded-full border border-black/20"
                         style={{ backgroundColor: activeColor.code }}
@@ -1461,7 +1460,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 </div>
 
                 {colors.length === 0 ? (
-                  <div className="p-3 rounded-lg border border-dashed border-[#E8D8B5] bg-[#FAF8F2]/60 text-xs text-[#8C7E6A]">
+                  <div className="p-3 rounded-lg border border-dashed border-[#F8C4D8] bg-[#FFF5F8]/60 text-xs text-[#7B4A5E]">
                     Enter a color code or name below and click <strong>+ Add Color</strong> to add it here.
                   </div>
                 ) : (
@@ -1475,7 +1474,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                           style={getActiveColorStyle(c.code, isActive)}
                           className={`group flex items-center gap-2 pl-2.5 pr-2 py-1.5 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${isActive
                             ? 'font-bold'
-                            : 'bg-white text-[#12100D] border-[#E8D8B5] hover:border-[#B87802] hover:bg-[#FAF8F2]'
+                            : 'bg-white text-[#1A0510] border-[#F8C4D8] hover:border-[#C2185B] hover:bg-[#FFF5F8]'
                             }`}
                         >
                           {/* Color preview circle */}
@@ -1483,12 +1482,12 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                             className="w-4 h-4 rounded-full border border-black/20 shrink-0"
                             style={{ backgroundColor: c.code }}
                           />
-                          <span className={isActive ? 'text-[#12100D] font-bold' : 'text-[#12100D]'}>{c.name}</span>
+                          <span className={isActive ? 'text-[#1A0510] font-bold' : 'text-[#1A0510]'}>{c.name}</span>
 
                           {isActive && (
                             <Check
                               className="w-3.5 h-3.5 stroke-[3]"
-                              style={{ color: c.code && c.code.startsWith('#') ? c.code : '#B87802' }}
+                              style={{ color: c.code && c.code.startsWith('#') ? c.code : '#C2185B' }}
                             />
                           )}
 
@@ -1499,7 +1498,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                               e.stopPropagation();
                               handleRemoveColor(c.id);
                             }}
-                            className="w-4 h-4 rounded-full flex items-center justify-center hover:bg-rose-600 hover:text-white transition-colors cursor-pointer text-[#8C7E6A]"
+                            className="w-4 h-4 rounded-full flex items-center justify-center hover:bg-rose-600 hover:text-white transition-colors cursor-pointer text-[#7B4A5E]"
                             title="Remove color"
                           >
                             <X className="w-3 h-3 stroke-[2.5]" />
@@ -1512,9 +1511,9 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
 
                 {colors.length > 0 && activeColor && (
                   <div className="flex items-center justify-between text-xs pt-1 px-0.5">
-                    <span className="text-[#6B6457] flex items-center gap-1.5 text-[11px]">
+                    <span className="text-[#7B4A5E] flex items-center gap-1.5 text-[11px]">
                       <span>Selected for photo assignment:</span>
-                      <strong className="text-[#12100D] flex items-center gap-1">
+                      <strong className="text-[#1A0510] flex items-center gap-1">
                         <span
                           className="w-2.5 h-2.5 rounded-full border border-black/20"
                           style={{ backgroundColor: activeColor.code }}
@@ -1528,7 +1527,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                         const el = document.getElementById('product-photos-section');
                         if (el) el.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className="text-[11px] font-semibold text-[#B87802] hover:text-[#996300] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                      className="text-[11px] font-semibold text-[#C2185B] hover:text-[#880E4F] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
                     >
                       <span>Manage photos for <span className="font-body font-semibold">{activeColor.name}</span> below ↓</span>
                     </button>
@@ -1539,11 +1538,11 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               {/* INPUT: Add Color Code Box */}
               <div className="space-y-1.5">
                 <label className={theme.forms.label}>
-                  Add Color Code or Name <span className="text-[#B87802]">*</span>
+                  Add Color Code or Name <span className="text-[#C2185B]">*</span>
                 </label>
                 <div className="flex items-center gap-2">
                   {/* Native Color Picker Swatch */}
-                  <div className="relative w-11 h-11 rounded-lg border border-[#E8D8B5] overflow-hidden shrink-0 bg-white hover:border-[#B87802] cursor-pointer flex items-center justify-center">
+                  <div className="relative w-11 h-11 rounded-lg border border-[#F8C4D8] overflow-hidden shrink-0 bg-white hover:border-[#C2185B] cursor-pointer flex items-center justify-center">
                     <input
                       type="color"
                       value={colorPickerHex}
@@ -1580,7 +1579,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   <button
                     type="button"
                     onClick={() => handleAddColor(colorInput)}
-                    className="h-11 px-4 rounded-lg bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer shrink-0 flex items-center gap-1.5"
+                    className="h-11 px-4 rounded-lg bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#D81B60] hover:to-[#9C0F5F] transition-all cursor-pointer shrink-0 flex items-center gap-1.5"
                   >
                     <Plus className="w-4 h-4 stroke-[2.5]" />
                     <span>Add Color</span>
@@ -1601,33 +1600,33 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 <label className={`${theme.forms.label} !mb-0 flex items-center gap-1.5`}>
                   <span>Photos {activeColor ? 'for ' : ''}</span>
                   {activeColor && (
-                    <span className="font-body font-semibold tracking-normal text-[#12100D]">
+                    <span className="font-body font-semibold tracking-normal text-[#1A0510]">
                       {activeColor.name}
                     </span>
                   )}
-                  <span className="text-[#B87802]">*</span>
+                  <span className="text-[#C2185B]">*</span>
                 </label>
-                <div className="inline-flex items-center p-0.5 rounded-md border border-[#E8D8B5] bg-[#FAF8F2] text-xs">
+                <div className="inline-flex items-center p-0.5 rounded-md border border-[#F8C4D8] bg-[#FFF5F8] text-xs">
                   <button
                     type="button"
                     onClick={() => setGalleryMode('upload')}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-sm font-medium transition-all cursor-pointer ${galleryMode === 'upload'
-                      ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
-                      : 'text-[#6B6457] hover:text-[#12100D]'
+                      ? 'bg-white text-[#1A0510] border border-[#F8C4D8]'
+                      : 'text-[#7B4A5E] hover:text-[#1A0510]'
                       }`}
                   >
-                    <Upload className="w-3 h-3 text-[#B87802]" />
+                    <Upload className="w-3 h-3 text-[#C2185B]" />
                     <span>Upload from Desktop</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setGalleryMode('url')}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-sm font-medium transition-all cursor-pointer ${galleryMode === 'url'
-                      ? 'bg-white text-[#12100D] border border-[#E8D8B5]'
-                      : 'text-[#6B6457] hover:text-[#12100D]'
+                      ? 'bg-white text-[#1A0510] border border-[#F8C4D8]'
+                      : 'text-[#7B4A5E] hover:text-[#1A0510]'
                       }`}
                   >
-                    <LinkIcon className="w-3 h-3 text-[#B87802]" />
+                    <LinkIcon className="w-3 h-3 text-[#C2185B]" />
                     <span>Enter URLs</span>
                   </button>
                 </div>
@@ -1666,22 +1665,22 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                       }}
                       onClick={() => galleryFileInputRef.current?.click()}
                       className={`border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-all cursor-pointer ${isDraggingPhotos
-                        ? 'border-[#B87802] bg-[#FAF8F2]'
-                        : 'border-[#E8D8B5] hover:border-[#B87802] bg-[#FAF8F2]/40 hover:bg-[#FAF8F2]'
+                        ? 'border-[#C2185B] bg-[#FFF5F8]'
+                        : 'border-[#F8C4D8] hover:border-[#C2185B] bg-[#FFF5F8]/40 hover:bg-[#FFF5F8]'
                         }`}
                     >
-                      <div className="w-12 h-12 rounded-full bg-[#FAF8F2] border border-[#E8D8B5] flex items-center justify-center mx-auto mb-3 text-[#B87802]">
+                      <div className="w-12 h-12 rounded-full bg-[#FFF5F8] border border-[#F8C4D8] flex items-center justify-center mx-auto mb-3 text-[#C2185B]">
                         <UploadCloud className="w-6 h-6" />
                       </div>
-                      <p className="text-sm font-semibold text-[#12100D] mb-1">
+                      <p className="text-sm font-semibold text-[#1A0510] mb-1">
                         Click to choose photo(s) {activeColor ? `for ${activeColor.name}` : ''} from desktop, or drag & drop here
                       </p>
-                      <p className="text-xs text-[#8C7E6A] mb-3">
+                      <p className="text-xs text-[#7B4A5E] mb-3">
                         JPG, PNG, WEBP, or AVIF (auto-optimized for fast storefront rendering)
                       </p>
                       <button
                         type="button"
-                        className="px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer"
+                        className="px-4 py-2 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#D81B60] hover:to-[#9C0F5F] transition-all cursor-pointer"
                       >
                         Browse Desktop Files
                       </button>
@@ -1689,7 +1688,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   )}
 
                   {isProcessingImage && (
-                    <div className="flex items-center gap-2 text-xs text-[#B87802] font-medium pt-1">
+                    <div className="flex items-center gap-2 text-xs text-[#C2185B] font-medium pt-1">
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                       <span>Processing photo(s)...</span>
                     </div>
@@ -1709,17 +1708,17 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                         }
                       }}
                       placeholder={`Paste image URL for ${activeColor ? activeColor.name : 'product'} (e.g. https://...)`}
-                      className="flex-1 h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm text-[#12100D] outline-none focus:outline-none focus:border-[#B87802]"
+                      className="flex-1 h-11 px-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm text-[#1A0510] outline-none focus:outline-none focus:border-[#C2185B]"
                     />
                     <button
                       type="button"
                       onClick={handleAddUrl}
-                      className="h-11 px-4 rounded-lg bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer shrink-0 flex items-center justify-center"
+                      className="h-11 px-4 rounded-lg bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white text-xs font-semibold uppercase tracking-wider hover:from-[#D81B60] hover:to-[#9C0F5F] transition-all cursor-pointer shrink-0 flex items-center justify-center"
                     >
                       + Add URL
                     </button>
                   </div>
-                  <p className="text-[11px] text-[#8C7E6A]">
+                  <p className="text-[11px] text-[#7B4A5E]">
                     Paste an image URL or multiple comma-separated URLs and click "+ Add URL".
                   </p>
                 </div>
@@ -1732,7 +1731,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     {currentPhotos.map((imgUrl, idx) => (
                       <div
                         key={idx}
-                        className="relative group aspect-3/4 rounded-lg overflow-hidden border border-[#E8D8B5] bg-white"
+                        className="relative group aspect-3/4 rounded-lg overflow-hidden border border-[#F8C4D8] bg-white"
                       >
                         <img
                           src={imgUrl}
@@ -1742,7 +1741,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                             e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23eee"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23999" font-size="10">Invalid Img</text></svg>';
                           }}
                         />
-                        <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded-xs bg-[#0C0A07]/80 text-[#F5B815] text-[10px] font-bold">
+                        <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded-xs bg-[#1A0510]/80 text-[#E91E8C] text-[10px] font-bold">
                           {idx === 0 ? 'Cover Photo' : `#${idx + 1}`}
                         </span>
                         <button
@@ -1761,7 +1760,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                       <button
                         type="button"
                         onClick={() => galleryFileInputRef.current?.click()}
-                        className="aspect-3/4 rounded-lg border-2 border-dashed border-[#E8D8B5] hover:border-[#B87802] bg-[#FAF8F2]/60 hover:bg-[#FAF8F2] flex flex-col items-center justify-center gap-1.5 p-2 transition-all cursor-pointer text-[#8C7E6A] hover:text-[#B87802]"
+                        className="aspect-3/4 rounded-lg border-2 border-dashed border-[#F8C4D8] hover:border-[#C2185B] bg-[#FFF5F8]/60 hover:bg-[#FFF5F8] flex flex-col items-center justify-center gap-1.5 p-2 transition-all cursor-pointer text-[#7B4A5E] hover:text-[#C2185B]"
                       >
                         <Plus className="w-5 h-5 stroke-[2.5]" />
                         <span className="text-xs font-semibold text-center">Add Photos</span>
@@ -1772,7 +1771,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     )}
                   </div>
 
-                  <p className="text-[11px] text-[#8C7E6A] mt-2">
+                  <p className="text-[11px] text-[#7B4A5E] mt-2">
                     First photo is used as the cover photo for {activeColor ? activeColor.name : 'this product'}.
                   </p>
                 </div>
@@ -1785,7 +1784,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md border border-[#E8D8B5] text-[#6B6457] hover:text-[#12100D] hover:bg-white text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-md border border-[#F8C4D8] text-[#7B4A5E] hover:text-[#1A0510] hover:bg-white text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset Form</span>
@@ -1796,7 +1795,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 type="button"
                 onClick={onBack}
                 disabled={loading}
-                className="px-5 py-2.5 rounded-md border border-[#E8D8B5] bg-white text-[#12100D] hover:bg-[#FAF8F2] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                className="px-5 py-2.5 rounded-md border border-[#F8C4D8] bg-white text-[#1A0510] hover:bg-[#FFF5F8] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
               >
                 Cancel
               </button>
@@ -1804,7 +1803,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
               <button
                 type="submit"
                 disabled={loading}
-                className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white border border-[#E91E8C]/40 font-medium text-xs tracking-wider uppercase hover:from-[#D81B60] hover:to-[#9C0F5F] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
               >
                 {loading ? (
                   <>
@@ -1814,8 +1813,8 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 ) : (
                   <>
                     <PackagePlus className="w-4 h-4" />
-                    <span>{isEdit ? 'Save Changes' : 'Publish Saree to Store'}</span>
-                    <Sparkles className="w-3.5 h-3.5 text-[#FEE63E]" />
+                    <span>{isEdit ? 'Save Changes' : 'Publish Jewellery to Store'}</span>
+                    <Sparkles className="w-3.5 h-3.5 text-[#FF80AB]" />
                   </>
                 )}
               </button>
@@ -1828,17 +1827,17 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
       {/* Small Modal for Adding Category / Fabric / Occasion */}
       {attributeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-          <div className="w-full max-w-md bg-white rounded-xl border border-[#E8D8B5] overflow-hidden p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8B5]">
+          <div className="w-full max-w-md bg-white rounded-xl border border-[#F8C4D8] overflow-hidden p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#F8C4D8]">
               <div className="flex items-center gap-2.5">
-                <span className="w-8 h-8 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] text-[#B87802] flex items-center justify-center font-bold">
+                <span className="w-8 h-8 rounded-lg bg-[#FFF5F8] border border-[#F8C4D8] text-[#C2185B] flex items-center justify-center font-bold">
                   <Plus className="w-4 h-4 stroke-[2.5]" />
                 </span>
                 <div>
-                  <h3 className="text-base font-bold text-[#12100D]">
+                  <h3 className="text-base font-bold text-[#1A0510]">
                     Add New {attributeModal.type === 'category' ? 'Category' : attributeModal.type === 'fabric' ? 'Fabric Weave' : 'Occasion'}
                   </h3>
-                  <p className="text-[11px] text-[#6B6457]">
+                  <p className="text-[11px] text-[#7B4A5E]">
                     Saves to database and automatically adds to your dropdown
                   </p>
                 </div>
@@ -1847,7 +1846,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                 type="button"
                 onClick={closeAttributeModal}
                 disabled={attrLoading}
-                className="w-7 h-7 rounded-md text-[#6B6457] hover:text-[#12100D] hover:bg-[#FAF8F2] flex items-center justify-center transition-colors cursor-pointer"
+                className="w-7 h-7 rounded-md text-[#7B4A5E] hover:text-[#1A0510] hover:bg-[#FFF5F8] flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1862,8 +1861,8 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
 
             <form onSubmit={handleSaveAttribute} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1">
-                  {attributeModal.type === 'category' ? 'Category Name' : attributeModal.type === 'fabric' ? 'Fabric Name' : 'Occasion Name'} <span className="text-[#B87802]">*</span>
+                <label className="block text-xs font-bold text-[#1A0510] mb-1">
+                  {attributeModal.type === 'category' ? 'Category Name' : attributeModal.type === 'fabric' ? 'Fabric Name' : 'Occasion Name'} <span className="text-[#C2185B]">*</span>
                 </label>
                 <input
                   type="text"
@@ -1878,22 +1877,22 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                         ? 'e.g. Pure Mulberry Silk, Organza, Tussar'
                         : 'e.g. Sangeet, Reception, Pooja'
                   }
-                  className="w-full h-11 px-3.5 rounded-lg border border-[#E8D8B5] bg-card text-sm text-[#12100D] outline-none focus:outline-none focus:border-[#B87802]"
+                  className="w-full h-11 px-3.5 rounded-lg border border-[#F8C4D8] bg-card text-sm text-[#1A0510] outline-none focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
               {/* Added Attributes Chips List with Hover-to-Reveal Close Button */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-bold text-[#12100D]">
+                  <label className="block text-xs font-bold text-[#1A0510]">
                     Added {attributeModal.type === 'category' ? 'Categories' : attributeModal.type === 'fabric' ? 'Fabrics' : 'Occasions'}
                   </label>
-                  <span className="text-[11px] text-[#8C7E6A] font-medium">
+                  <span className="text-[11px] text-[#7B4A5E] font-medium">
                     Hover to delete
                   </span>
                 </div>
 
-                <div className="min-h-[68px] max-h-48 overflow-y-auto p-2.5 rounded-lg border border-[#E8D8B5] bg-[#FAF8F2]/60 flex flex-wrap gap-1.5 content-start">
+                <div className="min-h-[68px] max-h-48 overflow-y-auto p-2.5 rounded-lg border border-[#F8C4D8] bg-[#FFF5F8]/60 flex flex-wrap gap-1.5 content-start">
                   {(() => {
                     const currentList =
                       attributeModal.type === 'category'
@@ -1913,7 +1912,7 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                     return currentList.map((item) => (
                       <div
                         key={item}
-                        className="group relative inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full text-xs font-semibold bg-white border border-[#E8D8B5] text-[#12100D] hover:border-[#B87802] transition-all"
+                        className="group relative inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full text-xs font-semibold bg-white border border-[#F8C4D8] text-[#1A0510] hover:border-[#C2185B] transition-all"
                       >
                         <span className="truncate max-w-[170px]">{item}</span>
                         <button
@@ -1943,14 +1942,14 @@ export function AddProductPage({ initialProduct = null, products = [], onBack, o
                   type="button"
                   onClick={closeAttributeModal}
                   disabled={attrLoading}
-                  className="px-4 py-2.5 rounded-lg border border-[#E8D8B5] bg-white text-[#12100D] hover:bg-[#FAF8F2] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                  className="px-4 py-2.5 rounded-lg border border-[#F8C4D8] bg-white text-[#1A0510] hover:bg-[#FFF5F8] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={attrLoading || !attrForm.name.trim()}
-                  className="flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#B87802] to-[#996300] text-white text-xs font-bold uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02] transition-all cursor-pointer disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white text-xs font-bold uppercase tracking-wider hover:from-[#D81B60] hover:to-[#9C0F5F] transition-all cursor-pointer disabled:opacity-50"
                 >
                   {attrLoading ? (
                     <>

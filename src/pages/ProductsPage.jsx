@@ -62,10 +62,10 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
       {/* Header & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold font-display text-foreground">Saree Collection</h2>
+          <h2 className="text-2xl font-semibold font-display text-foreground">Jewellery Collection</h2>
           <div className={theme.dividers.goldLeft} />
           <p className={`${theme.typography.bodyMuted} mt-2`}>
-            Manage handloom listings, pricing, fabric details, and real-time inventory
+            Manage 1-gram gold covering listings, pricing, material details, and real-time inventory
           </p>
         </div>
         <button
@@ -73,7 +73,7 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
           className={theme.buttons.primary}
         >
           <Plus className="w-4 h-4 mr-2" />
-          <span>Add New Saree</span>
+          <span>Add New Jewellery</span>
         </button>
       </div>
 
@@ -103,7 +103,7 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search saree, SKU, fabric..."
+            placeholder="Search jewellery, SKU, material..."
             className={`${theme.forms.input} pl-9`}
           />
         </div>
@@ -157,7 +157,7 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
               <div className="pt-3 border-t border-border flex items-center justify-between">
                 <div>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-base font-bold text-[#B87802]">
+                    <span className="text-base font-bold text-[#C2185B]">
                       ₹{p.price?.toLocaleString('en-IN')}
                     </span>
                     {p.mrp > p.price && (
@@ -173,14 +173,14 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
                   <button
                     onClick={() => setEditingProduct(p)}
                     className={theme.buttons.secondarySm}
-                    title="Edit Saree"
+                    title="Edit Jewellery"
                   >
-                    <Edit className="w-3.5 h-3.5 text-[#B87802]" />
+                    <Edit className="w-3.5 h-3.5 text-[#C2185B]" />
                   </button>
                   <button
                     onClick={() => setDeleteId(p._id)}
                     className="rounded-md border border-border bg-card p-2 text-destructive hover:bg-destructive hover:text-white transition-all cursor-pointer"
-                    title="Delete Saree"
+                    title="Delete Jewellery"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -203,10 +203,10 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
             try {
               if (editingProduct) {
                 await api.updateProduct(editingProduct._id, formData);
-                onNotify('Saree details updated successfully');
+                onNotify('Jewellery details updated successfully');
               } else {
                 await api.createProduct(formData);
-                onNotify('New saree added to catalog');
+                onNotify('New jewellery added to catalog');
               }
               onProductUpdated();
               setIsAddModalOpen(false);
@@ -225,9 +225,9 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
             className="fixed left-1/2 top-1/2 z-50 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-6 space-y-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className={theme.modal.title}>Remove Saree?</h3>
+            <h3 className={theme.modal.title}>Remove Jewellery Piece?</h3>
             <p className={theme.modal.description}>
-              Are you sure you want to delete this saree from the active catalog? This action cannot be undone.
+              Are you sure you want to delete this jewellery piece from the active catalog? This action cannot be undone.
             </p>
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
@@ -240,7 +240,7 @@ export const ProductsPage = ({ products, onProductUpdated, onNotify }) => {
                 onClick={() => handleDelete(deleteId)}
                 className="rounded-md bg-destructive text-white px-4 py-2 text-xs font-semibold hover:opacity-90 cursor-pointer"
               >
-                Delete Saree
+                Delete Jewellery
               </button>
             </div>
           </div>
@@ -292,7 +292,7 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div>
             <h3 className={theme.modal.title}>
-              {product ? 'Edit Saree Listing' : 'Add New Saree to Catalog'}
+              {product ? 'Edit Jewellery Listing' : 'Add New Jewellery to Catalog'}
             </h3>
             <div className={theme.dividers.goldLeft} />
           </div>
@@ -304,14 +304,14 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className={theme.forms.label}>Saree Name *</label>
+              <label className={theme.forms.label}>Jewellery Name *</label>
               <input
                 type="text"
                 name="name"
                 required
                 value={form.name}
                 onChange={handleChange}
-                placeholder="e.g. Kanchipuram Pure Silk Saree"
+                placeholder="e.g. Antique Matte Kemp Temple Bridal Combo Set"
                 className={`mt-1.5 ${theme.forms.input}`}
               />
             </div>
@@ -323,7 +323,7 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
                 required
                 value={form.sku}
                 onChange={handleChange}
-                placeholder="e.g. CF-SIL-009"
+                placeholder="e.g. MF-SET-001"
                 className={`mt-1.5 ${theme.forms.input}`}
               />
             </div>
@@ -338,11 +338,12 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
                 onChange={handleChange}
                 className={`mt-1.5 w-full ${theme.forms.select}`}
               >
-                <option value="Silk">Silk Sarees</option>
-                <option value="Cotton">Cotton Sarees</option>
-                <option value="Designer">Designer Sarees</option>
-                <option value="Wedding">Wedding Sarees</option>
-                <option value="Party Wear">Party Wear</option>
+                <option value="Bridal Sets">Bridal Sets</option>
+                <option value="Harams & Long Chains">Harams & Long Chains</option>
+                <option value="Necklaces & Chokers">Necklaces & Chokers</option>
+                <option value="Bangles & Kadas">Bangles & Kadas</option>
+                <option value="Earrings & Jhumkas">Earrings & Jhumkas</option>
+                <option value="Hip Belts & Hair Ornaments">Hip Belts & Hair Ornaments</option>
               </select>
             </div>
             <div>
@@ -438,7 +439,7 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
               rows="3"
               value={form.description}
               onChange={handleChange}
-              placeholder="A timeless silk saree woven with intricate gold zari brocade..."
+              placeholder="Exquisite 1-Gram gold covering jewellery with intricate temple carvings and kemp stones..."
               className={`mt-1.5 ${theme.forms.textarea}`}
             />
           </div>
@@ -478,7 +479,7 @@ const ProductFormModal = ({ product, onClose, onSave }) => {
               type="submit"
               className={theme.buttons.primary}
             >
-              {product ? 'Save Changes' : 'Create Saree'}
+              {product ? 'Save Changes' : 'Create Jewellery Item'}
             </button>
           </div>
         </form>

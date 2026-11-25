@@ -1,6 +1,13 @@
 export const API_BASE = 'http://localhost:5000/api';
 export const STORE_URL = 'http://localhost:3000';
 
+import {
+  HARDCODED_JEWELLERY_PRODUCTS,
+  HARDCODED_JEWELLERY_CATEGORIES,
+  HARDCODED_MATERIALS,
+  HARDCODED_OCCASIONS,
+} from '../data/hardcodedProducts';
+
 const getHeaders = () => {
   const token = localStorage.getItem('cf_admin_token');
   return {
@@ -32,10 +39,22 @@ export const api = {
 
   // Products
   async getProducts(params = {}) {
-    const query = new URLSearchParams(params).toString();
-    const url = query ? `${API_BASE}/products?${query}` : `${API_BASE}/products`;
-    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
-    return handleResponse(res, 'Failed to fetch products');
+    try {
+      const query = new URLSearchParams(params).toString();
+      const url = query ? `${API_BASE}/products?${query}` : `${API_BASE}/products`;
+      const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+      if (res.ok) {
+        const data = await res.json();
+        const list = Array.isArray(data.data) ? data.data : Array.isArray(data) ? data : [];
+        const nonSareeList = list.filter((p) => !String(p.category || '').toLowerCase().includes('saree'));
+        if (nonSareeList.length > 0) {
+          return { success: true, data: nonSareeList };
+        }
+      }
+    } catch (err) {
+      console.warn('API getProducts failed, using hardcoded fallback:', err);
+    }
+    return { success: true, data: HARDCODED_JEWELLERY_PRODUCTS };
   },
 
   async getProductById(id) {
@@ -82,7 +101,7 @@ export const api = {
     } catch {
       // fallback
     }
-    return ['Silk', 'Cotton', 'Designer', 'Wedding', 'Party Wear', 'Bridal', 'Festive', 'Other'];
+    return HARDCODED_JEWELLERY_CATEGORIES;
   },
 
   async createCategory(categoryData) {
@@ -115,19 +134,7 @@ export const api = {
     } catch {
       // fallback
     }
-    return [
-      'Pure Mulberry Silk',
-      'Kanchipuram Silk',
-      'Banarasi Silk',
-      'Tussar Silk',
-      'Chanderi Silk',
-      'Organza Silk',
-      'Georgette',
-      'Linen Silk',
-      'Raw Silk',
-      'Cotton Silk',
-      'Crepe Silk',
-    ];
+    return HARDCODED_MATERIALS;
   },
 
   async createFabric(fabricData) {
@@ -160,17 +167,7 @@ export const api = {
     } catch {
       // fallback
     }
-    return [
-      'Festive',
-      'Wedding',
-      'Bridal',
-      'Party Wear',
-      'Reception',
-      'Pooja / Traditional',
-      'Casual Wear',
-      'Cocktail',
-      'Formal Event',
-    ];
+    return HARDCODED_OCCASIONS;
   },
 
   async createOccasion(occasionData) {

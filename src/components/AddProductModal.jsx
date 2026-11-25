@@ -18,100 +18,28 @@ import {
 } from 'lucide-react';
 import { api, STORE_URL } from '../services/api';
 import { SuggestionInput } from './SuggestionInput';
+import {
+  SAMPLE_JEWELLERY_IMAGES as SAMPLE_IMAGES,
+  HARDCODED_JEWELLERY_CATEGORIES as CATEGORIES,
+  HARDCODED_MATERIALS as FABRICS,
+  HARDCODED_OCCASIONS as OCCASIONS,
+} from '../data/hardcodedProducts';
 
 const WASH_CARE_SUGGESTIONS = [
-  'Dry clean only',
-  'Dry clean recommended',
-  'Gentle hand wash',
-  'Dry clean or gentle hand wash',
-  'Hand wash with mild detergent',
+  'Store individually in airtight plastic zip-lock pouch',
+  'Keep away from direct perfume, hairspray, and deodorants',
+  'Wipe with dry microfiber cloth after every wear',
+  'Avoid contact with water, sweat, and chemical detergents',
+  'Store flat in velvet-lined jewellery box',
 ];
 
 const BLOUSE_PIECE_SUGGESTIONS = [
-  'Attached (80 cm)',
-  'Included — running blouse',
-  'Included — unstitched blouse piece (80 cm)',
-  'Without blouse piece',
-];
-
-const SAMPLE_IMAGES = [
-  {
-    title: 'Kanchipuram Maroon Zari',
-    url: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80',
-    color: 'Maroon',
-    category: 'Silk',
-  },
-  {
-    title: 'Rose Gold Soft Silk',
-    url: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=80',
-    color: 'Pink',
-    category: 'Silk',
-  },
-  {
-    title: 'Ivory Handloom Cotton',
-    url: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=80',
-    color: 'Ivory',
-    category: 'Cotton',
-  },
-  {
-    title: 'Mustard Temple Festive',
-    url: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=80',
-    color: 'Mustard',
-    category: 'Festive',
-  },
-  {
-    title: 'Royal Red Bridal Zari',
-    url: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80',
-    color: 'Red',
-    category: 'Wedding',
-  },
-  {
-    title: 'Midnight Sequin Party',
-    url: 'https://images.unsplash.com/photo-1610030469668-9655ecdd4e35?auto=format&fit=crop&w=1200&q=80',
-    color: 'Navy',
-    category: 'Party Wear',
-  },
-];
-
-const PRESET_COLORS = [
-  { name: 'Maroon', bg: '#800000', text: '#FFFFFF' },
-  { name: 'Red', bg: '#DC2626', text: '#FFFFFF' },
-  { name: 'Mustard', bg: '#D97706', text: '#FFFFFF' },
-  { name: 'Gold', bg: '#F5B815', text: '#0C0A07' },
-  { name: 'Pink', bg: '#EC4899', text: '#FFFFFF' },
-  { name: 'Green', bg: '#059669', text: '#FFFFFF' },
-  { name: 'Navy', bg: '#1E3A8A', text: '#FFFFFF' },
-  { name: 'Ivory', bg: '#FAF8F2', text: '#12100D', border: true },
-  { name: 'Beige', bg: '#D4C5A9', text: '#12100D' },
-  { name: 'Teal', bg: '#0D9488', text: '#FFFFFF' },
-  { name: 'Purple', bg: '#7E22CE', text: '#FFFFFF' },
-  { name: 'Black', bg: '#111827', text: '#FFFFFF' },
-];
-
-const CATEGORIES = [
-  'Silk',
-  'Cotton',
-  'Designer',
-  'Wedding',
-  'Party Wear',
-  'Bridal',
-  'Festive',
-  'Other',
-];
-
-const OCCASIONS = ['Festive', 'Wedding', 'Bridal', 'Party', 'Daily Wear', 'Casual'];
-
-const FABRICS = [
-  'Pure Mulberry Silk',
-  'Soft Silk',
-  'Banarasi Silk',
-  'Art Silk',
-  'Pure Linen',
-  'Handloom Cotton',
-  'Organza',
-  'Chiffon',
-  'Georgette with Sequins',
-  'Pure Silk with Zari',
+  'Adjustable golden thread dori (back rope)',
+  'Adjustable metal chain extender with hook',
+  'South Indian screw-back / Bombay screw',
+  'Side screw-lock opening',
+  'Push back with rubber stopper',
+  'Standard slip-on bangle size (2.4, 2.6, 2.8)',
 ];
 
 export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = null }) {
@@ -193,21 +121,21 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
     } else {
       setFormData({
         name: '',
-        sku: generateSKU('Silk'),
-        category: 'Silk',
-        fabric: 'Pure Mulberry Silk',
-        color: 'Maroon',
-        occasion: 'Festive',
+        sku: generateSKU('Bridal Sets'),
+        category: 'Bridal Sets',
+        fabric: '1-Gram Micro Gold Plated',
+        color: 'Ruby Red & Gold',
+        occasion: 'Bridal & Wedding',
         price: '',
         mrp: '',
         stockCount: 25,
         inStock: true,
         image: SAMPLE_IMAGES[0].url,
         gallery: '',
-        description: 'Handcrafted pure silk saree woven with fine gold zari and classic motifs. Perfect drape for celebrations and special occasions.',
-        length: '6.3 metres (with blouse piece)',
-        blousePiece: 'Included — running blouse',
-        washCare: 'Dry clean only',
+        description: 'Complete grand temple bridal jewellery set crafted with rich Goddess Lakshmi motifs and luminous kemp stones.',
+        length: 'Adjustable back rope dori',
+        blousePiece: 'Adjustable golden thread / screw lock',
+        washCare: 'Store in airtight zip pouch away from perfume and moisture.',
         isBestSeller: false,
         isNewArrival: true,
       });
@@ -294,29 +222,29 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-white rounded-lg border border-[#E8D8B5] max-w-4xl w-full max-h-[92vh] flex flex-col my-auto overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white rounded-lg border border-[#F8C4D8] max-w-4xl w-full max-h-[92vh] flex flex-col my-auto overflow-hidden animate-in fade-in zoom-in-95 duration-200">
 
         {/* Storefront Header */}
-        <div className="px-6 py-4 border-b border-[#E8D8B5] bg-[#FAF8F2] flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-[#F8C4D8] bg-[#FFF5F8] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-md bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-md bg-[#1A0510] text-[#E91E8C] border border-[#E91E8C]/30 flex items-center justify-center">
               <PackagePlus className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold font-display text-[#12100D] flex items-center gap-2">
-                {isEdit ? 'Edit Product Details' : 'Add New Saree to Store'}
-                <span className="text-[10px] font-body uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
+              <h2 className="text-xl font-semibold font-display text-[#1A0510] flex items-center gap-2">
+                {isEdit ? 'Edit Product Details' : 'Add New Jewellery to Store'}
+                <span className="text-[10px] font-body uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-[#1A0510] text-[#E91E8C] border border-[#E91E8C]/30">
                   Live Sync
                 </span>
               </h2>
-              <p className="text-xs text-[#6B6457] font-body">
+              <p className="text-xs text-[#7B4A5E] font-body">
                 Configured with category, colors, and prices. Automatically updates the storefront catalog.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-md text-[#6B6457] hover:text-[#12100D] hover:bg-white border border-transparent hover:border-[#E8D8B5] transition-all cursor-pointer"
+            className="p-2 rounded-md text-[#7B4A5E] hover:text-[#1A0510] hover:bg-white border border-transparent hover:border-[#F8C4D8] transition-all cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -343,14 +271,14 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 href={STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/30 text-xs font-medium uppercase tracking-wider hover:from-[#C98704] hover:to-[#A86E02]"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white border border-[#E91E8C]/30 text-xs font-medium uppercase tracking-wider hover:from-[#D81B60] hover:to-[#9C0F5F]"
               >
                 <span>Check Live Store</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
               <button
                 onClick={onClose}
-                className="px-3 py-2 rounded-md border border-[#E8D8B5] bg-white text-[#12100D] hover:bg-[#FAF8F2] text-xs font-semibold uppercase tracking-wider cursor-pointer"
+                className="px-3 py-2 rounded-md border border-[#F8C4D8] bg-white text-[#1A0510] hover:bg-[#FFF5F8] text-xs font-semibold uppercase tracking-wider cursor-pointer"
               >
                 Done
               </button>
@@ -375,16 +303,16 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
               {/* Product Title / Name */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 font-body">
-                  Product Name / Title <span className="text-[#B87802]">*</span>
+                <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] mb-1.5 font-body">
+                  Product Name / Title <span className="text-[#C2185B]">*</span>
                 </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="e.g. Kanchipuram Pure Silk Saree — Royal Peacock & Gold Zari"
-                  className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm text-[#12100D] placeholder-[#A89D8B] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815] font-medium"
+                  placeholder="e.g. Antique Matte Kemp Temple Bridal Combo Set"
+                  className="w-full px-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-sm text-[#1A0510] placeholder-[#A89D8B] outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#E91E8C] font-medium"
                   required
                 />
               </div>
@@ -394,13 +322,13 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 {/* SKU */}
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] font-body">
-                      SKU Code <span className="text-[#B87802]">*</span>
+                    <label className="text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] font-body">
+                      SKU Code <span className="text-[#C2185B]">*</span>
                     </label>
                     <button
                       type="button"
                       onClick={() => setFormData(p => ({ ...p, sku: generateSKU(p.category) }))}
-                      className="text-[11px] text-[#B87802] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
+                      className="text-[11px] text-[#C2185B] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
                     >
                       <RefreshCw className="w-3 h-3" /> Auto-gen
                     </button>
@@ -411,15 +339,15 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                     value={formData.sku}
                     onChange={handleChange}
                     placeholder="e.g. CF-SIL-001"
-                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm text-[#12100D] font-body font-semibold tracking-wider uppercase outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-sm text-[#1A0510] font-body font-semibold tracking-wider uppercase outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#E91E8C]"
                     required
                   />
                 </div>
 
                 {/* Category */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 font-body">
-                    Category <span className="text-[#B87802]">*</span>
+                  <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] mb-1.5 font-body">
+                    Category <span className="text-[#C2185B]">*</span>
                   </label>
                   <select
                     name="category"
@@ -431,7 +359,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                         setFormData(p => ({ ...p, image: matching.url, color: matching.color }));
                       }
                     }}
-                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm text-[#12100D] font-medium outline-none focus:border-[#B87802] cursor-pointer"
+                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-sm text-[#1A0510] font-medium outline-none focus:border-[#C2185B] cursor-pointer"
                   >
                     {CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -445,11 +373,11 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
               {/* Color Selection (Critical Requirement) */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] flex items-center gap-1.5 font-body">
-                    <Palette className="w-3.5 h-3.5 text-[#B87802]" />
-                    Color Palette <span className="text-[#B87802]">*</span>
+                  <label className="text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] flex items-center gap-1.5 font-body">
+                    <Palette className="w-3.5 h-3.5 text-[#C2185B]" />
+                    Color Palette <span className="text-[#C2185B]">*</span>
                   </label>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-sm bg-[#FAF8F2] border border-[#E8D8B5] text-[#B87802]">
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-sm bg-[#FFF5F8] border border-[#F8C4D8] text-[#C2185B]">
                     Selected: {formData.color || 'None'}
                   </span>
                 </div>
@@ -464,8 +392,8 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                         key={c.name}
                         onClick={() => setFormData(p => ({ ...p, color: c.name }))}
                         className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer border ${isSelected
-                            ? 'border-2 border-[#B87802] font-semibold'
-                            : 'border-[#E8D8B5] hover:border-[#B87802]'
+                            ? 'border-2 border-[#C2185B] font-semibold'
+                            : 'border-[#F8C4D8] hover:border-[#C2185B]'
                           }`}
                         style={{ backgroundColor: c.bg, color: c.text }}
                       >
@@ -488,20 +416,20 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                   value={formData.color}
                   onChange={handleChange}
                   placeholder="Or enter custom color (e.g. Royal Peacock Blue, Pastel Mint)"
-                  className="w-full px-3.5 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                  className="w-full px-3.5 py-2 rounded-sm border border-[#F8C4D8] bg-card text-xs text-[#1A0510] outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#E91E8C]"
                 />
               </div>
 
               {/* Pricing Row: Price & MRP with live Discount Badge */}
-              <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5] space-y-3">
+              <div className="p-4 rounded-lg bg-[#FFF5F8] border border-[#F8C4D8] space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] flex items-center gap-1.5 font-body">
-                    <IndianRupee className="w-3.5 h-3.5 text-[#B87802]" />
+                  <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] flex items-center gap-1.5 font-body">
+                    <IndianRupee className="w-3.5 h-3.5 text-[#C2185B]" />
                     Pricing & Discount
                   </span>
                   {discountPercent > 0 && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-sm text-xs font-semibold bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
-                      <Sparkles className="w-3 h-3 text-[#FEE63E]" />
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-sm text-xs font-semibold bg-[#1A0510] text-[#E91E8C] border border-[#E91E8C]/30">
+                      <Sparkles className="w-3 h-3 text-[#FF80AB]" />
                       {discountPercent}% OFF on Store
                     </span>
                   )}
@@ -510,18 +438,18 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Selling Price */}
                   <div>
-                    <label className="block text-xs font-semibold text-[#12100D] mb-1">
-                      Selling Price (₹) <span className="text-[#B87802]">*</span>
+                    <label className="block text-xs font-semibold text-[#1A0510] mb-1">
+                      Selling Price (₹) <span className="text-[#C2185B]">*</span>
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3 top-2.5 text-sm font-semibold text-[#B87802]">₹</span>
+                      <span className="absolute left-3 top-2.5 text-sm font-semibold text-[#C2185B]">₹</span>
                       <input
                         type="number"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
                         placeholder="e.g. 14999"
-                        className="w-full pl-8 pr-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm font-bold text-[#B87802] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                        className="w-full pl-8 pr-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-sm font-bold text-[#C2185B] outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#E91E8C]"
                         required
                         min="1"
                       />
@@ -530,18 +458,18 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
                   {/* MRP */}
                   <div>
-                    <label className="block text-xs font-semibold text-[#12100D] mb-1">
-                      MRP / Original Price (₹) <span className="text-[#B87802]">*</span>
+                    <label className="block text-xs font-semibold text-[#1A0510] mb-1">
+                      MRP / Original Price (₹) <span className="text-[#C2185B]">*</span>
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3 top-2.5 text-sm font-semibold text-[#6B6457]">₹</span>
+                      <span className="absolute left-3 top-2.5 text-sm font-semibold text-[#7B4A5E]">₹</span>
                       <input
                         type="number"
                         name="mrp"
                         value={formData.mrp}
                         onChange={handleChange}
                         placeholder="e.g. 19999"
-                        className="w-full pl-8 pr-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm font-semibold text-[#6B6457] line-through outline-none focus:border-[#B87802]"
+                        className="w-full pl-8 pr-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-sm font-semibold text-[#7B4A5E] line-through outline-none focus:border-[#C2185B]"
                         required
                         min="1"
                       />
@@ -553,7 +481,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
               {/* Fabric & Occasion */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 font-body">
+                  <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] mb-1.5 font-body">
                     Fabric Weave
                   </label>
                   <input
@@ -562,7 +490,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                     value={formData.fabric}
                     onChange={handleChange}
                     placeholder="e.g. Pure Mulberry Silk"
-                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm text-[#12100D] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-sm text-[#1A0510] outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#E91E8C]"
                   />
                   <datalist id="fabric-options">
                     {FABRICS.map((f) => (
@@ -572,14 +500,14 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 font-body">
+                  <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] mb-1.5 font-body">
                     Occasion
                   </label>
                   <select
                     name="occasion"
                     value={formData.occasion}
                     onChange={handleChange}
-                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-sm text-[#12100D] font-medium outline-none focus:border-[#B87802] cursor-pointer"
+                    className="w-full px-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-sm text-[#1A0510] font-medium outline-none focus:border-[#C2185B] cursor-pointer"
                   >
                     {OCCASIONS.map((occ) => (
                       <option key={occ} value={occ}>
@@ -591,10 +519,10 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
               </div>
 
               {/* Stock & Availability */}
-              <div className="p-4 rounded-lg bg-white border border-[#E8D8B5] space-y-3">
+              <div className="p-4 rounded-lg bg-white border border-[#F8C4D8] space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1 font-body">
+                    <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] mb-1 font-body">
                       Inventory Stock Count
                     </label>
                     <input
@@ -604,7 +532,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                       onChange={handleChange}
                       placeholder="e.g. 25"
                       min="0"
-                      className="w-full px-3.5 py-2 rounded-sm border border-[#E8D8B5] bg-card text-sm font-semibold text-[#12100D] outline-none focus:border-[#B87802]"
+                      className="w-full px-3.5 py-2 rounded-sm border border-[#F8C4D8] bg-card text-sm font-semibold text-[#1A0510] outline-none focus:border-[#C2185B]"
                     />
                   </div>
 
@@ -617,8 +545,8 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                         onChange={handleChange}
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#B87802]"></div>
-                      <span className="ml-3 text-xs font-bold text-[#12100D]">
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#C2185B]"></div>
+                      <span className="ml-3 text-xs font-bold text-[#1A0510]">
                         {formData.inStock ? 'In Stock (Buyable)' : 'Out of Stock'}
                       </span>
                     </label>
@@ -626,14 +554,14 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                 </div>
 
                 {/* Badges Toggle */}
-                <div className="flex items-center gap-6 pt-2 border-t border-[#E8D8B5]/60 text-xs font-semibold text-[#12100D]">
+                <div className="flex items-center gap-6 pt-2 border-t border-[#F8C4D8]/60 text-xs font-semibold text-[#1A0510]">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       name="isBestSeller"
                       checked={formData.isBestSeller}
                       onChange={handleChange}
-                      className="w-4 h-4 rounded text-[#B87802] border-[#E8D8B5] focus:ring-[#F5B815]"
+                      className="w-4 h-4 rounded text-[#C2185B] border-[#F8C4D8] focus:ring-[#E91E8C]"
                     />
                     <span>Best Seller Badge</span>
                   </label>
@@ -644,7 +572,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                       name="isNewArrival"
                       checked={formData.isNewArrival}
                       onChange={handleChange}
-                      className="w-4 h-4 rounded text-[#B87802] border-[#E8D8B5] focus:ring-[#F5B815]"
+                      className="w-4 h-4 rounded text-[#C2185B] border-[#F8C4D8] focus:ring-[#E91E8C]"
                     />
                     <span>New Arrival Badge</span>
                   </label>
@@ -653,7 +581,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 font-body">
+                <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] mb-1.5 font-body">
                   Detailed Description
                 </label>
                 <textarea
@@ -662,14 +590,14 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                   onChange={handleChange}
                   rows={3}
                   placeholder="Describe the weave, pallu, border zari, and styling tips..."
-                  className="w-full px-3.5 py-2 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D] outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2 rounded-sm border border-[#F8C4D8] bg-card text-xs text-[#1A0510] outline-none focus:border-[#C2185B]"
                 />
               </div>
 
               {/* Specifications: Low Stock Alert, Blouse Piece, Wash Care */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div>
-                  <label className="block font-semibold text-[#12100D] mb-1">Low Stock Alert</label>
+                  <label className="block font-semibold text-[#1A0510] mb-1">Low Stock Alert</label>
                   <input
                     type="number"
                     name="lowStockAlert"
@@ -677,29 +605,29 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                     onChange={handleChange}
                     placeholder="e.g. 10"
                     min="0"
-                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D]"
+                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#F8C4D8] bg-card text-xs text-[#1A0510]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-[#12100D] mb-1">Blouse Piece</label>
+                  <label className="block font-semibold text-[#1A0510] mb-1">Blouse Piece</label>
                   <SuggestionInput
                     name="blousePiece"
                     value={formData.blousePiece}
                     onChange={handleChange}
                     placeholder="e.g. Attached (80 cm)"
                     suggestions={BLOUSE_PIECE_SUGGESTIONS}
-                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D] outline-none focus:border-[#B87802]"
+                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#F8C4D8] bg-card text-xs text-[#1A0510] outline-none focus:border-[#C2185B]"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-[#12100D] mb-1">Wash Care</label>
+                  <label className="block font-semibold text-[#1A0510] mb-1">Wash Care</label>
                   <SuggestionInput
                     name="washCare"
                     value={formData.washCare}
                     onChange={handleChange}
                     placeholder="e.g. Dry Clean Only"
                     suggestions={WASH_CARE_SUGGESTIONS}
-                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D] outline-none focus:border-[#B87802]"
+                    className="w-full px-2.5 py-1.5 rounded-sm border border-[#F8C4D8] bg-card text-xs text-[#1A0510] outline-none focus:border-[#C2185B]"
                   />
                 </div>
               </div>
@@ -711,9 +639,9 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
               {/* Image URL Input */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] mb-1.5 flex items-center gap-1.5 font-body">
-                  <ImageIcon className="w-3.5 h-3.5 text-[#B87802]" />
-                  Product Image URL <span className="text-[#B87802]">*</span>
+                <label className="block text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] mb-1.5 flex items-center gap-1.5 font-body">
+                  <ImageIcon className="w-3.5 h-3.5 text-[#C2185B]" />
+                  Product Image URL <span className="text-[#C2185B]">*</span>
                 </label>
                 <input
                   type="url"
@@ -721,15 +649,15 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                   value={formData.image}
                   onChange={handleChange}
                   placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3.5 py-2.5 rounded-sm border border-[#E8D8B5] bg-card text-xs text-[#12100D] outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#F5B815]"
+                  className="w-full px-3.5 py-2.5 rounded-sm border border-[#F8C4D8] bg-card text-xs text-[#1A0510] outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#E91E8C]"
                   required
                 />
               </div>
 
               {/* Sample Image Presets */}
               <div>
-                <span className="block text-[11px] font-semibold text-[#6B6457] mb-2 uppercase tracking-[0.15em]">
-                  Quick Select Sample Saree Image:
+                <span className="block text-[11px] font-semibold text-[#7B4A5E] mb-2 uppercase tracking-[0.15em]">
+                  Quick Select Sample Jewellery Image:
                 </span>
                 <div className="grid grid-cols-3 gap-2">
                   {SAMPLE_IMAGES.map((img) => (
@@ -745,8 +673,8 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                         }))
                       }
                       className={`group relative rounded-sm overflow-hidden border aspect-[4/3] transition-all cursor-pointer ${formData.image === img.url
-                          ? 'border-[#B87802] ring-2 ring-[#B87802]'
-                          : 'border-[#E8D8B5] hover:opacity-90'
+                          ? 'border-[#C2185B] ring-2 ring-[#C2185B]'
+                          : 'border-[#F8C4D8] hover:opacity-90'
                         }`}
                     >
                       <img
@@ -754,7 +682,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                         alt={img.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
-                      <span className="absolute inset-x-0 bottom-0 bg-[#0C0A07]/80 text-[#FAF8F2] text-[9px] p-1 truncate text-center font-medium">
+                      <span className="absolute inset-x-0 bottom-0 bg-[#1A0510]/80 text-[#FFF5F8] text-[9px] p-1 truncate text-center font-medium">
                         {img.title}
                       </span>
                     </button>
@@ -763,19 +691,19 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
               </div>
 
               {/* Live Card Preview */}
-              <div className="p-4 rounded-lg bg-[#FAF8F2] border border-[#E8D8B5]">
+              <div className="p-4 rounded-lg bg-[#FFF5F8] border border-[#F8C4D8]">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#12100D] flex items-center gap-1.5 font-body">
-                    <Eye className="w-3.5 h-3.5 text-[#B87802]" />
+                  <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#1A0510] flex items-center gap-1.5 font-body">
+                    <Eye className="w-3.5 h-3.5 text-[#C2185B]" />
                     Live Store Card Preview
                   </span>
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30">
+                  <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm bg-[#1A0510] text-[#E91E8C] border border-[#E91E8C]/30">
                     Exact Match
                   </span>
                 </div>
 
                 {/* Simulated Customer Product Card */}
-                <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden max-w-[280px] mx-auto transition-all">
+                <div className="bg-white rounded-lg border border-[#F8C4D8] overflow-hidden max-w-[280px] mx-auto transition-all">
                   <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
                     {formData.image ? (
                       <img
@@ -796,51 +724,51 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
 
                     {/* Store Badges matching website theme */}
                     {discountPercent > 0 && (
-                      <span className="absolute top-3 left-3 rounded-sm bg-[#0C0A07] text-[#F5B815] border border-[#F5B815]/30 px-2 py-1 text-[11px] font-semibold tracking-wide">
+                      <span className="absolute top-3 left-3 rounded-sm bg-[#1A0510] text-[#E91E8C] border border-[#E91E8C]/30 px-2 py-1 text-[11px] font-semibold tracking-wide">
                         {discountPercent}% OFF
                       </span>
                     )}
 
                     {formData.isNewArrival && (
-                      <span className="absolute top-3 right-3 rounded-sm bg-[#F5B815] text-[#0C0A07] px-2 py-1 text-[11px] font-bold tracking-wide">
+                      <span className="absolute top-3 right-3 rounded-sm bg-[#E91E8C] text-[#1A0510] px-2 py-1 text-[11px] font-bold tracking-wide">
                         NEW
                       </span>
                     )}
 
                     {formData.isBestSeller && !formData.isNewArrival && (
-                      <span className="absolute top-3 right-3 rounded-sm bg-[#B87802] text-white px-2 py-1 text-[11px] font-bold tracking-wide">
+                      <span className="absolute top-3 right-3 rounded-sm bg-[#C2185B] text-white px-2 py-1 text-[11px] font-bold tracking-wide">
                         BEST SELLER
                       </span>
                     )}
 
                     {!formData.inStock && (
-                      <span className="absolute inset-x-0 bottom-0 bg-[#0C0A07]/85 py-2 text-center text-xs tracking-widest text-[#FAF8F2] uppercase font-semibold">
+                      <span className="absolute inset-x-0 bottom-0 bg-[#1A0510]/85 py-2 text-center text-xs tracking-widest text-[#FFF5F8] uppercase font-semibold">
                         Out of Stock
                       </span>
                     )}
                   </div>
 
                   <div className="p-4 space-y-2">
-                    <p className="text-[11px] tracking-[0.2em] uppercase text-[#6B6457]">
+                    <p className="text-[11px] tracking-[0.2em] uppercase text-[#7B4A5E]">
                       {formData.fabric || 'Pure Silk'}
                     </p>
 
-                    <h4 className="font-display text-lg font-medium text-[#12100D] line-clamp-1 leading-snug">
-                      {formData.name || 'Saree Title'}
+                    <h4 className="font-display text-lg font-medium text-[#1A0510] line-clamp-1 leading-snug">
+                      {formData.name || 'Jewellery Title'}
                     </h4>
 
                     <div className="flex items-center gap-1 text-sm">
-                      <Star className="h-3.5 w-3.5 fill-[#F5B815] text-[#F5B815]" />
-                      <span className="font-medium text-xs text-[#12100D]">4.8</span>
-                      <span className="text-xs text-[#6B6457]">(42)</span>
+                      <Star className="h-3.5 w-3.5 fill-[#E91E8C] text-[#E91E8C]" />
+                      <span className="font-medium text-xs text-[#1A0510]">4.8</span>
+                      <span className="text-xs text-[#7B4A5E]">(42)</span>
                     </div>
 
-                    <div className="flex items-baseline gap-2 pt-1 border-t border-[#E8D8B5]/50">
-                      <span className="text-lg font-semibold text-[#B87802]">
+                    <div className="flex items-baseline gap-2 pt-1 border-t border-[#F8C4D8]/50">
+                      <span className="text-lg font-semibold text-[#C2185B]">
                         ₹{Number(formData.price || 0).toLocaleString('en-IN')}
                       </span>
                       {Number(formData.mrp) > Number(formData.price) && (
-                        <span className="text-sm text-[#6B6457] line-through">
+                        <span className="text-sm text-[#7B4A5E] line-through">
                           ₹{Number(formData.mrp).toLocaleString('en-IN')}
                         </span>
                       )}
@@ -848,8 +776,8 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
                   </div>
                 </div>
 
-                <p className="text-[11px] text-center text-[#6B6457] mt-3 font-body">
-                  Renders with this exact styling on the <strong className="text-[#12100D]">storefront</strong> once submitted!
+                <p className="text-[11px] text-center text-[#7B4A5E] mt-3 font-body">
+                  Renders with this exact styling on the <strong className="text-[#1A0510]">storefront</strong> once submitted!
                 </p>
               </div>
 
@@ -858,12 +786,12 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-4 border-t border-[#E8D8B5] flex items-center justify-between gap-3">
+          <div className="pt-4 border-t border-[#F8C4D8] flex items-center justify-between gap-3">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-5 py-2.5 rounded-md border border-[#E8D8B5] text-[#12100D] hover:bg-[#FAF8F2] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+              className="px-5 py-2.5 rounded-md border border-[#F8C4D8] text-[#1A0510] hover:bg-[#FFF5F8] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
             >
               Cancel
             </button>
@@ -871,7 +799,7 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] text-white border border-[#F5B815]/40 font-medium text-xs tracking-wider uppercase hover:from-[#C98704] hover:to-[#A86E02] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white border border-[#E91E8C]/40 font-medium text-xs tracking-wider uppercase hover:from-[#D81B60] hover:to-[#9C0F5F] active:scale-95 transition-all cursor-pointer disabled:opacity-50"
             >
               {loading ? (
                 <>
@@ -881,8 +809,8 @@ export function AddProductModal({ isOpen, onClose, onSuccess, initialProduct = n
               ) : (
                 <>
                   <PackagePlus className="w-4 h-4" />
-                  <span>{isEdit ? 'Save Changes' : 'Publish Saree to Store'}</span>
-                  <Sparkles className="w-3.5 h-3.5 text-[#FEE63E]" />
+                  <span>{isEdit ? 'Save Changes' : 'Publish Jewellery to Store'}</span>
+                  <Sparkles className="w-3.5 h-3.5 text-[#FF80AB]" />
                 </>
               )}
             </button>

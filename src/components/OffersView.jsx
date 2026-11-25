@@ -74,7 +74,7 @@ export function OffersView({ onNotify }) {
     badge: 'LIMITED TIME',
     image: '',
     validTill: 'Valid until 31 Dec 2026',
-    terms: 'Valid on select authentic handwoven sarees. Cannot be clubbed with other promotional codes.',
+    terms: 'Valid on select authentic 1-Gram gold covering jewellery. Cannot be clubbed with other promotional codes.',
     category: 'All',
     selectedProducts: [],
     applyToAllInCategory: false,
@@ -145,7 +145,7 @@ export function OffersView({ onNotify }) {
       badge: 'FESTIVE SALE',
       image: '',
       validTill: 'Limited Period Offer',
-      terms: 'Applicable on authentic handwoven sarees above minimum purchase.',
+      terms: 'Applicable on authentic gold covering & bridal jewellery above minimum purchase.',
       category: 'All',
       selectedProducts: [],
       applyToAllInCategory: false,
@@ -399,24 +399,24 @@ export function OffersView({ onNotify }) {
         {/* Top Breadcrumb & Action Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-1">
           <div>
-            <nav className="flex items-center gap-2 text-xs font-semibold text-[#8C7E6A] mb-2 uppercase tracking-wider">
+            <nav className="flex items-center gap-2 text-xs font-semibold text-[#7B4A5E] mb-2 uppercase tracking-wider">
               <button
                 type="button"
                 onClick={() => setViewMode('list')}
-                className="hover:text-[#B87802] transition-colors flex items-center gap-1 cursor-pointer"
+                className="hover:text-[#C2185B] transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Offers & Deals</span>
               </button>
-              <ChevronRight className="w-3 h-3 text-[#B87802]" />
-              <span className="text-[#12100D] font-bold">
+              <ChevronRight className="w-3 h-3 text-[#C2185B]" />
+              <span className="text-[#1A0510] font-bold">
                 {editingOffer ? 'Edit Offer' : 'Add New Offer'}
               </span>
             </nav>
-            <h1 className={`${theme.fonts.display} text-2xl font-semibold text-[#12100D] tracking-tight`}>
+            <h1 className={`${theme.fonts.display} text-2xl font-semibold text-[#1A0510] tracking-tight`}>
               {editingOffer ? `Edit "${editingOffer.title}"` : 'Create Storefront Offer & Promotion'}
             </h1>
-            <p className="text-xs text-[#736858] mt-0.5">
+            <p className="text-xs text-[#7B4A5E] mt-0.5">
               Choose between Coupon Code setup or Direct Product Offer (Without Coupon).
             </p>
           </div>
@@ -425,7 +425,7 @@ export function OffersView({ onNotify }) {
             <button
               type="button"
               onClick={() => setViewMode('list')}
-              className="px-4 py-2.5 rounded-md border border-[#E8D8B5] bg-white hover:bg-[#FAF8F2] text-xs font-semibold text-[#4A4235] transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-md border border-[#F8C4D8] bg-white hover:bg-[#FFF5F8] text-xs font-semibold text-[#4A1C30] transition-colors cursor-pointer"
             >
               Cancel
             </button>
@@ -433,7 +433,7 @@ export function OffersView({ onNotify }) {
               type="button"
               onClick={handleSubmit}
               disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] hover:from-[#C98704] hover:to-[#A86E02] text-white text-xs font-semibold uppercase tracking-wider shadow-sm transition-all cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] hover:from-[#D81B60] hover:to-[#9C0F5F] text-white text-xs font-semibold uppercase tracking-wider shadow-sm transition-all cursor-pointer disabled:opacity-50"
             >
               {saving ? (
                 <>
@@ -451,12 +451,12 @@ export function OffersView({ onNotify }) {
         </div>
 
         {/* Main One-Page Form Card */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-[#E8D8B5] p-6 space-y-6 shadow-sm">
+        <form onSubmit={handleSubmit} className="bg-white rounded-lg border border-[#F8C4D8] p-6 space-y-6 shadow-sm">
           {/* SECTION A: OFFER TYPE SELECTOR (WITH COUPON vs WITHOUT COUPON) */}
-          <div className="space-y-3 pb-2 border-b border-[#E8D8B5]">
+          <div className="space-y-3 pb-2 border-b border-[#F8C4D8]">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#B87802]" />
-              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#12100D]`}>
+              <Sparkles className="w-4 h-4 text-[#C2185B]" />
+              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#1A0510]`}>
                 Choose Offer Mode
               </h2>
             </div>
@@ -474,25 +474,25 @@ export function OffersView({ onNotify }) {
                 }
                 className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 flex items-start gap-3.5 ${
                   isWithCoupon
-                    ? 'border-[#B87802] bg-[#FAF4E6]/50 shadow-sm'
-                    : 'border-[#E8D8B5] bg-white hover:border-[#B87802]/50 hover:bg-[#FAF8F2]'
+                    ? 'border-[#C2185B] bg-[#FFF0F5]/50 shadow-sm'
+                    : 'border-[#F8C4D8] bg-white hover:border-[#C2185B]/50 hover:bg-[#FFF5F8]'
                 }`}
               >
                 <div
                   className={`w-9 h-9 rounded-md flex items-center justify-center shrink-0 ${
                     isWithCoupon
-                      ? 'bg-[#B87802] text-white shadow-sm'
-                      : 'bg-[#FAF8F2] text-[#8C7E6A] border border-[#E8D8B5]'
+                      ? 'bg-[#C2185B] text-white shadow-sm'
+                      : 'bg-[#FFF5F8] text-[#7B4A5E] border border-[#F8C4D8]'
                   }`}
                 >
                   <Tag className="w-4 h-4" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-[#12100D]">With Coupon (Coupon Code Setup)</span>
-                    {isWithCoupon && <CheckCircle2 className="w-4 h-4 text-[#B87802]" />}
+                    <span className="text-sm font-bold text-[#1A0510]">With Coupon (Coupon Code Setup)</span>
+                    {isWithCoupon && <CheckCircle2 className="w-4 h-4 text-[#C2185B]" />}
                   </div>
-                  <p className="text-xs text-[#736858] mt-1 leading-relaxed">
+                  <p className="text-xs text-[#7B4A5E] mt-1 leading-relaxed">
                     Customer enters a coupon code (e.g. <strong>FESTIVE25</strong>) at checkout to claim the discount.
                   </p>
                 </div>
@@ -510,25 +510,25 @@ export function OffersView({ onNotify }) {
                 }
                 className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 flex items-start gap-3.5 ${
                   !isWithCoupon
-                    ? 'border-[#B87802] bg-[#FAF4E6]/50 shadow-sm'
-                    : 'border-[#E8D8B5] bg-white hover:border-[#B87802]/50 hover:bg-[#FAF8F2]'
+                    ? 'border-[#C2185B] bg-[#FFF0F5]/50 shadow-sm'
+                    : 'border-[#F8C4D8] bg-white hover:border-[#C2185B]/50 hover:bg-[#FFF5F8]'
                 }`}
               >
                 <div
                   className={`w-9 h-9 rounded-md flex items-center justify-center shrink-0 ${
                     !isWithCoupon
-                      ? 'bg-[#B87802] text-white shadow-sm'
-                      : 'bg-[#FAF8F2] text-[#8C7E6A] border border-[#E8D8B5]'
+                      ? 'bg-[#C2185B] text-white shadow-sm'
+                      : 'bg-[#FFF5F8] text-[#7B4A5E] border border-[#F8C4D8]'
                   }`}
                 >
                   <ShoppingBag className="w-4 h-4" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-[#12100D]">Without Coupon (Direct Product Offer)</span>
-                    {!isWithCoupon && <CheckCircle2 className="w-4 h-4 text-[#B87802]" />}
+                    <span className="text-sm font-bold text-[#1A0510]">Without Coupon (Direct Product Offer)</span>
+                    {!isWithCoupon && <CheckCircle2 className="w-4 h-4 text-[#C2185B]" />}
                   </div>
-                  <p className="text-xs text-[#736858] mt-1 leading-relaxed">
+                  <p className="text-xs text-[#7B4A5E] mt-1 leading-relaxed">
                     Direct promotional offer applied to products. Admin can select products or apply to an entire category.
                   </p>
                 </div>
@@ -538,17 +538,17 @@ export function OffersView({ onNotify }) {
 
           {/* Section 1: Offer Details & Category Setup */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-[#E8D8B5]">
-              <Sparkles className="w-4 h-4 text-[#B87802]" />
-              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#12100D]`}>
+            <div className="flex items-center gap-2 pb-2 border-b border-[#F8C4D8]">
+              <Sparkles className="w-4 h-4 text-[#C2185B]" />
+              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#1A0510]`}>
                 1. Offer Header & Category Details
               </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
-                  Offer Title <span className="text-[#B87802]">*</span>
+                <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
+                  Offer Title <span className="text-[#C2185B]">*</span>
                 </label>
                 <input
                   type="text"
@@ -558,12 +558,12 @@ export function OffersView({ onNotify }) {
                   placeholder={
                     isWithCoupon ? 'e.g. Festive Grand Celebration' : 'e.g. Pure Silk Heirloom Direct Sale'
                   }
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#C2185B]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                   Promotional Badge Label
                 </label>
                 <input
@@ -571,7 +571,7 @@ export function OffersView({ onNotify }) {
                   value={formData.badge}
                   onChange={(e) => setFormData((p) => ({ ...p, badge: e.target.value }))}
                   placeholder="e.g. FESTIVE SALE, BRIDAL EXCLUSIVE, DIRECT DEAL"
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
             </div>
@@ -580,13 +580,13 @@ export function OffersView({ onNotify }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-bold text-[#12100D] uppercase tracking-wider">
+                  <label className="block text-xs font-bold text-[#1A0510] uppercase tracking-wider">
                     Target Category / Weave
                   </label>
                   <button
                     type="button"
                     onClick={() => setShowCategoryModal(true)}
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#B87802] hover:text-[#996300] bg-[#FAF4E6] px-2.5 py-1 rounded border border-[#E8D8B5] hover:border-[#B87802] transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#C2185B] hover:text-[#880E4F] bg-[#FFF0F5] px-2.5 py-1 rounded border border-[#F8C4D8] hover:border-[#C2185B] transition-colors cursor-pointer"
                   >
                     <Plus className="w-3 h-3 stroke-[2.5]" />
                     <span>Add Category</span>
@@ -596,18 +596,18 @@ export function OffersView({ onNotify }) {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData((p) => ({ ...p, category: e.target.value }))}
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] bg-white focus:outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] bg-white focus:outline-none focus:border-[#C2185B]"
                 >
                   {categories.map((cat) => (
                     <option key={cat} value={cat}>
-                      {cat === 'All' ? 'All Weaves / All Categories' : `${cat} Sarees`}
+                      {cat === 'All' ? 'All Collections / All Categories' : `${cat}`}
                     </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                   Validity Text
                 </label>
                 <input
@@ -615,30 +615,30 @@ export function OffersView({ onNotify }) {
                   value={formData.validTill}
                   onChange={(e) => setFormData((p) => ({ ...p, validTill: e.target.value }))}
                   placeholder="e.g. Valid until 31 Dec 2026"
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                 Offer Subtitle / Description
               </label>
               <textarea
                 rows={2}
                 value={formData.subtitle}
                 onChange={(e) => setFormData((p) => ({ ...p, subtitle: e.target.value }))}
-                placeholder="e.g. Flat 25% off on our exquisite Banarasi & Kanchipuram pure silk sarees collection."
-                className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                placeholder="e.g. Flat 25% off on our exquisite bridal sets and antique kemp jewellery collection."
+                className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
               />
             </div>
           </div>
 
           {/* Section 2: Discount & Pricing Configuration */}
           <div className="space-y-4 pt-2">
-            <div className="flex items-center gap-2 pb-2 border-b border-[#E8D8B5]">
-              <Percent className="w-4 h-4 text-[#B87802]" />
-              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#12100D]`}>
+            <div className="flex items-center gap-2 pb-2 border-b border-[#F8C4D8]">
+              <Percent className="w-4 h-4 text-[#C2185B]" />
+              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#1A0510]`}>
                 2. Discount Rules {isWithCoupon && '& Coupon Setup'}
               </h2>
             </div>
@@ -647,8 +647,8 @@ export function OffersView({ onNotify }) {
               {/* If With Coupon: Show Coupon Code Input */}
               {isWithCoupon ? (
                 <div>
-                  <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
-                    Coupon Code <span className="text-[#B87802]">*</span>
+                  <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
+                    Coupon Code <span className="text-[#C2185B]">*</span>
                   </label>
                   <input
                     type="text"
@@ -656,15 +656,15 @@ export function OffersView({ onNotify }) {
                     value={formData.code}
                     onChange={(e) => setFormData((p) => ({ ...p, code: e.target.value.toUpperCase() }))}
                     placeholder="e.g. FESTIVE25"
-                    className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm font-mono font-bold text-[#996300] tracking-widest focus:outline-none focus:border-[#B87802]"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm font-mono font-bold text-[#880E4F] tracking-widest focus:outline-none focus:border-[#C2185B]"
                   />
                 </div>
               ) : (
                 <div>
-                  <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                     Offer Type
                   </label>
-                  <div className="px-3.5 py-2.5 rounded-md bg-[#FAF4E6] border border-[#E8D8B5] text-xs font-semibold text-[#996300] flex items-center gap-2">
+                  <div className="px-3.5 py-2.5 rounded-md bg-[#FFF0F5] border border-[#F8C4D8] text-xs font-semibold text-[#880E4F] flex items-center gap-2">
                     <ShoppingBag className="w-3.5 h-3.5" />
                     <span>Direct Product Offer</span>
                   </div>
@@ -672,13 +672,13 @@ export function OffersView({ onNotify }) {
               )}
 
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                   Discount Type
                 </label>
                 <select
                   value={formData.discountType}
                   onChange={(e) => setFormData((p) => ({ ...p, discountType: e.target.value }))}
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] bg-white focus:outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] bg-white focus:outline-none focus:border-[#C2185B]"
                 >
                   <option value="percentage">Percentage Discount (%)</option>
                   <option value="flat">Flat Amount (₹)</option>
@@ -686,8 +686,8 @@ export function OffersView({ onNotify }) {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
-                  Discount Value <span className="text-[#B87802]">*</span>
+                <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
+                  Discount Value <span className="text-[#C2185B]">*</span>
                 </label>
                 <input
                   type="number"
@@ -696,12 +696,12 @@ export function OffersView({ onNotify }) {
                   value={formData.discountValue}
                   onChange={(e) => setFormData((p) => ({ ...p, discountValue: e.target.value }))}
                   placeholder={formData.discountType === 'percentage' ? '25' : '2000'}
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                   Min. Order Value (₹)
                 </label>
                 <input
@@ -710,7 +710,7 @@ export function OffersView({ onNotify }) {
                   value={formData.minOrderValue}
                   onChange={(e) => setFormData((p) => ({ ...p, minOrderValue: e.target.value }))}
                   placeholder="e.g. 4999"
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
             </div>
@@ -719,15 +719,15 @@ export function OffersView({ onNotify }) {
           {/* SECTION 3: PRODUCT SELECTOR (ONLY SHOWN FOR "WITHOUT COUPON" DIRECT OFFERS) */}
           {!isWithCoupon && (
             <div className="space-y-4 pt-2">
-              <div className="flex items-center justify-between pb-2 border-b border-[#E8D8B5] flex-wrap gap-2">
+              <div className="flex items-center justify-between pb-2 border-b border-[#F8C4D8] flex-wrap gap-2">
                 <div className="flex items-center gap-2">
-                  <ShoppingBag className="w-4 h-4 text-[#B87802]" />
-                  <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#12100D]`}>
+                  <ShoppingBag className="w-4 h-4 text-[#C2185B]" />
+                  <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#1A0510]`}>
                     3. Select Products for this Direct Offer
                   </h2>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs px-2.5 py-1 rounded-full bg-[#FAF4E6] text-[#B87802] font-bold border border-[#E8D8B5]">
+                  <span className="text-xs px-2.5 py-1 rounded-full bg-[#FFF0F5] text-[#C2185B] font-bold border border-[#F8C4D8]">
                     {formData.applyToAllInCategory
                       ? `All products in "${formData.category}" selected`
                       : `${formData.selectedProducts.length} product(s) selected`}
@@ -736,7 +736,7 @@ export function OffersView({ onNotify }) {
               </div>
 
               {/* Option A: Apply to all in Category */}
-              <div className="p-3.5 rounded-lg border border-[#E8D8B5] bg-[#FAF8F2] flex items-center justify-between gap-4">
+              <div className="p-3.5 rounded-lg border border-[#F8C4D8] bg-[#FFF5F8] flex items-center justify-between gap-4">
                 <label className="flex items-center gap-2.5 cursor-pointer select-none">
                   <input
                     type="checkbox"
@@ -744,13 +744,13 @@ export function OffersView({ onNotify }) {
                     onChange={(e) =>
                       setFormData((p) => ({ ...p, applyToAllInCategory: e.target.checked }))
                     }
-                    className="w-4 h-4 text-[#B87802] rounded border-gray-300 focus:ring-[#B87802]"
+                    className="w-4 h-4 text-[#C2185B] rounded border-gray-300 focus:ring-[#C2185B]"
                   />
                   <div>
-                    <span className="text-xs font-bold text-[#12100D] block">
+                    <span className="text-xs font-bold text-[#1A0510] block">
                       Apply automatically to ALL products in "{formData.category}"
                     </span>
-                    <span className="text-[11px] text-[#736858]">
+                    <span className="text-[11px] text-[#7B4A5E]">
                       Any current and future products under this category will automatically get this offer.
                     </span>
                   </div>
@@ -759,17 +759,17 @@ export function OffersView({ onNotify }) {
 
               {/* Option B: Specific Product Selection */}
               {!formData.applyToAllInCategory && (
-                <div className="space-y-3 p-4 rounded-lg border border-[#E8D8B5] bg-white">
+                <div className="space-y-3 p-4 rounded-lg border border-[#F8C4D8] bg-white">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     {/* Search */}
                     <div className="relative flex-1">
-                      <Search className="w-3.5 h-3.5 text-[#8C7E6A] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <Search className="w-3.5 h-3.5 text-[#7B4A5E] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                       <input
                         type="text"
                         value={productSearch}
                         onChange={(e) => setProductSearch(e.target.value)}
                         placeholder="Search products by title or SKU to add to offer..."
-                        className="w-full pl-9 pr-3 py-2 rounded-md border border-[#E8D8B5] text-xs text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                        className="w-full pl-9 pr-3 py-2 rounded-md border border-[#F8C4D8] text-xs text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
                       />
                     </div>
 
@@ -778,7 +778,7 @@ export function OffersView({ onNotify }) {
                       <button
                         type="button"
                         onClick={() => handleSelectAllFiltered(filteredProducts)}
-                        className="text-xs font-semibold px-3 py-2 rounded-md border border-[#E8D8B5] bg-[#FAF8F2] hover:bg-white text-[#4A4235] hover:text-[#B87802] transition-colors cursor-pointer shrink-0"
+                        className="text-xs font-semibold px-3 py-2 rounded-md border border-[#F8C4D8] bg-[#FFF5F8] hover:bg-white text-[#4A1C30] hover:text-[#C2185B] transition-colors cursor-pointer shrink-0"
                       >
                         {filteredProducts.every((p) =>
                           formData.selectedProducts.includes(p.id || p._id || p.sku)
@@ -791,16 +791,16 @@ export function OffersView({ onNotify }) {
 
                   {/* Products Grid / List */}
                   {productsLoading ? (
-                    <div className="py-8 text-center text-xs text-[#736858] flex items-center justify-center gap-2">
-                      <RefreshCw className="w-4 h-4 animate-spin text-[#B87802]" />
+                    <div className="py-8 text-center text-xs text-[#7B4A5E] flex items-center justify-center gap-2">
+                      <RefreshCw className="w-4 h-4 animate-spin text-[#C2185B]" />
                       <span>Loading products...</span>
                     </div>
                   ) : filteredProducts.length === 0 ? (
-                    <div className="py-8 text-center text-xs text-[#736858]">
+                    <div className="py-8 text-center text-xs text-[#7B4A5E]">
                       No products found matching your search.
                     </div>
                   ) : (
-                    <div className="max-h-64 overflow-y-auto divide-y divide-[#E8D8B5]/50 border border-[#E8D8B5] rounded-md">
+                    <div className="max-h-64 overflow-y-auto divide-y divide-[#F8C4D8]/50 border border-[#F8C4D8] rounded-md">
                       {filteredProducts.map((p) => {
                         const pId = p.id || p._id || p.sku;
                         const isSelected = formData.selectedProducts.includes(pId);
@@ -815,21 +815,21 @@ export function OffersView({ onNotify }) {
                             key={pId}
                             onClick={() => handleToggleProduct(pId)}
                             className={`p-2.5 flex items-center justify-between gap-3 cursor-pointer transition-colors ${
-                              isSelected ? 'bg-[#FAF4E6]/60' : 'hover:bg-[#FAF8F2]'
+                              isSelected ? 'bg-[#FFF0F5]/60' : 'hover:bg-[#FFF5F8]'
                             }`}
                           >
                             <div className="flex items-center gap-3 min-w-0">
                               <div
                                 className={`w-4 h-4 rounded flex items-center justify-center border transition-colors ${
                                   isSelected
-                                    ? 'bg-[#B87802] border-[#B87802] text-white'
+                                    ? 'bg-[#C2185B] border-[#C2185B] text-white'
                                     : 'border-gray-300 bg-white'
                                 }`}
                               >
                                 {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                               </div>
 
-                              <div className="w-10 h-10 rounded overflow-hidden border border-[#E8D8B5] bg-neutral-900 shrink-0">
+                              <div className="w-10 h-10 rounded overflow-hidden border border-[#F8C4D8] bg-neutral-900 shrink-0">
                                 {displayImg ? (
                                   <img
                                     src={displayImg}
@@ -837,15 +837,15 @@ export function OffersView({ onNotify }) {
                                     className="w-full h-full object-cover"
                                   />
                                 ) : (
-                                  <div className="w-full h-full bg-[#FAF4E6]" />
+                                  <div className="w-full h-full bg-[#FFF0F5]" />
                                 )}
                               </div>
 
                               <div className="min-w-0">
-                                <p className="text-xs font-semibold text-[#12100D] truncate">
+                                <p className="text-xs font-semibold text-[#1A0510] truncate">
                                   {p.name}
                                 </p>
-                                <div className="flex items-center gap-2 text-[10px] text-[#8C7E6A]">
+                                <div className="flex items-center gap-2 text-[10px] text-[#7B4A5E]">
                                   <span>SKU: {p.sku || pId}</span>
                                   <span>•</span>
                                   <span>Category: {p.category || 'General'}</span>
@@ -854,11 +854,11 @@ export function OffersView({ onNotify }) {
                             </div>
 
                             <div className="text-right shrink-0">
-                              <span className="text-xs font-bold text-[#12100D]">
+                              <span className="text-xs font-bold text-[#1A0510]">
                                 ₹{Number(p.price || 0).toLocaleString()}
                               </span>
                               {p.mrp && Number(p.mrp) > Number(p.price) && (
-                                <span className="text-[10px] text-[#8C7E6A] line-through block">
+                                <span className="text-[10px] text-[#7B4A5E] line-through block">
                                   ₹{Number(p.mrp).toLocaleString()}
                                 </span>
                               )}
@@ -875,9 +875,9 @@ export function OffersView({ onNotify }) {
 
           {/* Section 4: Banner Photo (Desktop Upload) */}
           <div className="space-y-4 pt-2">
-            <div className="flex items-center gap-2 pb-2 border-b border-[#E8D8B5]">
-              <Upload className="w-4 h-4 text-[#B87802]" />
-              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#12100D]`}>
+            <div className="flex items-center gap-2 pb-2 border-b border-[#F8C4D8]">
+              <Upload className="w-4 h-4 text-[#C2185B]" />
+              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#1A0510]`}>
                 {isWithCoupon ? '3' : '4'}. Offer Banner Photo (Upload from Desktop)
               </h2>
             </div>
@@ -906,22 +906,22 @@ export function OffersView({ onNotify }) {
                 }}
                 className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center gap-2.5 ${
                   formData.image
-                    ? 'border-[#B87802]/60 bg-[#FAF8F2] hover:border-[#B87802]'
-                    : 'border-[#E8D8B5] bg-[#FAF8F2]/60 hover:bg-[#FAF8F2] hover:border-[#B87802]'
+                    ? 'border-[#C2185B]/60 bg-[#FFF5F8] hover:border-[#C2185B]'
+                    : 'border-[#F8C4D8] bg-[#FFF5F8]/60 hover:bg-[#FFF5F8] hover:border-[#C2185B]'
                 }`}
               >
-                <div className="w-12 h-12 rounded-full bg-[#FAF4E6] border border-[#E8D8B5] flex items-center justify-center text-[#B87802] shadow-sm">
+                <div className="w-12 h-12 rounded-full bg-[#FFF0F5] border border-[#F8C4D8] flex items-center justify-center text-[#C2185B] shadow-sm">
                   <Upload className="w-6 h-6 stroke-[2]" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[#12100D]">
+                  <p className="text-sm font-bold text-[#1A0510]">
                     {formData.image ? 'Change Photo from Desktop' : 'Choose Photo from Desktop'}
                   </p>
-                  <p className="text-xs text-[#736858] mt-0.5">
+                  <p className="text-xs text-[#7B4A5E] mt-0.5">
                     Click to browse files or drag & drop image from your desktop (PNG, JPG, WEBP, AVIF)
                   </p>
                   {fileName && (
-                    <span className="inline-block mt-2 text-[11px] font-semibold text-[#B87802] bg-[#FAF4E6] px-2.5 py-0.5 rounded-full border border-[#E8D8B5]">
+                    <span className="inline-block mt-2 text-[11px] font-semibold text-[#C2185B] bg-[#FFF0F5] px-2.5 py-0.5 rounded-full border border-[#F8C4D8]">
                       Selected file: {fileName}
                     </span>
                   )}
@@ -930,20 +930,20 @@ export function OffersView({ onNotify }) {
 
               {/* Live Preview Card */}
               {formData.image && (
-                <div className="relative h-44 sm:h-52 rounded-lg overflow-hidden border border-[#E8D8B5] bg-neutral-900 mt-3 shadow-inner">
+                <div className="relative h-44 sm:h-52 rounded-lg overflow-hidden border border-[#F8C4D8] bg-neutral-900 mt-3 shadow-inner">
                   <img
                     src={formData.image}
                     alt="Preview"
                     className="w-full h-full object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-5 flex flex-col justify-end">
-                    <span className="text-[10px] font-bold tracking-widest text-[#F5B815] uppercase mb-1">
+                    <span className="text-[10px] font-bold tracking-widest text-[#E91E8C] uppercase mb-1">
                       {formData.badge || (isWithCoupon ? 'COUPON DEAL' : 'DIRECT SALE')}
                     </span>
                     <span className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                       {formData.title || 'Offer Title Preview'}
                     </span>
-                    <span className="text-lg font-extrabold text-[#FEE63E] mt-0.5">
+                    <span className="text-lg font-extrabold text-[#FF80AB] mt-0.5">
                       {previewDiscountText}
                     </span>
                   </div>
@@ -954,29 +954,29 @@ export function OffersView({ onNotify }) {
 
           {/* Section 5: Terms & Display Status */}
           <div className="space-y-4 pt-2">
-            <div className="flex items-center gap-2 pb-2 border-b border-[#E8D8B5]">
-              <Clock className="w-4 h-4 text-[#B87802]" />
-              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#12100D]`}>
+            <div className="flex items-center gap-2 pb-2 border-b border-[#F8C4D8]">
+              <Clock className="w-4 h-4 text-[#C2185B]" />
+              <h2 className={`${theme.fonts.display} text-sm font-bold uppercase tracking-wider text-[#1A0510]`}>
                 {isWithCoupon ? '4' : '5'}. Terms & Visibility
               </h2>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+              <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                 Terms & Conditions Summary
               </label>
               <textarea
                 rows={2}
                 value={formData.terms}
                 onChange={(e) => setFormData((p) => ({ ...p, terms: e.target.value }))}
-                placeholder="Applicable on select authentic handwoven sarees. Cannot be combined with other offers."
-                className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                placeholder="Applicable on select authentic gold covering jewellery. Cannot be combined with other offers."
+                className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
               <div>
-                <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
                   Display Sequence (Order #)
                 </label>
                 <input
@@ -984,23 +984,23 @@ export function OffersView({ onNotify }) {
                   min="1"
                   value={formData.order}
                   onChange={(e) => setFormData((p) => ({ ...p, order: e.target.value }))}
-                  className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802]"
+                  className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B]"
                 />
               </div>
 
               <div className="pt-2 sm:pt-6">
-                <label className="flex items-center gap-3 p-3 rounded-lg border border-[#E8D8B5] bg-[#FAF8F2] cursor-pointer hover:bg-white transition-colors">
+                <label className="flex items-center gap-3 p-3 rounded-lg border border-[#F8C4D8] bg-[#FFF5F8] cursor-pointer hover:bg-white transition-colors">
                   <input
                     type="checkbox"
                     checked={formData.isActive}
                     onChange={(e) => setFormData((p) => ({ ...p, isActive: e.target.checked }))}
-                    className="w-4 h-4 text-[#B87802] rounded border-gray-300 focus:ring-[#B87802]"
+                    className="w-4 h-4 text-[#C2185B] rounded border-gray-300 focus:ring-[#C2185B]"
                   />
                   <div>
-                    <span className="text-xs font-bold text-[#12100D] uppercase tracking-wider block">
+                    <span className="text-xs font-bold text-[#1A0510] uppercase tracking-wider block">
                       Active on Storefront
                     </span>
-                    <span className="text-[11px] text-[#736858]">
+                    <span className="text-[11px] text-[#7B4A5E]">
                       Offer will be publicly visible on the Offers page
                     </span>
                   </div>
@@ -1010,18 +1010,18 @@ export function OffersView({ onNotify }) {
           </div>
 
           {/* Form Bottom Action Bar */}
-          <div className="pt-4 border-t border-[#E8D8B5] flex items-center justify-end gap-3">
+          <div className="pt-4 border-t border-[#F8C4D8] flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={() => setViewMode('list')}
-              className="px-5 py-2.5 rounded-md border border-[#E8D8B5] text-xs font-semibold text-[#4A4235] hover:bg-[#FAF8F2] transition-colors cursor-pointer"
+              className="px-5 py-2.5 rounded-md border border-[#F8C4D8] text-xs font-semibold text-[#4A1C30] hover:bg-[#FFF5F8] transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="px-6 py-2.5 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] hover:from-[#C98704] hover:to-[#A86E02] text-white text-xs font-semibold uppercase tracking-wider shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="px-6 py-2.5 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] hover:from-[#D81B60] hover:to-[#9C0F5F] text-white text-xs font-semibold uppercase tracking-wider shadow-sm transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {saving ? (
                 <>
@@ -1041,18 +1041,18 @@ export function OffersView({ onNotify }) {
         {/* ── MODAL: ADD NEW CATEGORY ── */}
         {showCategoryModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
-            <div className="bg-white rounded-lg border border-[#E8D8B5] w-full max-w-md p-6 shadow-xl space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#E8D8B5]">
+            <div className="bg-white rounded-lg border border-[#F8C4D8] w-full max-w-md p-6 shadow-xl space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#F8C4D8]">
                 <div className="flex items-center gap-2">
-                  <FolderPlus className="w-4 h-4 text-[#B87802]" />
-                  <h3 className={`${theme.fonts.display} text-base font-bold text-[#12100D]`}>
+                  <FolderPlus className="w-4 h-4 text-[#C2185B]" />
+                  <h3 className={`${theme.fonts.display} text-base font-bold text-[#1A0510]`}>
                     Add New Category
                   </h3>
                 </div>
                 <button
                   type="button"
                   onClick={() => setShowCategoryModal(false)}
-                  className="text-[#8C7E6A] hover:text-[#12100D]"
+                  className="text-[#7B4A5E] hover:text-[#1A0510]"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1060,8 +1060,8 @@ export function OffersView({ onNotify }) {
 
               <form onSubmit={handleAddNewCategory} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#12100D] mb-1.5 uppercase tracking-wider">
-                    Category Name <span className="text-[#B87802]">*</span>
+                  <label className="block text-xs font-bold text-[#1A0510] mb-1.5 uppercase tracking-wider">
+                    Category Name <span className="text-[#C2185B]">*</span>
                   </label>
                   <input
                     type="text"
@@ -1070,9 +1070,9 @@ export function OffersView({ onNotify }) {
                     value={newCategoryName}
                     onChange={(e) => setNewCategoryName(e.target.value)}
                     placeholder="e.g. Banarasi Georgette, Organza Silk, Pattu"
-                    className="w-full px-3.5 py-2.5 rounded-md border border-[#E8D8B5] text-sm text-[#12100D] focus:outline-none focus:border-[#B87802] focus:ring-1 focus:ring-[#B87802]"
+                    className="w-full px-3.5 py-2.5 rounded-md border border-[#F8C4D8] text-sm text-[#1A0510] focus:outline-none focus:border-[#C2185B] focus:ring-1 focus:ring-[#C2185B]"
                   />
-                  <p className="text-[11px] text-[#736858] mt-1">
+                  <p className="text-[11px] text-[#7B4A5E] mt-1">
                     This new category will immediately be available across the store and selected for this offer.
                   </p>
                 </div>
@@ -1081,14 +1081,14 @@ export function OffersView({ onNotify }) {
                   <button
                     type="button"
                     onClick={() => setShowCategoryModal(false)}
-                    className="px-4 py-2 rounded-md border border-[#E8D8B5] text-xs font-semibold text-[#4A4235] hover:bg-[#FAF8F2]"
+                    className="px-4 py-2 rounded-md border border-[#F8C4D8] text-xs font-semibold text-[#4A1C30] hover:bg-[#FFF5F8]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={categorySaving}
-                    className="px-5 py-2 rounded-md bg-[#B87802] hover:bg-[#996300] text-white text-xs font-semibold uppercase tracking-wider disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
+                    className="px-5 py-2 rounded-md bg-[#C2185B] hover:bg-[#880E4F] text-white text-xs font-semibold uppercase tracking-wider disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
                   >
                     {categorySaving ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                     <span>Save Category</span>
@@ -1108,22 +1108,22 @@ export function OffersView({ onNotify }) {
   return (
     <div className="space-y-6">
       {/* Offers Catalog Card */}
-      <div className="bg-white rounded-lg border border-[#E8D8B5] overflow-hidden shadow-sm">
-        <div className="px-6 py-4 border-b border-[#E8D8B5] flex items-center justify-between bg-[#FAF8F2] flex-wrap gap-4">
+      <div className="bg-white rounded-lg border border-[#F8C4D8] overflow-hidden shadow-sm">
+        <div className="px-6 py-4 border-b border-[#F8C4D8] flex items-center justify-between bg-[#FFF5F8] flex-wrap gap-4">
           <div className="flex items-center gap-2.5">
-            <span className="p-1.5 rounded-md bg-[#FAF4E6] text-[#B87802] border border-[#E8D8B5]">
+            <span className="p-1.5 rounded-md bg-[#FFF0F5] text-[#C2185B] border border-[#F8C4D8]">
               <Tag className="w-4 h-4" />
             </span>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className={`${theme.fonts.display} font-semibold text-base text-[#12100D]`}>
+                <h2 className={`${theme.fonts.display} font-semibold text-base text-[#1A0510]`}>
                   Offers & Promotional Deals
                 </h2>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-[#FAF4E6] text-[#B87802] font-semibold border border-[#E8D8B5]">
+                <span className="text-xs px-2 py-0.5 rounded-full bg-[#FFF0F5] text-[#C2185B] font-semibold border border-[#F8C4D8]">
                   {activeCount} Active / {offers.length} Total
                 </span>
               </div>
-              <span className="text-[11px] text-[#736858] font-medium">
+              <span className="text-[11px] text-[#7B4A5E] font-medium">
                 Manage promotional discount codes and direct product offers displayed on the storefront Offers page
               </span>
             </div>
@@ -1132,7 +1132,7 @@ export function OffersView({ onNotify }) {
           <button
             type="button"
             onClick={openCreateForm}
-            className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-[#B87802] to-[#996300] hover:from-[#C98704] hover:to-[#A86E02] text-white text-xs font-semibold uppercase tracking-wider shadow-sm transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-[#C2185B] to-[#880E4F] hover:from-[#D81B60] hover:to-[#9C0F5F] text-white text-xs font-semibold uppercase tracking-wider shadow-sm transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Add Offer</span>
@@ -1140,26 +1140,26 @@ export function OffersView({ onNotify }) {
         </div>
 
         {loading ? (
-          <div className="p-12 text-center text-[#736858] flex flex-col items-center justify-center gap-3">
-            <RefreshCw className="w-6 h-6 animate-spin text-[#B87802]" />
+          <div className="p-12 text-center text-[#7B4A5E] flex flex-col items-center justify-center gap-3">
+            <RefreshCw className="w-6 h-6 animate-spin text-[#C2185B]" />
             <p className="text-xs font-medium">Loading offers catalog...</p>
           </div>
         ) : offers.length === 0 ? (
-          <div className="p-12 text-center text-[#736858] space-y-3">
-            <Tag className="w-10 h-10 text-[#B87802]/40 mx-auto" />
-            <p className="text-sm font-semibold text-[#12100D]">No offers created yet</p>
-            <p className="text-xs text-[#736858] max-w-sm mx-auto">
+          <div className="p-12 text-center text-[#7B4A5E] space-y-3">
+            <Tag className="w-10 h-10 text-[#C2185B]/40 mx-auto" />
+            <p className="text-sm font-semibold text-[#1A0510]">No offers created yet</p>
+            <p className="text-xs text-[#7B4A5E] max-w-sm mx-auto">
               Create your first promotional discount offer to attract shoppers on the storefront Offers page.
             </p>
             <button
               onClick={openCreateForm}
-              className="mt-2 px-4 py-2 rounded-md bg-[#B87802] text-white text-xs font-semibold"
+              className="mt-2 px-4 py-2 rounded-md bg-[#C2185B] text-white text-xs font-semibold"
             >
               Add First Offer
             </button>
           </div>
         ) : (
-          <div className="divide-y divide-[#E8D8B5]/60">
+          <div className="divide-y divide-[#F8C4D8]/60">
             {offers.map((offer, idx) => {
               const isWithCoupon = offer.offerType !== 'without_coupon' && offer.hasCoupon !== false;
               const discountText =
@@ -1170,11 +1170,11 @@ export function OffersView({ onNotify }) {
               return (
                 <div
                   key={offer._id || offer.code || idx}
-                  className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#FAF8F2] transition-colors"
+                  className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#FFF5F8] transition-colors"
                 >
                   <div className="flex items-start gap-4 flex-1 min-w-0">
                     {/* Thumbnail */}
-                    <div className="w-20 h-16 sm:w-24 sm:h-20 rounded-md overflow-hidden border border-[#E8D8B5] bg-neutral-900 shrink-0 relative">
+                    <div className="w-20 h-16 sm:w-24 sm:h-20 rounded-md overflow-hidden border border-[#F8C4D8] bg-neutral-900 shrink-0 relative">
                       <img
                         src={offer.image}
                         alt={offer.title}
@@ -1186,7 +1186,7 @@ export function OffersView({ onNotify }) {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         {isWithCoupon ? (
-                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#FAF4E6] text-[#996300] border border-[#E8D8B5] inline-flex items-center gap-1">
+                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#FFF0F5] text-[#880E4F] border border-[#F8C4D8] inline-flex items-center gap-1">
                             <Tag className="w-3 h-3" />
                             {offer.code}
                           </span>
@@ -1201,12 +1201,12 @@ export function OffersView({ onNotify }) {
                           </span>
                         )}
 
-                        <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#1A1610] text-[#F5B815] border border-[#F5B815]/30">
+                        <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#1A0510] text-[#E91E8C] border border-[#E91E8C]/30">
                           {discountText}
                         </span>
 
                         {offer.badge && (
-                          <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-white text-[#736858] border border-[#E8D8B5]">
+                          <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-white text-[#7B4A5E] border border-[#F8C4D8]">
                             {offer.badge}
                           </span>
                         )}
@@ -1222,28 +1222,28 @@ export function OffersView({ onNotify }) {
                         </span>
                       </div>
 
-                      <h3 className={`${theme.fonts.display} font-semibold text-sm text-[#12100D] truncate`}>
+                      <h3 className={`${theme.fonts.display} font-semibold text-sm text-[#1A0510] truncate`}>
                         {offer.title}
                       </h3>
 
                       {offer.subtitle && (
-                        <p className="text-xs text-[#736858] line-clamp-1 mt-0.5">
+                        <p className="text-xs text-[#7B4A5E] line-clamp-1 mt-0.5">
                           {offer.subtitle}
                         </p>
                       )}
 
-                      <div className="flex items-center gap-3 text-[11px] text-[#8C7E6A] mt-1.5 font-medium flex-wrap">
+                      <div className="flex items-center gap-3 text-[11px] text-[#7B4A5E] mt-1.5 font-medium flex-wrap">
                         <span>
-                          Category: <strong className="text-[#4A4235]">{offer.category || 'All'}</strong>
+                          Category: <strong className="text-[#4A1C30]">{offer.category || 'All'}</strong>
                         </span>
                         {offer.minOrderValue > 0 && (
                           <span>
-                            | Min Order: <strong className="text-[#4A4235]">₹{offer.minOrderValue.toLocaleString()}</strong>
+                            | Min Order: <strong className="text-[#4A1C30]">₹{offer.minOrderValue.toLocaleString()}</strong>
                           </span>
                         )}
                         {offer.validTill && (
                           <span>
-                            | Validity: <strong className="text-[#4A4235]">{offer.validTill}</strong>
+                            | Validity: <strong className="text-[#4A1C30]">{offer.validTill}</strong>
                           </span>
                         )}
                       </div>
@@ -1251,7 +1251,7 @@ export function OffersView({ onNotify }) {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-2 shrink-0 border-t md:border-t-0 pt-2 md:pt-0 border-[#E8D8B5]/50">
+                  <div className="flex items-center gap-2 shrink-0 border-t md:border-t-0 pt-2 md:pt-0 border-[#F8C4D8]/50">
                     <button
                       type="button"
                       onClick={() => handleToggleActive(offer)}
@@ -1269,7 +1269,7 @@ export function OffersView({ onNotify }) {
                     <button
                       type="button"
                       onClick={() => openEditForm(offer)}
-                      className="p-2 rounded-md border border-[#E8D8B5] hover:border-[#B87802] text-[#4A4235] hover:text-[#B87802] hover:bg-[#FAF8F2] transition-colors cursor-pointer"
+                      className="p-2 rounded-md border border-[#F8C4D8] hover:border-[#C2185B] text-[#4A1C30] hover:text-[#C2185B] hover:bg-[#FFF5F8] transition-colors cursor-pointer"
                       title="Edit offer"
                     >
                       <Edit2 className="w-3.5 h-3.5" />
@@ -1278,7 +1278,7 @@ export function OffersView({ onNotify }) {
                     <button
                       type="button"
                       onClick={() => handleDelete(offer)}
-                      className="p-2 rounded-md border border-[#E8D8B5] hover:border-rose-400 text-[#4A4235] hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                      className="p-2 rounded-md border border-[#F8C4D8] hover:border-rose-400 text-[#4A1C30] hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
                       title="Delete offer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />

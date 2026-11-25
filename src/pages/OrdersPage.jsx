@@ -107,7 +107,7 @@ export const OrdersPage = ({ orders, onOrderUpdated, onNotify }) => {
               ) : (
                 filteredOrders.map((ord) => (
                   <tr key={ord._id || ord.orderNumber} className={theme.table.trHover}>
-                    <td className={`${theme.table.td} font-body font-semibold tracking-wider text-[#B87802]`}>
+                    <td className={`${theme.table.td} font-body font-semibold tracking-wider text-[#C2185B]`}>
                       {ord.orderNumber}
                     </td>
                     <td className={`${theme.table.td} text-muted-foreground`}>
@@ -124,7 +124,7 @@ export const OrdersPage = ({ orders, onOrderUpdated, onNotify }) => {
                       <p className="text-[10px] text-muted-foreground">{ord.customerPhone}</p>
                     </td>
                     <td className={`${theme.table.td} text-muted-foreground`}>
-                      {ord.items?.length || 1} saree{(ord.items?.length || 1) > 1 ? 's' : ''}
+                      {ord.items?.length || 1} item{(ord.items?.length || 1) > 1 ? 's' : ''}
                     </td>
                     <td className={theme.table.td}>
                       <span className="uppercase text-[10px] font-semibold px-2 py-0.5 rounded-sm bg-secondary text-foreground border border-border">
@@ -185,7 +185,7 @@ const OrderDetailModal = ({ order, onClose }) => {
       >
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div>
-            <span className="text-[10px] uppercase font-body text-[#B87802] font-bold tracking-widest">
+            <span className="text-[10px] uppercase font-body text-[#C2185B] font-bold tracking-widest">
               Official Tax Invoice
             </span>
             <h3 className="text-xl font-display font-semibold text-foreground mt-0.5">
@@ -263,7 +263,7 @@ const OrderDetailModal = ({ order, onClose }) => {
           </div>
           <div className="flex justify-between text-foreground font-bold text-sm pt-2 border-t border-border">
             <span>Total Paid</span>
-            <span className="text-[#B87802]">₹{order.totalAmount?.toLocaleString('en-IN')}</span>
+            <span className="text-[#C2185B]">₹{order.totalAmount?.toLocaleString('en-IN')}</span>
           </div>
         </div>
 
@@ -276,9 +276,9 @@ const OrderDetailModal = ({ order, onClose }) => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs text-foreground hover:border-[#B87802] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs text-foreground hover:border-[#C2185B] transition-colors cursor-pointer"
             >
-              <Printer className="w-3.5 h-3.5 text-[#B87802]" />
+              <Printer className="w-3.5 h-3.5 text-[#C2185B]" />
               <span>Print Invoice</span>
             </button>
             <button

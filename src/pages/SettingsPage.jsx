@@ -6,10 +6,10 @@ import { theme } from '../theme';
 export const SettingsPage = ({ onNotify }) => {
   const { backendOnline } = useAuth();
   const [storeSettings, setStoreSettings] = useState({
-    storeName: 'CF Handlooms',
-    tagline: 'Handwoven Heritage & Authentic Indian Elegance',
-    supportEmail: 'care@cfhandlooms.com',
-    supportPhone: '+91 98765 43210',
+    storeName: 'Madha Fancy & Gold Covering',
+    tagline: '1-Gram Micro Gold Covering & Bridal Imitation Jewellery',
+    supportEmail: 'contact@madhafancy.com',
+    supportPhone: '+91 8098291067',
     freeShippingThreshold: 2999,
     standardShippingFee: 149,
     currencySymbol: '₹',
@@ -33,7 +33,7 @@ export const SettingsPage = ({ onNotify }) => {
       {/* Backend Status Card */}
       <div className={`${theme.cards.base} p-6 flex items-center justify-between`}>
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-md bg-secondary border border-border flex items-center justify-center text-[#B87802]">
+          <div className="w-12 h-12 rounded-md bg-secondary border border-border flex items-center justify-center text-[#C2185B]">
             <Database className="w-6 h-6" />
           </div>
           <div>
@@ -55,7 +55,7 @@ export const SettingsPage = ({ onNotify }) => {
       {/* Store Profile Form */}
       <form onSubmit={handleSave} className={`${theme.cards.padded} space-y-4 text-xs`}>
         <h3 className="text-sm font-semibold text-foreground border-b border-border pb-3 flex items-center gap-2">
-          <Store className="w-4 h-4 text-[#B87802]" />
+          <Store className="w-4 h-4 text-[#C2185B]" />
           <span>General Store Details</span>
         </h3>
 

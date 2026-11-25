@@ -227,7 +227,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                 <input
                   type="text"
-                  placeholder="Search by saree name, SKU, fabric…"
+                  placeholder="Search by jewellery name, SKU, material…"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={`${theme.forms.input} pl-9 !w-64`}
@@ -304,7 +304,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
 
                           {/* Category */}
                           <td className={theme.table.td}>
-                            <span className="text-xs bg-[#FAF8F2] border border-[#E8D8B5] px-2 py-0.5 rounded-sm text-[#B87802] font-semibold whitespace-nowrap">
+                            <span className="text-xs bg-[#FFF5F8] border border-[#F8C4D8] px-2 py-0.5 rounded-sm text-[#C2185B] font-semibold whitespace-nowrap">
                               {p.category || 'Silk'}
                             </span>
                           </td>
@@ -316,7 +316,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
 
                           {/* Price */}
                           <td className={theme.table.td}>
-                            <p className="text-sm font-semibold text-[#B87802] whitespace-nowrap">
+                            <p className="text-sm font-semibold text-[#C2185B] whitespace-nowrap">
                               ₹{Number(p.price || 0).toLocaleString('en-IN')}
                             </p>
                             {p.mrp > p.price && (
@@ -352,7 +352,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
                               <button
                                 onClick={() => handleQuickRestock(p, 10)}
                                 disabled={isUpdating}
-                                className="inline-flex items-center gap-1 rounded-md bg-[#FAF8F2] border border-[#B87802] px-2.5 py-1 text-xs font-semibold text-[#B87802] hover:bg-[#B87802] hover:text-white transition-all cursor-pointer disabled:opacity-50 whitespace-nowrap"
+                                className="inline-flex items-center gap-1 rounded-md bg-[#FFF5F8] border border-[#C2185B] px-2.5 py-1 text-xs font-semibold text-[#C2185B] hover:bg-[#C2185B] hover:text-white transition-all cursor-pointer disabled:opacity-50 whitespace-nowrap"
                                 title="Quick restock +10 units"
                               >
                                 {isUpdating ? (
@@ -367,7 +367,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
                               {onEditProduct && (
                                 <button
                                   onClick={() => onEditProduct(p)}
-                                  className="inline-flex items-center gap-1 rounded-md border border-border px-2.5 py-1 text-xs font-medium text-foreground hover:border-[#B87802] hover:text-[#B87802] transition-colors cursor-pointer whitespace-nowrap"
+                                  className="inline-flex items-center gap-1 rounded-md border border-border px-2.5 py-1 text-xs font-medium text-foreground hover:border-[#C2185B] hover:text-[#C2185B] transition-colors cursor-pointer whitespace-nowrap"
                                   title="Edit product catalog details"
                                 >
                                   <Edit2 className="w-3 h-3" />
@@ -380,7 +380,7 @@ export function LowStockPage({ products = [], onEditProduct, onRefresh, onNotify
                                 href={STORE_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-1 rounded-md border border-border hover:border-[#B87802] text-muted-foreground hover:text-[#B87802] transition-colors"
+                                className="p-1 rounded-md border border-border hover:border-[#C2185B] text-muted-foreground hover:text-[#C2185B] transition-colors"
                                 title="View product on storefront"
                               >
                                 <ExternalLink className="w-3.5 h-3.5" />

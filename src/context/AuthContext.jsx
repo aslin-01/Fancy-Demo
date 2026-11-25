@@ -67,11 +67,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const quickAdminLogin = async () => {
-    try {
-      return await login('admin@cfhandlooms.com', 'admin123');
-    } catch {
-      return await login('admin@vastrakala.com', 'admin123');
-    }
+    return await login('admin@madhafancy.com', 'admin123');
   };
 
   return (

@@ -77,11 +77,11 @@ export const CustomersPage = ({ customers }) => {
         {filtered.map((cust) => (
           <div
             key={cust._id}
-            className={`${theme.cards.base} p-5 hover:border-[#B87802] transition-colors flex flex-col justify-between`}
+            className={`${theme.cards.base} p-5 hover:border-[#C2185B] transition-colors flex flex-col justify-between`}
           >
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#B87802] to-[#996300] text-white flex items-center justify-center font-bold text-sm border border-[#F5B815]/30">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#C2185B] to-[#880E4F] text-white flex items-center justify-center font-bold text-sm border border-[#E91E8C]/30">
                   {cust.name.slice(0, 2).toUpperCase()}
                 </div>
                 <div>
@@ -92,11 +92,11 @@ export const CustomersPage = ({ customers }) => {
 
               <div className="space-y-1.5 text-xs text-muted-foreground mb-4">
                 <div className="flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5 text-[#B87802]" />
+                  <Mail className="w-3.5 h-3.5 text-[#C2185B]" />
                   <span className="truncate">{cust.email}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="w-3.5 h-3.5 text-[#B87802]" />
+                  <Phone className="w-3.5 h-3.5 text-[#C2185B]" />
                   <span>{cust.phone || 'Not provided'}</span>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export const CustomersPage = ({ customers }) => {
               </div>
               <div className="bg-secondary/40 p-2 rounded-sm border border-border">
                 <span className="text-[10px] text-muted-foreground uppercase tracking-wider block">Spent</span>
-                <span className="font-bold text-[#B87802] text-sm">
+                <span className="font-bold text-[#C2185B] text-sm">
                   ₹{(cust.totalSpent || 18499).toLocaleString('en-IN')}
                 </span>
               </div>
