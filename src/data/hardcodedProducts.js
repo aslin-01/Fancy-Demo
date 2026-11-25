@@ -72,7 +72,7 @@ export const SAMPLE_JEWELLERY_IMAGES = [
   },
   {
     "title": "Maang Tikka & Nethichutti",
-    "url": "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80",
+    "url": "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80",
     "color": "Antique Gold / Ruby",
     "category": "Maang Tikka & Nethichutti"
   },
@@ -84,7 +84,7 @@ export const SAMPLE_JEWELLERY_IMAGES = [
   },
   {
     "title": "Armlets & Vanki",
-    "url": "https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=800&q=80",
+    "url": "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
     "color": "Antique Gold / Ruby",
     "category": "Armlets & Vanki"
   },
@@ -96,7 +96,7 @@ export const SAMPLE_JEWELLERY_IMAGES = [
   },
   {
     "title": "Pendant Sets & Lockets",
-    "url": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
+    "url": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
     "color": "Antique Gold / Ruby",
     "category": "Pendant Sets & Lockets"
   },
@@ -390,7 +390,7 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Magnificent bridal waist belt with carved dancing peacocks, temple pillars, and adjustable chain back.",
     "washCare": "Store flat in velvet case.",
@@ -413,9 +413,9 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "reviewsCount": 14,
     "isBestSeller": false,
     "isNewArrival": false,
-    "image": "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Traditional nine-piece graduated hair billai set for classical South Indian bridal braids.",
@@ -439,9 +439,9 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "reviewsCount": 28,
     "isBestSeller": true,
     "isNewArrival": true,
-    "image": "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Classic South Indian bridal forehead ornament with Lakshmi medallion and ruby kemp side chains.",
@@ -468,7 +468,7 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Ornate dual strand headpiece studded with pearls and micro gold carved peacocks.",
     "washCare": "Keep away from hairspray.",
@@ -517,9 +517,9 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "reviewsCount": 29,
     "isBestSeller": false,
     "isNewArrival": true,
-    "image": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Classical dance payal with rhythmic musical ghungroos and traditional temple stone motifs.",
@@ -543,9 +543,9 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "reviewsCount": 21,
     "isBestSeller": true,
     "isNewArrival": false,
-    "image": "https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Majestic V-shaped temple vanki carved with Goddess Lakshmi seated on a lotus with twin peacocks.",
@@ -572,7 +572,7 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Royal 1-Gram gold covering armlet with peacock filigree and hanging gold pearl drops.",
     "washCare": "Store airtight.",
@@ -647,9 +647,9 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "reviewsCount": 37,
     "isBestSeller": true,
     "isNewArrival": false,
-    "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Heavy antique temple medallion with seated Lakshmi, ruby stones, and matching floral studs.",
@@ -676,7 +676,7 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Sparkling brilliant-cut cubic zirconia floral pendant with free 18-inch micro gold chain.",
     "washCare": "Wipe with soft cloth.",
@@ -702,7 +702,7 @@ export const HARDCODED_JEWELLERY_PRODUCTS = [
     "image": "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=800&q=80"
     ],
     "description": "Authentic non-pierced press-on nose ring with classic red kemp stones and pearl latkan.",
     "washCare": "Wipe clean after use.",
