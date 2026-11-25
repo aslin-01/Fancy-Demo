@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { theme } from "@/theme";
 
 // ─── HARDCODED MADHA FANCY BANNER SLIDES ──────────────────────────────────────
@@ -213,42 +212,21 @@ export function HeroBanner() {
         })}
       </div>
 
-      {/* Navigation Arrows (only show if multiple slides) */}
+      {/* Dots Indicator (only show if multiple slides) */}
       {slideCount > 1 && (
-        <>
-          <button
-            type="button"
-            onClick={prevSlide}
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:border-[#E91E8C] hover:bg-[#C2185B] hover:text-white hover:scale-110 active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#E91E8C]"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="h-5 w-5 -ml-0.5" />
-          </button>
-
-          <button
-            type="button"
-            onClick={nextSlide}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:border-[#E91E8C] hover:bg-[#C2185B] hover:text-white hover:scale-110 active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#E91E8C]"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="h-5 w-5 -mr-0.5" />
-          </button>
-
-          {/* Dots Indicator */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-            {SLIDES.map((_, dotIdx) => (
-              <button
-                key={dotIdx}
-                onClick={() => setCurrent(dotIdx)}
-                className={`transition-all duration-300 rounded-full ${dotIdx === current
-                  ? "w-8 h-2 bg-[#E91E8C]"
-                  : "w-2 h-2 bg-white/40 hover:bg-white/70"
-                  }`}
-                aria-label={`Go to slide ${dotIdx + 1}`}
-              />
-            ))}
-          </div>
-        </>
+        <div className="absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+          {SLIDES.map((_, dotIdx) => (
+            <button
+              key={dotIdx}
+              onClick={() => setCurrent(dotIdx)}
+              className={`transition-all duration-300 rounded-full ${dotIdx === current
+                ? "w-8 h-2 bg-[#E91E8C]"
+                : "w-2 h-2 bg-white/40 hover:bg-white/70"
+                }`}
+              aria-label={`Go to slide ${dotIdx + 1}`}
+            />
+          ))}
+        </div>
       )}
     </section>
   );

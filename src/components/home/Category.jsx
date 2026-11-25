@@ -71,14 +71,14 @@ export function Category() {
 
   const cardWidthClass =
     activeCategories.length <= 4
-      ? "w-[65vw] xs:w-[50vw] sm:w-[35vw] md:w-[28vw] lg:flex-1 lg:max-w-xs"
-      : "w-[65vw] xs:w-[50vw] sm:w-[35vw] md:w-[28vw] lg:w-[calc((100%-4*1.5rem)/5)]";
+      ? "w-[65vw] xs:w-[50vw] sm:w-[35vw] md:w-[28vw] lg:flex-1"
+      : "w-[65vw] xs:w-[50vw] sm:w-[35vw] md:w-[28vw] lg:w-[calc((100%-3*1.5rem)/4)]";
 
   return (
-    <section id="categories" className="relative py-20 bg-beige/60 border-t border-b border-[#F8C4D8]/50 overflow-hidden">
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="categories" className="relative bg-beige/60 border-t border-b border-[#F8C4D8]/50 overflow-hidden">
+      <div className={theme.layout.sectionContainer}>
         <SectionHeading eyebrow="Curated for You" title="Shop by Category" />
-        
+
         <div
           className="relative"
           onMouseEnter={() => setIsPaused(true)}
@@ -89,7 +89,7 @@ export function Category() {
           {/* Single Row Horizontal Auto Slider */}
           <div
             ref={sliderRef}
-            className="flex flex-nowrap gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 px-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex flex-nowrap gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {activeCategories.map((cat) => (
               <Link
@@ -119,8 +119,8 @@ export function Category() {
                   <p className="font-display text-lg font-medium text-white">
                     {cat.name}
                   </p>
-                  <p className="mt-0.5 flex items-center justify-center gap-1 text-[11px] tracking-[0.2em] uppercase text-gold opacity-0 transition-opacity group-hover:opacity-100">
-                    Explore <ChevronRight className="h-3 w-3" />
+                  <p className="mt-1 flex items-center justify-center gap-1 text-[13px] font-bold tracking-[0.2em] uppercase text-gold opacity-0 transition-opacity group-hover:opacity-100">
+                    Explore <ChevronRight className="h-5 w-5" />
                   </p>
                 </div>
               </Link>

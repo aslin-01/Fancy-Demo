@@ -23,7 +23,7 @@ export function Arrivals() {
         <SectionHeading eyebrow="Just In" title="New Arrivals" />
         <div className={theme.layout.grid4Cols}>
           {newArrivals.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <ProductCard key={p.id} product={p} imageAspect="aspect-square" />
           ))}
         </div>
         <div className="mt-10 text-center">

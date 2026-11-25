@@ -63,24 +63,6 @@ export function Header() {
   const [mobileShopOpen, setMobileShopOpen] = useState(true);
   const [hoveredCategorySlug, setHoveredCategorySlug] = useState(null);
   const [query, setQuery] = useState("");
-  const [authorizedEmail, setAuthorizedEmail] = useState(() => {
-    let email = localStorage.getItem("mf_authorized_email") || "";
-    const oldEmail = localStorage.getItem("cf_authorized_email") || "";
-    if (!email && oldEmail) {
-      email = oldEmail;
-    }
-    // Cleanse any reference to cfhandlooms
-    if (email && email.toLowerCase().includes("cfhandlooms")) {
-      email = "admin@madhafancy.com";
-    }
-    // Always persist clean email and purge old keys
-    if (email) {
-      localStorage.setItem("mf_authorized_email", email);
-    }
-    localStorage.removeItem("cf_authorized_email");
-    localStorage.removeItem("cf_authorized_user");
-    return email;
-  });
   const navigate = useNavigate();
   const location = useLocation();
   const navContainerRef = useRef(null);
@@ -187,29 +169,6 @@ export function Header() {
       setHoveredCategorySlug(null);
     }, 200);
   };
-
-  useEffect(() => {
-    const handleAuthChange = () => {
-      let email = localStorage.getItem("mf_authorized_email") || "";
-      const oldEmail = localStorage.getItem("cf_authorized_email") || "";
-      if (!email && oldEmail) email = oldEmail;
-      if (email && email.toLowerCase().includes("cfhandlooms")) {
-        email = "admin@madhafancy.com";
-        localStorage.setItem("mf_authorized_email", email);
-      }
-      localStorage.removeItem("cf_authorized_email");
-      localStorage.removeItem("cf_authorized_user");
-      setAuthorizedEmail(email);
-    };
-    window.addEventListener("mf_auth_state_changed", handleAuthChange);
-    window.addEventListener("cf_auth_state_changed", handleAuthChange);
-    window.addEventListener("storage", handleAuthChange);
-    return () => {
-      window.removeEventListener("mf_auth_state_changed", handleAuthChange);
-      window.removeEventListener("cf_auth_state_changed", handleAuthChange);
-      window.removeEventListener("storage", handleAuthChange);
-    };
-  }, []);
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
@@ -349,30 +308,6 @@ export function Header() {
           </form>
 
           <div className="ml-auto flex shrink-0 items-center gap-4 sm:gap-6">
-            {authorizedEmail && (
-              <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FFF5F8] border border-[#F8C4D8] text-[11px]">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                <span className="font-semibold text-[#12100D] max-w-[120px] truncate">
-                  {authorizedEmail}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    localStorage.removeItem("mf_authorized_email");
-                    localStorage.removeItem("mf_authorized_user");
-                    localStorage.removeItem("cf_authorized_email");
-                    localStorage.removeItem("cf_authorized_user");
-                    setAuthorizedEmail("");
-                    window.dispatchEvent(new Event("mf_auth_state_changed"));
-                    window.dispatchEvent(new Event("cf_auth_state_changed"));
-                  }}
-                  className="ml-1 text-[10px] text-[#C2185B] hover:text-rose-600 font-semibold cursor-pointer underline"
-                  title="Exit / Switch user email"
-                >
-                  Exit
-                </button>
-              </div>
-            )}
             <Link
               to="/admin/dashboard"
               className="group flex flex-col items-center justify-center gap-1 text-foreground/85 hover:text-[#C2185B] transition-colors"

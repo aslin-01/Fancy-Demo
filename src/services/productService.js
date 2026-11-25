@@ -7,17 +7,33 @@ export const PRESET_IMAGES = [
   { label: 'Bangles & Kadas — Micro Gold Plated', src: 'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?auto=format&fit=crop&w=800&q=80', id: 'bangles' },
   { label: 'Earrings & Jhumkas — Temple Bell', src: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80', id: 'jhumkas' },
   { label: 'Hip Belts & Hair — Antique Oddiyanam', src: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=800&q=80', id: 'oddiyanam' },
-  { label: 'Maang Tikka — Nethichutti', src: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80', id: 'nethichutti' },
+  { label: 'Maang Tikka — Nethichutti', src: '/products/maang-tikka.jpg', id: 'nethichutti' },
   { label: 'Anklets & Kolusu — 1-Gram Plated', src: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80', id: 'kolusu' },
-  { label: 'Armlets & Vanki — Lakshmi Carving', src: 'https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=800&q=80', id: 'vanki' },
+  { label: 'Armlets & Vanki — Lakshmi Carving', src: '/products/lakshmi-vanki.jpg', id: 'vanki' },
   { label: 'Mangalsutra & Thali — Kodi Chain', src: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80', id: 'thali' },
-  { label: 'Pendant Sets — Temple Locket', src: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80', id: 'pendant' },
+  { label: 'Pendant Sets — Temple Locket', src: '/products/temple-locket.jpg', id: 'pendant' },
   { label: 'Nose Rings — Traditional Mukkuvalai', src: 'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=800&q=80', id: 'mukkuvalai' },
   { label: 'Luxury Brand Showcase Hero', src: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1600&q=80', id: 'hero' },
 ];
 
-const STORAGE_PRODUCTS_KEY = 'mf_products_list_v2';
-const STORAGE_CATEGORIES_KEY = 'mf_categories_list_v2';
+const sanitizeImageUrl = (url) => {
+  if (!url || typeof url !== 'string') return url;
+  if (url.includes('photo-1544441893-675973e31985') || url === '/banners/banner-4.jpg') return '/products/maang-tikka.jpg';
+  if (url.includes('photo-1539185441755-769473a23570') || url === '/banners/banner-1.jpg') return '/products/temple-locket.jpg';
+  if (url.includes('photo-1512496015851-a90fb38ba796') || url === '/banners/banner-3.jpg') return '/products/temple-payal.jpg';
+  if (url.includes('photo-1600003014755-ba31aa59c4b6') || url === '/banners/banner-2.jpg') return '/products/lakshmi-vanki.jpg';
+  return url;
+};
+
+const sanitizeProductImages = (p) => ({
+  ...p,
+  image: sanitizeImageUrl(p.image),
+  gallery: Array.isArray(p.gallery) ? p.gallery.map(sanitizeImageUrl) : [],
+  images: Array.isArray(p.images) ? p.images.map(sanitizeImageUrl) : [],
+});
+
+const STORAGE_PRODUCTS_KEY = 'mf_products_list_v4';
+const STORAGE_CATEGORIES_KEY = 'mf_categories_list_v4';
 const API_URL = 'http://localhost:5000/api';
 
 class ProductService {
@@ -38,7 +54,7 @@ class ProductService {
         if (Array.isArray(parsed) && parsed.length > 0) {
           const hasJewelry = parsed.some((p) => p.id && String(p.id).startsWith('mf-prod'));
           if (hasJewelry) {
-            return parsed;
+            return parsed.map(sanitizeProductImages);
           }
         }
       }
@@ -153,13 +169,14 @@ class ProductService {
           );
           if (!hasOnlyLegacy) {
             this.products = serverProducts.map((p) => {
-              const resolvedImg =
+              const resolvedImg = sanitizeImageUrl(
                 p.image ||
                 (Array.isArray(p.gallery) && p.gallery[0]) ||
                 (Array.isArray(p.images) && p.images[0]) ||
                 (Array.isArray(p.colors) && p.colors[0]?.images && p.colors[0].images[0]) ||
-                PRESET_IMAGES[0].src;
-              return {
+                PRESET_IMAGES[0].src
+              );
+              return sanitizeProductImages({
                 ...p,
                 id: p._id || p.id,
                 image: resolvedImg,
@@ -168,7 +185,7 @@ class ProductService {
                 colors: Array.isArray(p.colors) ? p.colors : [],
                 isActive: p.isActive !== false,
                 inStock: p.inStock !== false,
-              };
+              });
             });
             this.saveProducts(this.products);
             updated = true;

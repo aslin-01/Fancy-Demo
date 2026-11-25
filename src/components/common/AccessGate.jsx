@@ -3,7 +3,7 @@ import { Mail, Lock, ShieldCheck, ArrowRight, ShieldAlert, Sparkles, CheckCircle
 import { theme } from "@/theme";
 
 // Default seed of allowed emails if backend is offline or storage is empty
-const DEFAULT_ALLOWED_EMAILS = [];
+const DEFAULT_ALLOWED_EMAILS = ["admin@madhafancy.com", "priya.sharma@example.com"];
 
 export function AccessGate() {
   const [authorizedEmail, setAuthorizedEmail] = useState(() => {
@@ -40,7 +40,7 @@ export function AccessGate() {
       }
       localStorage.removeItem("cf_authorized_email");
       localStorage.removeItem("cf_authorized_user");
-      if (email) setAuthorizedEmail(email);
+      setAuthorizedEmail(email);
     };
     window.addEventListener("storage", handleStorage);
     window.addEventListener("mf_auth_state_changed", handleStorage);
@@ -85,21 +85,21 @@ export function AccessGate() {
         }
       }
 
-      // 2. Fallback check against local admin-created authorized user list
-      let allowedList = DEFAULT_ALLOWED_EMAILS;
+      // 2. Fallback check against default pre-authorized & local admin-created authorized user list
+      const allowedSet = new Set(DEFAULT_ALLOWED_EMAILS);
       try {
         const savedList = localStorage.getItem("mf_user_access_list") || localStorage.getItem("cf_user_access_list");
         if (savedList) {
           const parsed = JSON.parse(savedList);
-          allowedList = parsed
+          parsed
             .filter((u) => u.status === "Active" && u.canAccessWebsite !== false)
-            .map((u) => u.email.toLowerCase().trim());
+            .forEach((u) => allowedSet.add(u.email.toLowerCase().trim()));
         }
       } catch {
         // use fallback
       }
 
-      if (allowedList.includes(clean)) {
+      if (allowedSet.has(clean)) {
         localStorage.setItem("mf_authorized_email", clean);
         localStorage.removeItem("cf_authorized_email");
         setAuthorizedEmail(clean);

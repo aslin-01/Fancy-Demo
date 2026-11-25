@@ -14,7 +14,7 @@ export function Sellers() {
         <SectionHeading eyebrow="Most Loved" title="Best Sellers" />
         <div className={theme.layout.grid4Cols}>
           {bestSellers.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <ProductCard key={p.id} product={p} imageAspect="aspect-square" />
           ))}
         </div>
       </div>

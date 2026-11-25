@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
+import { Check, ChevronDown, SlidersHorizontal } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { formatINR } from "@/data/products";
 import { ProductCard } from "@/components/common/ProductCard";
@@ -42,6 +42,25 @@ export function ShopPage() {
   const [inStockOnly, setInStockOnly] = useState(false);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
+  const sortRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sortRef.current && !sortRef.current.contains(e.target)) {
+        setSortOpen(false);
+      }
+    };
+    const handleEsc = (e) => {
+      if (e.key === "Escape") setSortOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEsc);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
 
   const categoryNames = useMemo(
     () => collectUniqueValues(products, (p) => (p.category ? [p.category] : [])),
@@ -384,19 +403,58 @@ export function ShopPage() {
               Showing {Math.min(visible, filtered.length)} of {filtered.length}{" "}
               items
             </p>
-            <div className="relative">
-              <select
-                value={sort}
-                onChange={(e) => updateSearchParam("sort", e.target.value)}
-                className={theme.forms.select}
+            <div className="relative" ref={sortRef}>
+              <button
+                type="button"
+                onClick={() => setSortOpen((prev) => !prev)}
+                aria-haspopup="listbox"
+                aria-expanded={sortOpen}
+                className={`flex min-w-[195px] items-center justify-between gap-3 rounded-lg border bg-white px-4 py-2 text-sm font-medium text-foreground shadow-xs transition-all cursor-pointer ${
+                  sortOpen
+                    ? "border-[#C2185B] ring-2 ring-[#E91E8C]/15"
+                    : "border-[#F8C4D8] hover:border-[#C2185B]"
+                }`}
               >
-                {sortOptions.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <span>
+                  {sortOptions.find((o) => o.value === sort)?.label || "Popularity"}
+                </span>
+                <ChevronDown
+                  className={`h-4 w-4 text-[#C2185B] transition-transform duration-200 ${
+                    sortOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {sortOpen && (
+                <div
+                  role="listbox"
+                  className="absolute right-0 top-full z-40 mt-1.5 w-full min-w-[210px] overflow-hidden rounded-xl border border-[#F8C4D8] bg-[#FFFDFE] p-1.5 shadow-xl animate-in fade-in slide-in-from-top-1 duration-150"
+                >
+                  {sortOptions.map((o) => {
+                    const isSelected = o.value === sort;
+                    return (
+                      <button
+                        key={o.value}
+                        type="button"
+                        role="option"
+                        aria-selected={isSelected}
+                        onClick={() => {
+                          updateSearchParam("sort", o.value);
+                          setSortOpen(false);
+                        }}
+                        className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors cursor-pointer ${
+                          isSelected
+                            ? "bg-[#C2185B] text-white font-semibold"
+                            : "text-foreground/85 hover:bg-[#FFF5F8] hover:text-[#C2185B]"
+                        }`}
+                      >
+                        <span>{o.label}</span>
+                        {isSelected && <Check className="h-3.5 w-3.5 shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
 
