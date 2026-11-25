@@ -10,6 +10,9 @@ import {
   ShoppingCart,
   User,
   X,
+  Sparkles,
+  Crown,
+  Gem,
 } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { theme } from "@/theme";
@@ -18,6 +21,39 @@ const mainNavLinks = [
   { label: "Home", to: "/" },
   // "Shop All" with sub-menu is inserted between Home and Offers
   { label: "Offers", to: "/offers" },
+];
+
+const MEGA_MENU_SECTIONS = [
+  {
+    title: "Bridal & Grand Sets",
+    tagline: "Temple Kemp & Antique Combos",
+    items: [
+      { name: "Bridal Sets", desc: "Grand temple kemp combos & chokers", badge: "Trending" },
+      { name: "Harams & Long Chains", desc: "Kasu Malai, Mango Mala & Mop chains" },
+      { name: "Necklaces & Chokers", desc: "Antique matte chokers & AD stones" },
+      { name: "Pendant Sets & Lockets", desc: "Temple lockets with ruby drops" },
+    ],
+  },
+  {
+    title: "Bangles, Earrings & Hair",
+    tagline: "Daily & Occasion Gold Covering",
+    items: [
+      { name: "Bangles & Kadas", desc: "Daily wear micro gold & screw kadas", badge: "Hot" },
+      { name: "Earrings & Jhumkas", desc: "South Indian Jimikki Kammal & studs" },
+      { name: "Maang Tikka & Nethichutti", desc: "Traditional matha patti & bridal tikkas" },
+      { name: "Nose Rings & Mukkuvalai", desc: "Traditional clip-on bridal naths" },
+    ],
+  },
+  {
+    title: "Traditional Ornaments",
+    tagline: "Heritage South Indian Jewellery",
+    items: [
+      { name: "Hip Belts & Hair Ornaments", desc: "Antique peacock Oddiyanam & Jadabillai", badge: "Bridal" },
+      { name: "Armlets & Vanki", desc: "Lakshmi & peacock carved vankis" },
+      { name: "Anklets & Kolusu", desc: "Micro gold daily wear kolusu & payals" },
+      { name: "Mangalsutra & Thali Chains", desc: "South Indian Kodi thali & mugappu chains" },
+    ],
+  },
 ];
 
 export function Header() {
@@ -458,120 +494,142 @@ export function Header() {
             onMouseLeave={handleMouseLeave}
             className="absolute left-0 right-0 top-full z-50 border-b border-[#F8C4D8] bg-[#FFF5F8]/98 shadow-2xl backdrop-blur-md transition-all duration-300 animate-in fade-in slide-in-from-top-2"
           >
-            {/* Gold highlight accent strip */}
+            {/* Top gold / pink highlight accent strip */}
             <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#E91E8C] to-transparent" />
 
-            <div className="mx-auto max-w-6xl px-6 py-6 sm:px-8">
-              {menuCategories.length === 0 ? (
-                <div className="py-8 text-center">
-                  <p className="text-sm text-muted-foreground">
-                    Explore our complete handcrafted 1-gram gold jewellery collection.
-                  </p>
+            <div className="mx-auto max-w-7xl px-6 py-7 sm:px-8">
+              {/* 4-Column Luxury Department Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 lg:gap-8">
+                {MEGA_MENU_SECTIONS.map((section) => (
+                  <div key={section.title} className="space-y-3">
+                    <div className="pb-1 border-b border-[#F8C4D8]/60">
+                      <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#C2185B]">
+                        {section.title}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">
+                        {section.tagline}
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      {section.items.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={`/shop?category=${encodeURIComponent(item.name)}`}
+                          onClick={() => setShopMenuOpen(false)}
+                          className="group block rounded-lg px-2.5 py-2 transition-all duration-150 hover:bg-[#E91E8C]/10"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-semibold text-foreground/90 group-hover:text-[#C2185B] transition-colors leading-tight">
+                              {item.name}
+                            </span>
+                            {item.badge ? (
+                              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#E91E8C]/15 text-[#C2185B]">
+                                {item.badge}
+                              </span>
+                            ) : (
+                              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/40 opacity-0 group-hover:opacity-100 group-hover:text-[#C2185B] group-hover:translate-x-0.5 transition-all" />
+                            )}
+                          </div>
+                          <p className="text-[11px] text-muted-foreground/80 line-clamp-1 mt-0.5">
+                            {item.desc}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Column 4: Curated Visual Showcases */}
+                <div className="space-y-3">
+                  <div className="pb-1 border-b border-[#F8C4D8]/60">
+                    <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#C2185B]">
+                      Featured Highlights
+                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      Handcrafted Masterpieces
+                    </p>
+                  </div>
+
+                  {/* Showcase Card 1 */}
+                  <Link
+                    to="/shop?category=Bridal%20Sets"
+                    onClick={() => setShopMenuOpen(false)}
+                    className="group relative block h-[105px] overflow-hidden rounded-xl border border-[#F8C4D8] shadow-xs hover:shadow-md transition-all duration-300"
+                  >
+                    <img
+                      src="/banners/banner-1.jpg"
+                      alt="Royal Bridal Collection"
+                      className="h-full w-full object-cover object-right group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-3 flex flex-col justify-end">
+                      <span className="text-[9px] font-bold tracking-widest uppercase text-[#F8C4D8]">
+                        Royal Bridal 2026
+                      </span>
+                      <h4 className="text-xs font-semibold text-white group-hover:text-[#F8C4D8] transition-colors leading-tight">
+                        Grand Kemp Temple Sets
+                      </h4>
+                      <span className="mt-0.5 inline-flex items-center gap-1 text-[10px] font-medium text-white/90">
+                        <span>Explore Bridal</span>
+                        <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Showcase Card 2 */}
                   <Link
                     to="/shop"
                     onClick={() => setShopMenuOpen(false)}
-                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#C2185B] hover:text-[#0C0A07]"
+                    className="group relative block h-[105px] overflow-hidden rounded-xl border border-[#F8C4D8] shadow-xs hover:shadow-md transition-all duration-300"
                   >
-                    <span>Browse All Jewellery</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
+                    <img
+                      src="/banners/banner-3.jpg"
+                      alt="1-Gram Gold Bestsellers"
+                      className="h-full w-full object-cover object-right group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-3 flex flex-col justify-end">
+                      <span className="text-[9px] font-bold tracking-widest uppercase text-[#F8C4D8]">
+                        1-Gram Gold Covering
+                      </span>
+                      <h4 className="text-xs font-semibold text-white group-hover:text-[#F8C4D8] transition-colors leading-tight">
+                        Festive Harams & Bangles
+                      </h4>
+                      <span className="mt-0.5 inline-flex items-center gap-1 text-[10px] font-medium text-white/90">
+                        <span>Shop All Designs</span>
+                        <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
                   </Link>
                 </div>
-              ) : (
-                <div className="flex gap-8 items-start min-h-[160px]">
+              </div>
 
-                  {/* Left Column: Categories arranged order-wise */}
-                  <div className="w-60 shrink-0">
-                    <p className="text-[10px] font-bold tracking-[0.24em] uppercase text-[#C2185B] mb-3 px-3">
-                      Categories
-                    </p>
-                    <div className="space-y-1">
-                      {menuCategories.map((cat) => {
-                        const isHovered =
-                          hoveredCategorySlug &&
-                          (hoveredCategorySlug.toLowerCase() === cat.slug.toLowerCase() ||
-                            hoveredCategorySlug.toLowerCase() === cat.name.toLowerCase());
-                        return (
-                          <div
-                            key={cat.slug}
-                            onMouseEnter={() => handleCategoryMouseEnter(cat.slug)}
-                            onMouseLeave={handleCategoryMouseLeave}
-                          >
-                            <Link
-                              to={`/shop?category=${encodeURIComponent(cat.name)}`}
-                              onClick={() => {
-                                setShopMenuOpen(false);
-                                setHoveredCategorySlug(null);
-                              }}
-                              className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
-                                isHovered
-                                  ? "bg-[#E91E8C]/20 text-[#C2185B] font-semibold"
-                                  : "text-foreground/80 hover:bg-[#E91E8C]/10 hover:text-[#C2185B]"
-                              }`}
-                            >
-                              <span className="group-hover:translate-x-0.5 transition-transform">
-                                {cat.name}
-                              </span>
-                              <ChevronRight
-                                className={`h-4 w-4 transition-all ${
-                                  isHovered
-                                    ? "text-[#C2185B] translate-x-1"
-                                    : "text-muted-foreground/35 group-hover:text-[#C2185B]"
-                                }`}
-                              />
-                            </Link>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* ONLY ON HOVER: Show the related product card(s) */}
-                  {hoveredCategory && hoveredCategory.products.length > 0 && (
-                    <div
-                      onMouseEnter={handleCardsMouseEnter}
-                      onMouseLeave={handleCardsMouseLeave}
-                      className="flex-1 pl-4 animate-in fade-in duration-150"
-                    >
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
-                        {hoveredCategory.products.map((p) => {
-                          const primaryTitle = p.fabric || p.name;
-                          const secondaryTitle =
-                            p.fabric && p.name && p.fabric.toLowerCase() !== p.name.toLowerCase()
-                              ? p.name
-                              : p.occasion || "";
-                          return (
-                            <Link
-                              key={p.id || p._id}
-                              to={`/product/${p.id || p._id}`}
-                              onClick={() => {
-                                setShopMenuOpen(false);
-                                setHoveredCategorySlug(null);
-                              }}
-                              className="group rounded-xl border border-[#F8C4D8]/80 bg-white/95 p-3.5 hover:bg-white hover:border-[#C2185B] hover:shadow-xs transition-all duration-200"
-                            >
-                              <div className="flex items-center justify-between">
-                                <p className="text-sm font-semibold text-foreground/90 group-hover:text-[#C2185B] transition-colors leading-tight">
-                                  {primaryTitle}
-                                </p>
-                                <ArrowRight className="h-3.5 w-3.5 text-[#C2185B] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all shrink-0 ml-1.5" />
-                              </div>
-                              <div className="mt-1.5 flex items-center justify-between text-xs text-muted-foreground">
-                                <span className="line-clamp-1">{secondaryTitle}</span>
-                                {Number(p.price) > 0 && (
-                                  <span className="font-semibold text-[#C2185B] ml-2 shrink-0">
-                                    ₹{Number(p.price).toLocaleString("en-IN")}
-                                  </span>
-                                )}
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
+              {/* Mega Menu Trust Strip & Full Catalog Button */}
+              <div className="mt-6 pt-4 border-t border-[#F8C4D8]/80 flex flex-wrap items-center justify-between gap-4 text-xs">
+                <div className="flex flex-wrap items-center gap-6 text-muted-foreground">
+                  <span className="flex items-center gap-1.5 font-medium text-[#12100D]">
+                    <Sparkles className="h-3.5 w-3.5 text-[#C2185B]" />
+                    1-Gram Micro Gold Plating Guarantee
+                  </span>
+                  <span className="hidden sm:inline-block text-[#F8C4D8]">|</span>
+                  <span className="hidden sm:flex items-center gap-1.5">
+                    <Crown className="h-3.5 w-3.5 text-[#C2185B]" />
+                    Erode Fort Traditional Craftsmanship
+                  </span>
+                  <span className="hidden md:inline-block text-[#F8C4D8]">|</span>
+                  <span className="hidden md:flex items-center gap-1.5">
+                    <Gem className="h-3.5 w-3.5 text-[#C2185B]" />
+                    Free Delivery on Orders Above ₹1,999
+                  </span>
                 </div>
-              )}
+                <Link
+                  to="/shop"
+                  onClick={() => setShopMenuOpen(false)}
+                  className="inline-flex items-center gap-1.5 font-semibold text-[#C2185B] hover:text-[#880E4F] transition-colors uppercase tracking-wider text-[11px]"
+                >
+                  <span>View All 24+ Jewellery Designs</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         )}
@@ -627,34 +685,39 @@ export function Header() {
                 </div>
 
                 {mobileShopOpen && (
-                  <ul className="mt-2 space-y-2.5 pl-3 border-l-2 border-[#E91E8C]/40 mb-2">
-                    {menuCategories.map((cat) => (
-                      <li key={cat.slug} className="space-y-1">
-                        <Link
-                          to={`/shop?category=${encodeURIComponent(cat.name)}`}
-                          onClick={() => setMobileOpen(false)}
-                          className="flex items-center justify-between text-xs font-semibold uppercase text-foreground/90 hover:text-[#C2185B]"
-                        >
-                          <span>{cat.name}</span>
-                          <span className="text-[10px] text-muted-foreground">
-                            {cat.products.length} {cat.products.length === 1 ? "Design" : "Designs"}
-                          </span>
-                        </Link>
-                        <div className="flex flex-wrap gap-1.5 pl-1">
-                          {cat.products.map((p) => (
+                  <div className="mt-2 space-y-3.5 pl-3 border-l-2 border-[#E91E8C]/40 mb-3">
+                    {MEGA_MENU_SECTIONS.map((sec) => (
+                      <div key={sec.title} className="space-y-1.5">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#C2185B]">
+                          {sec.title}
+                        </p>
+                        <div className="space-y-1 pl-1">
+                          {sec.items.map((item) => (
                             <Link
-                              key={p.id || p._id}
-                              to={`/product/${p.id || p._id}`}
+                              key={item.name}
+                              to={`/shop?category=${encodeURIComponent(item.name)}`}
                               onClick={() => setMobileOpen(false)}
-                              className="text-[11px] text-muted-foreground hover:text-[#C2185B] bg-[#FFF5F8] px-2 py-0.5 rounded border border-[#F8C4D8]/50"
+                              className="flex items-center justify-between py-1 text-xs text-foreground/85 hover:text-[#C2185B]"
                             >
-                              {p.fabric || p.name}
+                              <span>{item.name}</span>
+                              {item.badge && (
+                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#E91E8C]/15 text-[#C2185B]">
+                                  {item.badge}
+                                </span>
+                              )}
                             </Link>
                           ))}
                         </div>
-                      </li>
+                      </div>
                     ))}
-                  </ul>
+                    <Link
+                      to="/shop"
+                      onClick={() => setMobileOpen(false)}
+                      className="block pt-1 text-xs font-semibold text-[#C2185B] uppercase tracking-wider underline"
+                    >
+                      View All 24+ Jewellery Designs →
+                    </Link>
+                  </div>
                 )}
               </li>
 
