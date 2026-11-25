@@ -9,7 +9,7 @@ import {
 } from '../data/hardcodedProducts';
 
 const getHeaders = () => {
-  const token = localStorage.getItem('cf_admin_token');
+  const token = localStorage.getItem('mf_admin_token') || localStorage.getItem('vk_admin_token') || localStorage.getItem('cf_admin_token');
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),

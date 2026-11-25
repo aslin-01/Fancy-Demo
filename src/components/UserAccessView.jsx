@@ -51,7 +51,7 @@ export function UserAccessView() {
   // ── 1. Users state: Loaded from localStorage or API (NO hardcoded fake users) ──
   const [users, setUsers] = useState(() => {
     try {
-      const saved = localStorage.getItem('cf_user_access_list');
+      const saved = localStorage.getItem('mf_user_access_list') || localStorage.getItem('cf_user_access_list');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -61,7 +61,7 @@ export function UserAccessView() {
   // ── 2. Roles state: Dynamic with user generation ──
   const [roles, setRoles] = useState(() => {
     try {
-      const saved = localStorage.getItem('cf_user_roles');
+      const saved = localStorage.getItem('mf_user_roles') || localStorage.getItem('cf_user_roles');
       return saved ? JSON.parse(saved) : INITIAL_ROLES;
     } catch {
       return INITIAL_ROLES;
@@ -81,20 +81,21 @@ export function UserAccessView() {
   // Save users to state and localStorage
   const saveUsers = (newUsers) => {
     setUsers(newUsers);
-    localStorage.setItem('cf_user_access_list', JSON.stringify(newUsers));
+    localStorage.setItem('mf_user_access_list', JSON.stringify(newUsers));
 
     // Save allowed emails list for storefront validation
     const allowedEmails = newUsers
       .filter((u) => u.status === 'Active' && u.canAccessWebsite !== false)
       .map((u) => u.email.toLowerCase().trim());
-    localStorage.setItem('cf_allowed_emails', JSON.stringify(allowedEmails));
+    localStorage.setItem('mf_allowed_emails', JSON.stringify(allowedEmails));
+    window.dispatchEvent(new Event('mf_user_access_updated'));
     window.dispatchEvent(new Event('cf_user_access_updated'));
   };
 
   // Save roles
   const saveRoles = (newRoles) => {
     setRoles(newRoles);
-    localStorage.setItem('cf_user_roles', JSON.stringify(newRoles));
+    localStorage.setItem('mf_user_roles', JSON.stringify(newRoles));
   };
 
   // Sync users from backend API if online
